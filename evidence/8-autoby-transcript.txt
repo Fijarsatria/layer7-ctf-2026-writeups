@@ -1,0 +1,494 @@
+captured_at=2026-11-21T02:58:11.999773+00:00 rc=124 tag=8-autoby
+for size in range(38,56,2):
+        ft=ImageFont.truetype(fp,size)
+        for ch in chars:
+            img=Image.new('L',(200,200),255); ImageDraw.Draw(img).text((30,30),ch,font=ft,fill=0)
+            a=np.array(img); ys,xs=np.where(a<128)
+            if len(ys)==0: continue
+            T[ch].append(crop_gray(a[ys.min():ys.max()+1,xs.min():xs.max()+1]))
+import json
+res={}
+for i in range(1,51):
+    G=crop_gray(f'pngs/{i:02d}.png')
+    sc={c:max(float((G*t).sum()) for t in T[c]) for c in chars}
+    top=sorted(sc.items(),key=lambda kv:-kv[1])[:4]
+    res[i]=top
+    print('%2d'%i,' '.join('%s:%.3f'%(c,s) for c,s in top))
+json.dump({str(k):v for k,v in res.items()},open('charset_check.json','w'))
+EOF
+timeout 115 python3 charset_check.py 2>&1 | tail -55
+1 c:0.965 C:0.946 G:0.793 e:0.657
+ 2 4:0.955 A:0.563 6:0.448 I:0.388
+ 3 7:0.988 y:0.648 z:0.580 Z:0.559
+ 4 1:0.966 l:0.959 I:0.828 i:0.787
+ 5 7:0.849 z:0.725 Z:0.719 2:0.547
+ 6 0:0.969 O:0.961 o:0.948 Q:0.836
+ 7 8:0.940 3:0.746 S:0.745 6:0.734
+ 8 7:0.691 V:0.579 1:0.575 v:0.568
+ 9 1:0.673 j:0.612 I:0.598 l:0.567
+10 9:0.905 g:0.792 0:0.623 o:0.605
+11 f:0.990 t:0.764 l:0.576 I:0.573
+12 2:0.831 z:0.498 3:0.469 Z:0.420
+13 b:0.759 U:0.579 h:0.555 u:0.537
+14 4:0.913 A:0.628 6:0.469 I:0.383
+15 5:0.942 S:0.770 s:0.721 6:0.642
+16 a:0.893 8:0.606 e:0.601 d:0.571
+17 1:0.957 l:0.932 I:0.811 i:0.735
+18 b:0.806 h:0.617 U:0.572 u:0.538
+19 2:0.942 z:0.439 3:0.403 7:0.389
+20 3:0.940 a:0.642 B:0.639 8:0.614
+21 7:0.986 y:0.661 z:0.580 Z:0.559
+22 d:0.937 J:0.680 u:0.647 U:0.634
+23 e:0.918 o:0.672 0:0.667 O:0.657
+24 7:0.975 y:0.635 2:0.529 Y:0.509
+25 3:0.978 a:0.697 J:0.649 8:0.641
+26 1:0.863 l:0.784 I:0.708 i:0.680
+27 1:0.708 l:0.645 I:0.645 i:0.586
+28 9:0.965 g:0.783 0:0.629 O:0.622
+29 2:0.886 7:0.652 z:0.609 Z:0.597
+30 c:0.949 C:0.930 G:0.758 e:0.676
+31 4:0.962 A:0.558 6:0.438 l:0.364
+32 3:0.950 B:0.655 8:0.651 S:0.639
+33 0:0.904 o:0.888 O:0.863 Q:0.794
+34 c:0.940 C:0.919 G:0.750 e:0.678
+35 2:0.922 7:0.619 z:0.601 Z:0.578
+36 a:0.899 8:0.605 e:0.597 3:0.561
+37 9:0.963 g:0.806 0:0.651 O:0.639
+38 a:0.873 e:0.619 8:0.576 Q:0.572
+39 6:0.953 G:0.731 5:0.679 8:0.646
+40 d:0.815 U:0.567 u:0.550 J:0.549
+41 e:0.935 0:0.672 o:0.662 O:0.660
+42 a:0.822 8:0.700 B:0.652 3:0.609
+43 d:0.718 U:0.572 u:0.510 o:0.497
+44 5:0.899 S:0.767 s:0.703 6:0.639
+45 I:0.633 1:0.630 l:0.595 7:0.581
+46 f:0.820 t:0.794 l:0.682 I:0.664
+47 1:0.922 l:0.836 I:0.772 i:0.733
+48 7:0.965 y:0.592 T:0.568 Y:0.568
+49 9:0.942 g:0.786 O:0.613 0:0.611
+50 5:0.861 S:0.756 s:0.718 3:0.603
+> build · deepseek-flash
+[0m$ [0mcd /home/bocil/ctf/layer7/work/8 && time python3 -c "exec(open('class2.py').read().split('if __name__')[0]); print(sum(len(v) for v in T.values()),'templates')"
+3744 templates
+
+real	0m15.951s
+user	0m3.692s
+sys	0m0.333s
+> build · deepseek-flash
+[0m$ [0mcd /home/bocil/ctf/layer7/work/8 && python3 - <<'EOF'
+from PIL import Image,ImageDraw,ImageFont,ImageFilter
+import numpy as np, os
+M=32
+def crop_gray(im):
+    if isinstance(im,str): im=np.array(Image.open(im).convert('L'))
+    ys,xs=np.where(im<128)
+    a=im[ys.min():ys.max()+1,xs.min():xs.max()+1].astype(np.float32); a=255.0-a
+    img=Image.fromarray(a.astype(np.uint8)).resize((M,M),Image.BILINEAR)
+    b=np.array(img).astype(np.float32)
+    b=np.array(Image.fromarray(b.astype(np.uint8)).filter(ImageFilter.GaussianBlur(1.0))).astype(np.float32)
+    b=b-b.mean(); return b/np.sqrt((b*b).sum()+1e-9)
+fonts=['/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf','/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf',
+ '/tmp/opencode/dejavu/usr/share/fonts/truetype/dejavu/DejaVuSansCondensed.ttf',
+ '/usr/share/fonts/truetype/lato/Lato-Regular.ttf','/usr/share/fonts/truetype/lato/Lato-Medium.ttf','/usr/share/fonts/truetype/lato/Lato-Bold.ttf','/usr/share/fonts/truetype/lato/Lato-Black.ttf',
+ '/usr/share/fonts/truetype/noto/NotoSansMono-Regular.ttf','/usr/share/fonts/truetype/noto/NotoSansMono-Bold.ttf',
+ '/usr/share/fonts/opentype/urw-base35/NimbusSans-Regular.otf','/usr/share/fonts/opentype/urw-base35/NimbusSans-Bold.otf',
+ '/usr/share/fonts/opentype/urw-base35/URWGothic-Book.otf','/usr/share/fonts/opentype/urw-base35/URWGothic-Demi.otf']
+fonts=[f for f in fonts if os.path.exists(f)]
+pred='c471708719f2b45a1b237de731192c430c2a9a6dead51f1795'
+for i in [1,2,3,4,11,17,28,37]:
+    ch=pred[i-1]; G=crop_gray(f'pngs/{i:02d}.png')
+    best=[]
+    for fp in fonts:
+        for size in range(38,56):
+            ft=ImageFont.truetype(fp,size)
+            img=Image.new('L',(200,200),255); ImageDraw.Draw(img).text((30,30),ch,font=ft,fill=0)
+            a=np.array(img); ys,xs=np.where(a<128)
+            if len(ys)==0: continue
+            P=crop_gray(a[ys.min():ys.max()+1,xs.min():xs.max()+1])
+            best.append((float((G*P).sum()),os.path.basename(fp),size))
+    best.sort(reverse=True)
+    print(i,ch,best[:3])
+EOF
+1 c [(0.9683745503425598, 'DejaVuSans.ttf', 55), (0.9675288796424866, 'DejaVuSans.ttf', 53), (0.9646338224411011, 'DejaVuSans.ttf', 52)]
+2 4 [(0.9595250487327576, 'DejaVuSansCondensed.ttf', 47), (0.9585433006286621, 'DejaVuSans.ttf', 39), (0.9548434615135193, 'NotoSansMono-Regular.ttf', 52)]
+3 7 [(0.9896263480186462, 'DejaVuSans.ttf', 43), (0.9882796406745911, 'DejaVuSansCondensed.ttf', 50), (0.9872385263442993, 'DejaVuSans.ttf', 45)]
+4 1 [(0.9732236862182617, 'DejaVuSans.ttf', 41), (0.966079831123352, 'DejaVuSans.ttf', 50), (0.965675950050354, 'DejaVuSans.ttf', 45)]
+11 f [(0.9946950078010559, 'DejaVuSans.ttf', 55), (0.991938054561615, 'DejaVuSansCondensed.ttf', 49), (0.9915784597396851, 'DejaVuSansCondensed.ttf', 55)]
+17 1 [(0.9642760157585144, 'DejaVuSans.ttf', 41), (0.9595044851303101, 'DejaVuSans.ttf', 45), (0.9569750428199768, 'DejaVuSansCondensed.ttf', 54)]
+28 9 [(0.9650882482528687, 'DejaVuSans.ttf', 54), (0.9636869430541992, 'DejaVuSans.ttf', 39), (0.9606406688690186, 'DejaVuSans.ttf', 51)]
+37 9 [(0.9730258584022522, 'DejaVuSans.ttf', 53), (0.9724515676498413, 'DejaVuSans.ttf', 51), (0.963194727897644, 'DejaVuSans.ttf', 54)]
+> build · deepseek-flash
+Now I'll build the final client that solves all 50 stages, decodes each glyph as it arrives, and submits the KEY.
+[0m$ [0mcd /home/bocil/ctf/layer7/work/8 && cat > solve_key.py <<'EOF'
+import socket,base64,re,time,sys,os,io,json
+import numpy as np
+from PIL import Image
+from elfstage import get_stage_section
+exec(open('inv.py').read())
+# load classifier (builds templates ~16s)
+exec(open('class2.py').read().split("if __name__")[0])
+
+HOST,PORT='104.105.138.8',31339
+outdir='run2'; os.makedirs(outdir,exist_ok=True)
+log=open(f'{outdir}/run.log','wb')
+
+def classify(pngbytes):
+    im=np.array(Image.open(io.BytesIO(pngbytes)).convert('L'))
+    G=crop_gray(im)
+    sc={c:max(sim(G,t) for t in T[c]) for c in chars}
+    r=sorted(sc.items(),key=lambda kv:-kv[1])
+    return r
+
+s=socket.create_connection((HOST,PORT),timeout=30); s.settimeout(30)
+buf=b''
+def recv_until(tok,maxt=30):
+    global buf
+    t0=time.time()
+    while tok not in buf:
+        if time.time()-t0>maxt: return None
+        try: ch=s.recv(65536)
+        except socket.timeout: return None
+        if not ch: return None
+        buf+=ch; log.write(ch); log.flush()
+    idx=buf.index(tok)+len(tok)
+    chunk=buf[:idx]; buf=buf[idx:]
+    return chunk
+
+key=''
+info=[]
+for stage in range(1,51):
+    chunk=recv_until(b'ANSWER>',30)
+    if chunk is None:
+        print('no ANSWER at stage',stage); break
+    text=chunk.decode(errors='replace')
+    m=re.search(r'STAGE (\d+)/(\d+)',text)
+    if not m:
+        print('bad chunk',text[:200]); break
+    sn=int(m.group(1)); nb=int(re.search(r'INPUT_BYTES (\d+)',text).group(1))
+    elf=base64.b64decode(re.search(r'ELF_BASE64 ([A-Za-z0-9+/=]+)',text).group(1))
+    st=get_stage_section(elf); N,B,W,R,K1,K2,target=parse_stage(st)
+    assert N==nb
+    t0=time.time(); inp=reverse(N,B,W,R,K1,K2,target); dt=time.time()-t0
+    open(f'{outdir}/{sn:02d}.png','wb').write(inp)
+    top=classify(inp)
+    key+=top[0][0]
+    info.append({'stage':sn,'pred':top[0][0],'score':top[0][1],'second':top[1][0],'second_score':top[1][1]})
+    print('stage %2d %s %.3f (2nd %s %.3f) solve %.2fs  key=%s'%(sn,top[0][0],top[0][1],top[1][0],top[1][1],dt,key),flush=True)
+    s.sendall(inp.hex().encode()+b'\n')
+
+json.dump(info,open(f'{outdir}/classify.json','w'),indent=1)
+print('KEY =',key,flush=True)
+# read until KEY prompt
+prompt=recv_until(b'KEY>',20)
+if prompt is None:
+    print('no KEY prompt; buffer:',buf[-300:]); 
+else:
+    print('PROMPT:',prompt[-200:].decode(errors='replace'))
+    t0=time.time()
+    s.sendall(key.encode()+b'\n')
+    print('sent key in %.3fs'%(time.time()-t0),flush=True)
+    rest=b''
+    t0=time.time()
+    while time.time()-t0<15:
+        try: ch=s.recv(65536)
+        except socket.timeout: break
+        if not ch: break
+        rest+=ch; log.write(ch); log.flush()
+    print('FINAL:')
+    print(rest.decode(errors='replace'))
+    open(f'{outdir}/final.txt','w').write(rest.decode(errors='replace'))
+log.close(); s.close()
+EOF
+timeout 400 python3 solve_key.py 2>&1 | tail -70
+Traceback (most recent call last):
+  File "/home/bocil/ctf/layer7/work/8/solve_key.py", line 49, in <module>
+    t0=time.time(); inp=reverse(N,B,W,R,K1,K2,target); dt=time.time()-t0
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<string>", line 87, in reverse
+  File "<string>", line 37, in solve_quad
+AssertionError
+> build · deepseek-flash
+The inverse hit an edge case. Let me reproduce and debug it.
+[0m$ [0mcd /home/bocil/ctf/layer7/work/8 && cat > fetch_debug.py <<'EOF'
+import socket,base64,re,traceback
+from elfstage import get_stage_section
+src=open('inv.py').read()
+exec(src)
+s=socket.create_connection(('104.105.138.8',31339),timeout=20); s.settimeout(20)
+buf=b''
+while b'ANSWER>' not in buf:
+    c=s.recv(65536)
+    if not c: break
+    buf+=c
+txt=buf.decode(errors='replace')
+elf=base64.b64decode(re.search(r'ELF_BASE64 ([A-Za-z0-9+/=]+)',txt).group(1))
+st=get_stage_section(elf); N,B,W,R,K1,K2,target=parse_stage(st)
+print('N,B,W,R',N,B,W,R)
+open('fail_stage.bin','wb').write(elf)
+# instrumented reverse
+NB=(N-4)//16
+sch,KK=build_schedule(NB,R,K1,K2)
+import struct
+V=list(struct.unpack('<%dI'%(N//4),target)); D=V[1:]; r=(V[0]^K2[3])&M
+def dbg_solve(a2,a1,a0,tag):
+    assert a1&1
+    x=a0&1
+    for k in range(1,32):
+        if (a2*x*x+a1*x+a0)&((1<<(k+1))-1):
+            x+=(1<<k)
+    if ((a2*x*x+a1*x+a0)&M)!=0:
+        print('FAIL',tag,'a2',hex(a2),'a1',hex(a1),'a0',hex(a0),'x',hex(x),'res',hex((a2*x*x+a1*x+a0)&M))
+        raise SystemExit
+    return x
+try:
+    for i in range(R-1,-1,-1):
+        A=(KK[i&7]|1)&M; Bcoef=(rol((KK[(i+3)&7]^r)&M,7)|1)&M
+        print('round',i,'r',hex(r),'A',hex(A),'Bcoef',hex(Bcoef))
+        D=second_pass_inv(D,A,Bcoef,NB)
+        Wi=(W+0x11*i)&M
+        for t_ in range(NB-1,-1,-1):
+            s=i*NB+t_
+            st_t,st_e,st_p,st_q=sch[s]; cc=t_+1
+            v=(cc-1) if (i&1)==0 else (NB-cc)
+            idxB=(v*B+Wi)%NB
+            idxA=(((KK[i&7]%(NB-1))+1)+idxB)%NB
+            Q=D[4*idxA:4*idxA+4]
+            tmp=((rol(Q[st_t>>30]^st_e, st_p>>27)+Q[st_q>>30])&M)%(NB-1)
+            idxC=tmp+(1 if tmp>=idxB else 0)
+            C=D[4*idxC:4*idxC+4]; W0,W1,W2,W3=D[4*idxB:4*idxB+4]
+            C0,C1,C2,C3=C
+            Kc=(r^((C2+W1)&M))&M; T=ror(Kc,9); m=((st_p^W0)|1)&M
+            rr=dbg_solve((2*m)&M,(1+2*((C2+st_q)&M))&M,((W0^W3)-T)&M,'Q1 r%d s%d'%(i,s))
+            s_=(rol((C0+rr)&M,5)^st_t)&M; E1=((C1^rr)+st_e)&M
+            d=(rol((C2+s_)&M,13)^st_p)&M; Aq=((C3^E1)+st_q)&M
+            r9b=(W2^ror((Aq+W0)&M,15))&M; r13=(W3-(s_^W1))&M
+            r8=(W0^rol((E1+r9b)&M,7))&M; u=(Aq^r8)&M
+            P=ror((r13^r9b)&M,11); B3=(P-u)&M
+            rb=W0>>27; V1=(ror(W1,rb)-(d^r13))&M; c0r=rol((B3^V1)&M,13); U=(r9b-c0r)&M
+            B2=dbg_solve((2*(d|1))&M,(1+2*((s_^B3)&M))&M,(-U)&M,'Q2 r%d s%d'%(i,s))
+            r9=rol((((E1+B2)&M)^r8),B3>>27); B1=(V1^r9)&M
+            B0=(r8-rol((((B1^s_)+B3)&M),B2>>27))&M
+            D[4*idxB:4*idxB+4]=[B0,B1,B2,B3]; r=rr
+    print('OK')
+except SystemExit:
+    pass
+s.close()
+EOF
+timeout 60 python3 fetch_debug.py 2>&1 | tail -20
+N,B,W,R 4228 71 121 8
+round 7 r 0x9f79d32f A 0x4ae5a705 Bcoef 0xcb5f5a45
+round 6 r 0x55224e6d A 0xdbef9059 Bcoef 0x5be2983
+round 5 r 0x4518e16 A 0x4ba76ff1 Bcoef 0xe24428d7
+round 4 r 0xf0bab5aa A 0xb65de627 Bcoef 0x2f89575d
+round 3 r 0x33f6487b A 0x346c9061 Bcoef 0xcec11f5
+round 2 r 0xa14a1ef8 A 0x14ef6d9b Bcoef 0x76b88475
+round 1 r 0x79300915 A 0x5329323f Bcoef 0xb6f799e7
+round 0 r 0x4f4cb357 A 0xab950647 Bcoef 0x90119b3d
+OK
+Traceback (most recent call last):
+  File "/home/bocil/ctf/layer7/work/8/fetch_debug.py", line 63, in <module>
+    s.close()
+    ^^^^^^^
+AttributeError: 'int' object has no attribute 'close'
+> build · deepseek-flash
+[0m$ [0mcd /home/bocil/ctf/layer7/work/8 && cat > find_fail.py <<'EOF'
+import socket,base64,re,struct,sys
+from elfstage import get_stage_section
+exec(open('inv.py').read())
+
+def fetch():
+    s=socket.create_connection(('104.105.138.8',31339),timeout=20); s.settimeout(20)
+    buf=b''
+    while b'ANSWER>' not in buf:
+        c=s.recv(65536)
+        if not c: break
+        buf+=c
+    txt=buf.decode(errors='replace')
+    elf=base64.b64decode(re.search(r'ELF_BASE64 ([A-Za-z0-9+/=]+)',txt).group(1))
+    s.close()
+    return elf
+
+def try_reverse(elf):
+    st=get_stage_section(elf); N,B,W,R,K1,K2,target=parse_stage(st)
+    NB=(N-4)//16; sch,KK=build_schedule(NB,R,K1,K2)
+    V=list(struct.unpack('<%dI'%(N//4),target)); D=V[1:]; r=(V[0]^K2[3])&M
+    fail=None
+    def q(a2,a1,a0,tag):
+        assert a1&1
+        x=a0&1
+        for k in range(1,32):
+            if (a2*x*x+a1*x+a0)&((1<<(k+1))-1): x+=(1<<k)
+        if ((a2*x*x+a1*x+a0)&M)!=0:
+            raise ValueError((tag,a2,a1,a0,x,(a2*x*x+a1*x+a0)&M))
+        return x
+    for i in range(R-1,-1,-1):
+        A=(KK[i&7]|1)&M; Bcoef=(rol((KK[(i+3)&7]^r)&M,7)|1)&M
+        D=second_pass_inv(D,A,Bcoef,NB)
+        Wi=(W+0x11*i)&M
+        for t_ in range(NB-1,-1,-1):
+            s=i*NB+t_
+            st_t,st_e,st_p,st_q=sch[s]; cc=t_+1
+            v=(cc-1) if (i&1)==0 else (NB-cc)
+            idxB=(v*B+Wi)%NB
+            idxA=(((KK[i&7]%(NB-1))+1)+idxB)%NB
+            Q=D[4*idxA:4*idxA+4]
+            tmp=((rol(Q[st_t>>30]^st_e, st_p>>27)+Q[st_q>>30])&M)%(NB-1)
+            idxC=tmp+(1 if tmp>=idxB else 0)
+            C=D[4*idxC:4*idxC+4]; W0,W1,W2,W3=D[4*idxB:4*idxB+4]
+            C0,C1,C2,C3=C
+            Kc=(r^((C2+W1)&M))&M; T=ror(Kc,9); m=((st_p^W0)|1)&M
+            try:
+                rr=q((2*m)&M,(1+2*((C2+st_q)&M))&M,((W0^W3)-T)&M,'Q1')
+            except ValueError as e:
+                return (N,B,W,R,i,s,idxB,idxC,r,C,W0,W1,W2,W3,e,'Q1')
+            s_=(rol((C0+rr)&M,5)^st_t)&M; E1=((C1^rr)+st_e)&M
+            d=(rol((C2+s_)&M,13)^st_p)&M; Aq=((C3^E1)+st_q)&M
+            r9b=(W2^ror((Aq+W0)&M,15))&M; r13=(W3-(s_^W1))&M
+            r8=(W0^rol((E1+r9b)&M,7))&M; u=(Aq^r8)&M
+            P=ror((r13^r9b)&M,11); B3=(P-u)&M
+            rb=W0>>27; V1=(ror(W1,rb)-(d^r13))&M; c0r=rol((B3^V1)&M,13); U=(r9b-c0r)&M
+            try:
+                B2=q((2*(d|1))&M,(1+2*((s_^B3)&M))&M,(-U)&M,'Q2')
+            except ValueError as e:
+                return (N,B,W,R,i,s,idxB,idxC,rr,C,W0,W1,W2,W3,e,'Q2')
+            r9=rol((((E1+B2)&M)^r8),B3>>27); B1=(V1^r9)&M
+            B0=(r8-rol((((B1^s_)+B3)&M),B2>>27))&M
+            D[4*idxB:4*idxB+4]=[B0,B1,B2,B3]; r=rr
+    return None
+
+for attempt in range(40):
+    elf=fetch()
+    res=try_reverse(elf)
+    if res:
+        print('FAIL at attempt',attempt,'N,B,W,R,i,s,idxB,idxC',res[:8])
+        print('r',hex(res[8]),'C',[hex(x) for x in res[9]],'W',[hex(x) for x in res[10:14]])
+        print('err',res[14],res[15])
+        open('fail_stage.bin','wb').write(elf)
+        break
+    else:
+        print('attempt',attempt,'ok',flush=True)
+else:
+    print('no failure found')
+EOF
+timeout 115 python3 find_fail.py 2>&1 | tail -20
+attempt 21 ok
+attempt 22 ok
+attempt 23 ok
+attempt 24 ok
+attempt 25 ok
+attempt 26 ok
+attempt 27 ok
+attempt 28 ok
+attempt 29 ok
+attempt 30 ok
+attempt 31 ok
+attempt 32 ok
+attempt 33 ok
+attempt 34 ok
+attempt 35 ok
+attempt 36 ok
+attempt 37 ok
+attempt 38 ok
+attempt 39 ok
+no failure found
+> build · deepseek-flash
+Found the bug: importing the classifier overwrote the 32-bit mask constant. Let me fix and rerun.
+[0m$ [0mcd /home/bocil/ctf/layer7/work/8 && python3 - <<'EOF'
+s=open('solve_key.py').read()
+s=s.replace("# load classifier (builds templates ~16s)\nexec(open('class2.py').read().split(\"if __name__\")[0])",
+            "# load classifier as module (avoid clobbering M)\nimport class2")
+s=s.replace("    G=crop_gray(im)\n    sc={c:max(sim(G,t) for t in T[c]) for c in chars}",
+            "    G=class2.crop_gray(im)\n    sc={c:max(class2.sim(G,t) for t in class2.T[c]) for c in class2.chars}")
+open('solve_key.py','w').write(s)
+EOF
+grep -n "import class2\|class2\." solve_key.py | head; timeout 400 python3 solve_key.py 2>&1 | tail -70
+Command moved to the background (shell ID: sh_1fc073b52001BRC6CaZfwXNGvX).
+PID: 102504
+Output is streaming to: /home/bocil/.local/share/opencode/shell/01a126b68893d058c6758eaf6b0babc286ef55ca/sh_1fc073b52001BRC6CaZfwXNGvX.out
+
+The command did not finish within its timeout of 120 seconds and was moved to the background. Do not start another copy while it is running.
+> build · deepseek-flash
+[0m$ [0mcd /home/bocil/ctf/layer7 && ls solves/ && sed -n '1,40p' solves/*.md 2>/dev/null | head -60
+11.md
+14.md
+20.md
+21.md
+7.md
+---
+id: 11
+title: Forgotten
+category: web
+points: 980
+solved_at: 2026-11-21T09:50:06+07:00
+flag: Layer7{WowieZombie}
+status: verified
+---
+
+## TL;DR
+
+`Forgotten` is a Rust/axum file-sharing service. Reporting a file makes the
+service generate a review-only **evidence slip** whose `reviewer-token` field is
+actually the challenge flag, then it "destroys" the slip by expiring it.
+
+Two mistakes keep the data alive:
+
+1. Album downloads larger than 8 KiB run a snapshot-maintenance pass that
+   writes `maintenance.json` into the ZIP, listing every retired alias,
+   including the evidence slip alias.
+2. The CDN/nginx in front of the app cached the review fetch of
+   `/f/<evidence_alias>`. After restoring that alias with the upload `claim`
+   field, the stale cached evidence slip is served again — flag included.
+
+## Recon
+
+```bash
+python3 l7.py chall 11
+python3 l7.py file 11
+```
+
+The challenge provides a Linux x86-64 Rust binary (`for_user/forgotten`) and
+the service runs at `http://172.237.8.236:8080`.
+
+```text
+$ file forgotten
+ELF 64-bit LSB pie executable, x86-64, dynamically linked, not stripped
+
+$ strings -a forgotten | grep -E '/api/|/album|/f/|reviewer-token|Layer7'
+> build · deepseek-flash
+[0m$ [0mcd /home/bocil/ctf/layer7 && grep -n "def submit\|attempts\|def cmd_submit\|submit" l7.py | head -20; cat state/attempts.json 2>/dev/null | head -20
+11:    ./l7.py submit <id> <flag>
+235:def cmd_submit(c: Client, cid: str, flag: str) -> None:
+236:    r = c.post(f"/api/challenges/{cid}/submit", json={"flag": flag})
+242:        "submitted_at": _dt.datetime.now(_dt.timezone.utc).isoformat(),
+248:    (d / "submit.json").write_text(json.dumps(evidence, ensure_ascii=False, indent=2))
+277:        elif cmd == "submit":
+278:            cmd_submit(c, args[0], args[1])
+{
+  "1": {
+    "n": 2,
+    "next": 1795223933.21077
+  },
+  "3": {
+    "n": 0,
+    "next": 1795224901.2348294
+  },
+  "4": {
+    "n": 0,
+    "next": 1795224915.6839726
+  },
+  "9": {
+    "n": 1,
+    "next": 1795224905.097463
+  },
+  "15": {
+    "n": 0,
+    "next": 1795225154.2561293
+> build · deepseek-flash
+[0m$ [0mtail -25 /home/bocil/.local/share/opencode/shell/01a126b68893d058c6758eaf6b0babc286ef55ca/sh_1fc073b52001BRC6CaZfwXNGvX.out 2>/dev/null
+7:import class2
+15:    G=class2.crop_gray(im)
+16:    sc={c:max(class2.sim(G,t) for t in class2.T[c]) for c in class2.chars}
+> build · deepseek-flash
+I'll wait for the full run to complete.
+shutdown did not finish within 10s; exiting. Still pending:
+  1809.9s  child 82336 running: /home/bocil/.opencode/bin/opencode serve --stdio --port 0

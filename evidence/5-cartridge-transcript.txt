@@ -1,0 +1,415 @@
+captured_at=2026-11-21T02:55:07.657970+00:00 rc=143 tag=5-cartridge
+rite(a.build())
+PY
+./emu --flag ./flag --seed 1 findsel.rom | xxd
+(no output)
+> build · deepseek-flash
+[0m$ [0mcd /home/bocil/ctf/layer7/work/5 && python3 - <<'PY'
+from asm import Asm
+a=Asm(); a.op('ldi',0,0x1234); a.op('out',0,0xfe30); a.op('in',1,0xfe30); a.op('out',1,0xfe00); a.op('mov',2,1)
+for _ in range(8): a.op('shr',2)
+a.op('out',2,0xfe00); a.op('halt'); open('porttest.rom','wb').write(a.build())
+PY
+./emu --flag ./flag --seed 1 porttest.rom | xxd
+00000000: 3412                                     4.
+> build · deepseek-flash
+[0m$ [0mcd /home/bocil/ctf/layer7/work/5 && gdb -q -batch \
+ -ex 'set pagination off' -ex 'starti' -ex 'set $base=$pc-0x1969' \
+ -ex 'b *($base+0x2d20)' -ex 'c' \
+ -ex 'x/4hx $rdi+0x48' -ex 'p/x *(unsigned long*)($rdi+0x20)' \
+ -ex 'set $e=*(unsigned long*)($rdi+0x20)' -ex 'x/12gx $e' \
+ -ex 'p/x *(unsigned int*)($rdi+0x4a)' -ex 'p/x *(unsigned int*)($e+0x3c)' \
+ --args ./emu --flag ./flag --seed 1 findsel.rom 2>&1 | tail -40
+This GDB supports auto-downloading debuginfo from the following URLs:
+  <https://debuginfod.ubuntu.com>
+Enable debuginfod for this session? (y or [n]) [answered N; input not from terminal]
+Debuginfod has been disabled.
+To make this setting permanent, add 'set debuginfod enabled off' to .gdbinit.
+
+Program stopped.
+0x00007ffff7fef969 in ?? ()
+Breakpoint 1 at 0x7ffff7ff0d20
+
+Breakpoint 1, 0x00007ffff7ff0d20 in ?? ()
+0x7fffffffe0e8:	0x0000	0x99f5	0x0000	0x0000
+$1 = 0x7ffff7fc59e0
+0x7ffff7fc59e0:	0x9e86240dc0d80551	0x4fe9c3833932fd88
+0x7ffff7fc59f0:	0xc4fe7c1241ba2916	0xc4fe7c121b8a2916
+0x7ffff7fc5a00:	0x00007ffff7fdc030	0x00007ffff7fcb040
+0x7ffff7fc5a10:	0x4fe9c38300000004	0x2d6b10793932fd88
+0x7ffff7fc5a20:	0x0000000000000000	0x0000000000000000
+0x7ffff7fc5a30:	0xd7eaf963d6990ba5	0xdb6562ab8e250c18
+$2 = 0x99f5
+$3 = 0x2d6b1079
+> build · deepseek-flash
+[0m$ [0mcd /home/bocil/ctf/layer7/work/5 && python3 - <<'PY'
+from asm import Asm
+vals=[0x145899f5,0xd3de0d5e,0x2d6b1079,0x81a18104,0x670bda5a,0x2a67180e,0x6e504f78,0xe4617370,0xecc1f554]
+a=Asm()
+for i,v in enumerate(vals):
+    a.op('ldi',0,v&0xffff); a.op('out',0,0xfe30)
+    a.op('ldi',0,(v>>16)&0xffff); a.op('out',0,0xfe32)
+    a.op('ldi',0,0xa19e); a.op('out',0,0xfe26)
+    a.op('in',1,0xfe28)
+    a.op('cmpi',1,0)
+    a.op('jnz', f'skip{i}')
+    a.op('ldi',2,0x41+i); a.op('out',2,0xfe00)
+    a.label(f'skip{i}')
+a.op('halt')
+open('findsel.rom','wb').write(a.build())
+PY
+./emu --flag ./flag --seed 1 findsel.rom | xxd
+00000000: 43                                       C
+> build · deepseek-flash
+[0m← [0mWrite work/5/remote_client.py
+Created file successfully: work/5/remote_client.py
+> build · deepseek-flash
+[0m$ [0mcd /home/bocil/ctf/layer7/work/5 && python3 remote_client.py recon_low.rom 104.105.149.249 29651 remote_low1.bin 2>remote1.log; echo "exit=$?"; cat remote1.log; ls -l remote_low1.bin 2>/dev/null; sha256sum remote_low1.bin 2>/dev/null
+exit=1
+Traceback (most recent call last):
+  File "/home/bocil/ctf/layer7/work/5/remote_client.py", line 10, in <module>
+    rom = open(rom_path, 'rb').read()
+          ^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'recon_low.rom'
+> build · deepseek-flash
+[0m$ [0mcd /home/bocil/ctf/layer7/work/5 && ls -l recon* dump* | head; python3 recon.py 0x8000 0x8000 recon_low.rom && python3 recon.py 0 0x100 recon_high.rom && python3 remote_client.py recon_low.rom 104.105.149.249 29651 remote_low1.bin 2>remote1.log; echo "exit=$?"; cat remote1.log; ls -l remote_low1.bin; sha256sum remote_low1.bin
+-rw-rw-r-- 1 bocil bocil   256 Nov 21 09:47 dump_high.bin
+-rw-rw-r-- 1 bocil bocil 32768 Nov 21 09:47 dump_low.bin
+-rw-rw-r-- 1 bocil bocil 33024 Nov 21 09:47 dump_seed1.bin
+-rw-rw-r-- 1 bocil bocil  1207 Nov 21 09:46 recon.py
+-rw-rw-r-- 1 bocil bocil    74 Nov 21 09:47 recon.rom
+-rw-rw-r-- 1 bocil bocil    74 Nov 21 09:47 recon_high.bin
+-rw-rw-r-- 1 bocil bocil    74 Nov 21 09:47 recon_low.bin
+-rw-rw-r-- 1 bocil bocil 33024 Nov 21 09:47 recon_seed1.bin
+wrote recon_low.rom
+wrote recon_high.rom
+exit=0
+BANNER: CARTRIDGE SLOT READY
+SEND 4-BYTE BIG-ENDIAN LENGTH THEN ROM
+
+received 32768 bytes
+-rw-rw-r-- 1 bocil bocil 32768 Nov 21 09:47 remote_low1.bin
+a1cff599e0036282ed4e48ae0c0c3876cc40e30eb0e9ba554b4b482d3fe8436e  remote_low1.bin
+> build · deepseek-flash
+[0m$ [0mcd /home/bocil/ctf/layer7/work/5 && python3 - <<'PY'
+import struct
+b=open('remote_low1.bin','rb').read()
+def u32(o): return struct.unpack_from('<I',b,o)[0]
+def u64(o): return struct.unpack_from('<Q',b,o)[0]
+cands=[]
+for o in range(0,len(b)-0x60,8):
+    if u32(o+0x30)!=4: continue
+    e00=u32(o); e04=u32(o+4); e08=u64(o+8); e34=u32(o+0x34); e38=u32(o+0x38); e3c=u32(o+0x3c)
+    if e00!=(e34^0x8f31c6d2): continue
+    if e04!=(e38^0xa7b4d985): continue
+    if e08 != ((e34<<32)|e38): continue
+    cands.append(o)
+print('candidates', [hex(o) for o in cands], len(cands))
+for o in cands:
+    print(hex(o), 'e34',hex(u32(o+0x34)),'e38',hex(u32(o+0x38)),'e3c',hex(u32(o+0x3c)),'e50',hex(u64(o+0x50)),'p20',hex(u64(o+0x20)),'p28',hex(u64(o+0x28)),'e10',hex(u64(o+0x10)),'e18',hex(u64(o+0x18)))
+PY
+candidates ['0x2490', '0x29e0', '0x2c68', '0x3678', '0x3fd8', '0x4a50', '0x51a8', '0x5fc0', '0x7268'] 9
+0x2490 e34 0x6e5a07bb e38 0x33548e73 e3c 0x35f8ef8e e50 0xc6ff81f28e1000a0 p20 0x77a544944030 p28 0x77a544933040 e10 0x7b97b17c6a6fb503 e18 0x7b97b17c305fb503
+0x29e0 e34 0x5d4dea2d e38 0x7c16657a e3c 0x9cb4369d e50 0xf87a72859168ae54 p20 0x77a544944030 p28 0x77a544933040 e10 0x7dfcb17c163acfc9 e18 0x7dfcb17c4c0acfc9
+0x2c68 e34 0xb5a220f3 e38 0x4bc8227f e3c 0xe6d66cb7 e50 0x9f1ea97d11e0d4ec p20 0x77a544944030 p28 0x77a544933040 e10 0xe0d3b17cc90b9d22 e18 0xe0d3b17c933b9d22
+0x3678 e34 0x29508771 e38 0x5f5d7b3a e3c 0x928440b4 e50 0xc51c2c3990eacefc p20 0x77a544944030 p28 0x77a544933040 e10 0x918b17c416ceb83 e18 0x918b17c1b5ceb83
+0x3fd8 e34 0x6dc279be e38 0xf10b5403 e3c 0xa835eefa e50 0x8a173d744d0e7725 p20 0x77a544944030 p28 0x77a544933040 e10 0xdfa2b17caba8d0be e18 0xdfa2b17cf198d0be
+0x4a50 e34 0xe806694 e38 0xf9d45484 e3c 0xcf50b36d e50 0x359c9be5d7bf93b4 p20 0x77a544944030 p28 0x77a544933040 e10 0x333fb17cc035a481 e18 0x333fb17c9a05a481
+0x51a8 e34 0x3acdb3f9 e38 0x8d04adf4 e3c 0x6ac03a90 e50 0x92cd0d5c9f45b0ae p20 0x77a544944030 p28 0x77a544933040 e10 0xef52b17c80a8c80e e18 0xef52b17cda98c80e
+0x5fc0 e34 0x71d0b694 e38 0x1ea44d44 e3c 0x1f697931 e50 0xb27cc26d13453165 p20 0x77a544944030 p28 0x77a544933040 e10 0x97fb17c5815f561 e18 0x97fb17c0225f561
+0x7268 e34 0xb979dab1 e38 0x40ee21ca e3c 0x5e28fc80 e50 0xd78787312e0d0011 p20 0x77a544944030 p28 0x77a544933040 e10 0x9e8b17ccef66329 e18 0x9e8b17c94c66329
+> build · deepseek-flash
+[0m$ [0mcd /home/bocil/ctf/layer7/work/5 && sleep 2 && python3 remote_client.py recon_low.rom 104.105.149.249 29651 remote_low2.bin 2>remote2.log; cat remote2.log; python3 - <<'PY'
+import struct,hashlib
+b1=open('remote_low1.bin','rb').read(); b2=open('remote_low2.bin','rb').read()
+print('same?', b1==b2)
+def ents(b):
+    def u32(o): return struct.unpack_from('<I',b,o)[0]
+    def u64(o): return struct.unpack_from('<Q',b,o)[0]
+    out=[]
+    for o in range(0,len(b)-0x60,8):
+        if u32(o+0x30)!=4: continue
+        e34=u32(o+0x34); e38=u32(o+0x38)
+        if u32(o)!=(e34^0x8f31c6d2): continue
+        if u32(o+4)!=(e38^0xa7b4d985): continue
+        if u64(o+8)!=((e34<<32)|e38): continue
+        out.append((o,hex(u32(o+0x3c)),hex(u64(o+0x50)),hex(u64(o+0x20))))
+    return out
+for x in ents(b1): print('1',x)
+print('---')
+for x in ents(b2): print('2',x)
+PY
+BANNER: CARTRIDGE SLOT READY
+SEND 4-BYTE BIG-ENDIAN LENGTH THEN ROM
+
+received 32768 bytes
+same? False
+1 (9360, '0x35f8ef8e', '0xc6ff81f28e1000a0', '0x77a544944030')
+1 (10720, '0x9cb4369d', '0xf87a72859168ae54', '0x77a544944030')
+1 (11368, '0xe6d66cb7', '0x9f1ea97d11e0d4ec', '0x77a544944030')
+1 (13944, '0x928440b4', '0xc51c2c3990eacefc', '0x77a544944030')
+1 (16344, '0xa835eefa', '0x8a173d744d0e7725', '0x77a544944030')
+1 (19024, '0xcf50b36d', '0x359c9be5d7bf93b4', '0x77a544944030')
+1 (20904, '0x6ac03a90', '0x92cd0d5c9f45b0ae', '0x77a544944030')
+1 (24512, '0x1f697931', '0xb27cc26d13453165', '0x77a544944030')
+1 (29288, '0x5e28fc80', '0xd78787312e0d0011', '0x77a544944030')
+---
+2 (13008, '0x840163ff', '0x255713130cc5f787', '0x77a544944030')
+2 (15360, '0xb1d7db2a', '0x7ff3b13bcccf23c8', '0x77a544944030')
+2 (18704, '0xab4694d0', '0x4e64ca93eb3f0cd4', '0x77a544944030')
+2 (19736, '0xd844148e', '0xeda18e1598dc5ecd', '0x77a544944030')
+2 (19848, '0xa457c5d', '0xee43831eb6e5f575', '0x77a544944030')
+2 (22296, '0x787fc6c4', '0x8e6971319ad2ab3a', '0x77a544944030')
+2 (23520, '0x23ee0266', '0xaec0b5c456481dca', '0x77a544944030')
+2 (26680, '0xf8b8f1fd', '0xcf1d9b85da86146c', '0x77a544944030')
+2 (27552, '0x51d1f3cf', '0xdacc5f7bc850b096', '0x77a544944030')
+> build · deepseek-flash
+[0m$ [0mcd /home/bocil/ctf/layer7/work/5 && python3 - <<'PY'
+# determine loop counts/keys
+def seq(start, step, end, mod=0x10000):
+    k=start; n=0
+    while True:
+        n+=1
+        if k==end: return n,k
+        k=(k+step)%mod
+print('2050', seq(0x5c31,0x7f4a,0xd45f))
+print('stage2', seq(0xffffa517,0x9e37,0x7174))
+# check hash 0x2050 linearity in rec+0x18
+import struct, random
+def h2050(edi, rec):
+    q=struct.unpack_from('<Q',rec,4)[0]
+    eax=((q>>32)^edi^struct.unpack_from('<I',rec,0)[0]^struct.unpack_from('<I',rec,0x14)[0]^(q&0xffffffff)^0x494f4d4d)&0xffffffff
+    key=0x5c31
+    for i in range(0,0x1c,2):
+        w=struct.unpack_from('<H',rec,i)[0]
+        eax=((eax<<16)|(eax>>16))&0xffffffff
+        eax=(eax+(w^key))&0xffffffff
+        if key==0xd45f: break
+        key=(key+0x7f4a)&0xffff
+    return eax
+# test linear: h(edi, rec with x) - h(edi, rec with 0) mod 2^32
+rec=bytearray(random.randbytes(0x1c))
+edi=0x12345678
+base=bytearray(rec); struct.pack_into('<I',base,0x18,0)
+h0=h2050(edi,base)
+for x in [1,2,3,0x1234,0xffff,0x10000,0xdeadbeef,0xffffffff]:
+    r=bytearray(rec); struct.pack_into('<I',r,0x18,x)
+    d=(h2050(edi,r)-h0)&0xffffffff
+    print(hex(x),'delta',hex(d))
+# see if delta = rol16(x) or similar
+PY
+2050 (12, 54367)
+stage2 (12, 29044)
+0x1 delta 0x0
+0x2 delta 0x0
+0x3 delta 0x0
+0x1234 delta 0x0
+0xffff delta 0x0
+0x10000 delta 0x0
+0xdeadbeef delta 0x0
+0xffffffff delta 0x0
+> build · deepseek-flash
+[0m$ [0mcd /home/bocil/ctf/layer7/work/5 && gdb -q -batch \
+ -ex 'set pagination off' -ex 'set disable-randomization on' -ex 'starti' -ex 'set $base=$pc-0x1969' -ex 'b *($base+0x34e0)' -ex 'c' \
+ -ex 'set $e=*(unsigned long*)($rdi+0x20)' -ex 'p/x $e' -ex 'x/44bx $e' \
+ -ex 'p/x *(unsigned long*)($rdi+0)' -ex 'p/x *(unsigned long*)($rdi+8)' -ex 'p/x *(unsigned long*)($rdi+0x10)' -ex 'p/x *(unsigned long*)($rdi+0x18)' \
+ --args ./emu --flag ./flag --seed 1 test_hello.rom 2>&1 | tail -30
+This GDB supports auto-downloading debuginfo from the following URLs:
+  <https://debuginfod.ubuntu.com>
+Enable debuginfod for this session? (y or [n]) [answered N; input not from terminal]
+Debuginfod has been disabled.
+To make this setting permanent, add 'set debuginfod enabled off' to .gdbinit.
+
+Program stopped.
+0x00007ffff7fef969 in ?? ()
+Breakpoint 1 at 0x7ffff7ff14e0
+
+Breakpoint 1, 0x00007ffff7ff14e0 in ?? ()
+$1 = 0x7ffff7fc59e0
+0x7ffff7fc59e0:	0x51	0x05	0xd8	0xc0	0x0d	0x24	0x86	0x9e
+0x7ffff7fc59e8:	0x88	0xfd	0x32	0x39	0x83	0xc3	0xe9	0x4f
+0x7ffff7fc59f0:	0x16	0x29	0xba	0x41	0x12	0x7c	0xfe	0xc4
+0x7ffff7fc59f8:	0x16	0x29	0x8a	0x1b	0x12	0x7c	0xfe	0xc4
+0x7ffff7fc5a00:	0x30	0xc0	0xfd	0xf7	0xff	0x7f	0x00	0x00
+0x7ffff7fc5a08:	0x40	0xb0	0xfc	0xf7
+$2 = 0x7ffff7fdc030
+$3 = 0x7ffff7fcb040
+$4 = 0x7ffff7fc2050
+$5 = 0x7ffff7fca050
+> build · deepseek-flash
+[0m$ [0mcd /home/bocil/ctf/layer7/work/5 && gdb -q -batch -ex 'set pagination off' -ex 'set disable-randomization on' -ex 'starti' -ex 'set $base=$pc-0x1969' -ex 'b *($base+0x34e0)' -ex 'c' -ex 'set $e=*(unsigned long*)($rdi+0x20)' -ex 'x/12gx $e' --args ./emu --flag ./flag --seed 1 test_hello.rom 2>&1 | tail -15
+Enable debuginfod for this session? (y or [n]) [answered N; input not from terminal]
+Debuginfod has been disabled.
+To make this setting permanent, add 'set debuginfod enabled off' to .gdbinit.
+
+Program stopped.
+0x00007ffff7fef969 in ?? ()
+Breakpoint 1 at 0x7ffff7ff14e0
+
+Breakpoint 1, 0x00007ffff7ff14e0 in ?? ()
+0x7ffff7fc59e0:	0x9e86240dc0d80551	0x4fe9c3833932fd88
+0x7ffff7fc59f0:	0xc4fe7c1241ba2916	0xc4fe7c121b8a2916
+0x7ffff7fc5a00:	0x00007ffff7fdc030	0x00007ffff7fcb040
+0x7ffff7fc5a10:	0x4fe9c38300000004	0x2d6b10793932fd88
+0x7ffff7fc5a20:	0x0000000000000000	0x0000000000000000
+0x7ffff7fc5a30:	0xd7eaf963d6990ba5	0xdb6562ab8e250c18
+> build · deepseek-flash
+[0m$ [0mcd /home/bocil/ctf/layer7/work/5 && python3 - <<'PY'
+M=(1<<64)-1
+e8=0x4fe9c3833932fd88
+e10=0xc4fe7c1241ba2916
+e38=0x3932fd88
+e3c=0x2d6b1079
+def rol(x,n): n%=64; return ((x<<n)|(x>>(64-n)))&M
+def ror(x,n): n%=64; return ((x>>n)|(x<<(64-n)))&M
+rdi=((e38<<32)|e38) ^ e8 ^ 0xd1ceb00bcafebeef
+W=(ror(rol(rdi,32)^e10,16)-rdi)&M
+print('rdi',hex(rdi),'W',hex(W))
+print('W-0x47c0',hex((W-0x47c0)&M))
+T=(W+0x551e)&M
+print('T',hex(T))
+A=rol(rdi,32)
+new_e10=A ^ rol((T+rdi)&M,16)
+print('new_e10',hex(new_e10))
+# verify call formula with new_e10 gives T
+chk=(ror(A^new_e10,16)-rdi)&M
+print('check target',hex(chk))
+PY
+rdi 0xa7158e00cafebeef W 0x7ffff7ff27c0
+W-0x47c0 0x7ffff7fee000
+T 0x7ffff7ff7cde
+new_e10 0xc4fe7c119cd82916
+check target 0x7ffff7ff7cde
+> build · deepseek-flash
+[0m$ [0mcd /home/bocil/ctf/layer7/work/5 && python3 - <<'PY'
+import struct
+M=(1<<64)-1
+e10_old=0xc4fe7c1241ba2916
+e10_new=0xc4fe7c119cd82916
+e50=0xd7eaf963d6990ba5
+def words(x): return [(x>>(16*i))&0xffff for i in range(4)]
+wo=words(e10_old); wn=words(e10_new)
+print([hex(x) for x in wo],[hex(x) for x in wn])
+d=[(wn[i]-wo[i])&0xffff for i in range(4)]
+print('deltas',[hex(x) for x in d])
+new=e50
+new=(new + (d[0]<<48) + (d[1]<<32) + (d[2]<<16) + d[3]) & M
+print('newhash',hex(new))
+# verify with hash function
+def entry_hash(b):
+    e38=struct.unpack_from('<I',b,0x38)[0]
+    r8=(((e38>>11)&0x1e)|1); ecx=((e38^(e38>>16))&0x1f)
+    rax=0x6a09e667f3bcc909; si=0x7f4a
+    while True:
+        w=struct.unpack_from('<H',b,ecx*2)[0]
+        rax=((rax<<16)|(rax>>48))&M
+        ecx=(ecx+r8)&0x1f
+        rax=(rax+((w^si)&0xffff))&M
+        if si==0xa7f3: break
+        si=(si-0x61c9)&0xffff
+    return rax
+# original entry bytes
+qwords=[0x9e86240dc0d80551,0x4fe9c3833932fd88,e10_old,0xc4fe7c121b8a2916,0x00007ffff7fdc030,0x00007ffff7fcb040,0x4fe9c38300000004,0x2d6b10793932fd88,0,0,e50,0]
+b=bytearray(b''.join(struct.pack('<Q',q) for q in qwords))
+print('orig hash',hex(entry_hash(b)))
+struct.pack_into('<Q',b,0x10,e10_new)
+print('new hash',hex(entry_hash(b)))
+PY
+['0x2916', '0x41ba', '0x7c12', '0xc4fe'] ['0x2916', '0x9cd8', '0x7c11', '0xc4fe']
+deltas ['0x0', '0x5b1e', '0xffff', '0x0']
+newhash 0xd7eb5482d6980ba5
+orig hash 0xd7eaf963d6990ba5
+new hash 0xd7ee5441d6990ba5
+> build · deepseek-flash
+[0m← [0mWrite work/5/model.py
+Created file successfully: work/5/model.py
+> build · deepseek-flash
+[0m$ [0mcd /home/bocil/ctf/layer7/work/5 && python3 model.py
+Traceback (most recent call last):
+  File "/home/bocil/ctf/layer7/work/5/model.py", line 134, in <module>
+    ra, rb, ra2, key, H = build_records(e8, e38, e3c)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/bocil/ctf/layer7/work/5/model.py", line 83, in build_records
+    assert hash_2050(e38, ra2) == H
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError
+> build · deepseek-flash
+[0m$ [0mcd /home/bocil/ctf/layer7/work/5 && python3 - <<'PY'
+import struct
+from model import hash_2050, M32, M16
+# local entry
+qwords=[0x9e86240dc0d80551,0x4fe9c3833932fd88,0xc4fe7c1241ba2916,0xc4fe7c121b8a2916,0x00007ffff7fdc030,0x00007ffff7fcb040,0x4fe9c38300000004,0x2d6b10793932fd88,0,0,0xd7eaf963d6990ba5,0xdb6562ab8e250c18]
+entry=b''.join(struct.pack('<Q',q) for q in qwords)
+e8=struct.unpack_from('<Q',entry,8)[0]; e38=struct.unpack_from('<I',entry,0x38)[0]; e3c=struct.unpack_from('<I',entry,0x3c)[0]
+O=0x6d17; length=0x100
+sols=[]
+for C in range(O-0x100, O+1):
+    r13=O-C  # since r13=O-C
+    if r13>0x100: continue
+    for B7 in range(0,0x8000-length+1,0x100):
+        R7=B7
+        D=(B7 - O + C)&0xffff
+        for B6 in range(0,0x10000,0x100):
+            rb=bytearray(0x1c); struct.pack_into('<I',rb,0,O); struct.pack_into('<Q',rb,4,e8); struct.pack_into('<H',rb,0x0c,B6); struct.pack_into('<H',rb,0x0e,R7); struct.pack_into('<H',rb,0x10,2); struct.pack_into('<H',rb,0x12,1); struct.pack_into('<I',rb,0x14,e3c)
+            ra2=bytearray(0x1c); struct.pack_into('<I',ra2,0,r13); struct.pack_into('<Q',ra2,4,e8); struct.pack_into('<H',ra2,0x0c,C); struct.pack_into('<H',ra2,0x0e,D); struct.pack_into('<H',ra2,0x10,2); struct.pack_into('<H',ra2,0x12,1); struct.pack_into('<I',ra2,0x14,e3c)
+            if hash_2050(e38,rb)==hash_2050(e38,ra2):
+                sols.append((C,B6,B7,D))
+                print('SOL',hex(C),hex(B6),hex(B7),hex(D))
+                raise SystemExit
+print('none')
+PY
+Command moved to the background (shell ID: sh_1fc04f25f001FPl7YuqetqwAMC).
+PID: 101736
+Output is streaming to: /home/bocil/.local/share/opencode/shell/01a126b68893d058c6758eaf6b0babc286ef55ca/sh_1fc04f25f001FPl7YuqetqwAMC.out
+
+The command did not finish within its timeout of 120 seconds and was moved to the background. Do not start another copy while it is running.
+> build · deepseek-flash
+[0m$ [0mpkill -f 'from model import hash_2050' 2>/dev/null; sleep 1; echo killed
+(no output)
+> build · deepseek-flash
+[0m$ [0mcd /home/bocil/ctf/layer7/work/5 && timeout 100 python3 - <<'PY'
+import struct
+from model import hash_2050
+qwords=[0x9e86240dc0d80551,0x4fe9c3833932fd88,0xc4fe7c1241ba2916,0xc4fe7c121b8a2916,0x00007ffff7fdc030,0x00007ffff7fcb040,0x4fe9c38300000004,0x2d6b10793932fd88,0,0,0xd7eaf963d6990ba5,0xdb6562ab8e250c18]
+entry=b''.join(struct.pack('<Q',q) for q in qwords)
+e8=struct.unpack_from('<Q',entry,8)[0]; e38=struct.unpack_from('<I',entry,0x38)[0]; e3c=struct.unpack_from('<I',entry,0x3c)[0]
+O=0x6d17; length=0x100; k6=0x5c31
+cnt=0
+for C in range(O-0x100, O+1):
+    r13=O-C
+    for B7 in range(0,0x8000-length+1,0x100):
+        R7=B7; D=(B7 - O + C)&0xffff
+        rb=bytearray(0x1c); struct.pack_into('<I',rb,0,O); struct.pack_into('<Q',rb,4,e8); struct.pack_into('<H',rb,0x0c,0); struct.pack_into('<H',rb,0x0e,R7); struct.pack_into('<H',rb,0x10,2); struct.pack_into('<H',rb,0x12,1); struct.pack_into('<I',rb,0x14,e3c)
+        ra2=bytearray(0x1c); struct.pack_into('<I',ra2,0,r13); struct.pack_into('<Q',ra2,4,e8); struct.pack_into('<H',ra2,0x0c,C); struct.pack_into('<H',ra2,0x0e,D); struct.pack_into('<H',ra2,0x10,2); struct.pack_into('<H',ra2,0x12,1); struct.pack_into('<I',ra2,0x14,e3c)
+        hb=hash_2050(e38,rb); ha=hash_2050(e38,ra2)
+        if (hb&0xffff)!=(ha&0xffff): continue
+        # high delta
+        delta=((ha>>16)-(hb>>16))&0xffff
+        B6=(k6 ^ ((delta + (0^k6))&0xffff))&0xffff
+        if B6 & 0xff: continue
+        # verify
+        rb2=bytearray(rb); struct.pack_into('<H',rb2,0x0c,B6)
+        if hash_2050(e38,rb2)==ha:
+            print('SOL',hex(C),hex(B6),hex(B7),hex(D), 'r13',hex(r13)); raise SystemExit
+        cnt+=1
+print('none, low matches',cnt)
+PY
+none, low matches 0
+> build · deepseek-flash
+[0m$ [0mcd /home/bocil/ctf/layer7/work/5 && python3 - <<'PY'
+import struct
+from model import hash_2050
+e38=0x3932fd88; e8=0x4fe9c3833932fd88; e3c=0x2d6b1079
+rec=bytearray(0x1c); struct.pack_into('<I',rec,0,0x6d17); struct.pack_into('<Q',rec,4,e8); struct.pack_into('<H',rec,0x0c,0); struct.pack_into('<H',rec,0x0e,0x1000); struct.pack_into('<H',rec,0x10,2); struct.pack_into('<H',rec,0x12,1); struct.pack_into('<I',rec,0x14,e3c)
+h0=hash_2050(e38,rec); print('h0',hex(h0))
+for off,name in [(0x0c,'w6'),(0x0e,'w7'),(0,'w0'),(0x10,'w8'),(0x12,'w9')]:
+    r=bytearray(rec); v=struct.unpack_from('<H',r,off)[0]; struct.pack_into('<H',r,off,(v+0x100)&0xffff)
+    h=hash_2050(e38,r); print(name,'delta',hex((h-h0)&0xffffffff))
+PY
+h0 0x92fbdfd9
+w6 delta 0xff000000
+w7 delta 0xffffff00
+w0 delta 0xfffd00
+w8 delta 0x1000000
+w9 delta 0xffffff00
+> build · deepseek-flash

@@ -1,0 +1,2087 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="English write-ups for Layer7 CTF 2026 (Jeopardy + KoTH) with captured evidence and verified flags.">
+      
+      
+        <meta name="author" content="B0TCIL">
+      
+      
+        <link rel="canonical" href="https://fijarsatria.github.io/layer7-ctf-2026-writeups/challenges/20-prism-box/">
+      
+      
+        <link rel="prev" href="../17-false-friends/">
+      
+      
+        <link rel="next" href="../8-autoby/">
+      
+      
+      <link rel="icon" href="../../assets/layer7.svg">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.14">
+    
+    
+      
+        <title>Prism Box - Layer7 CTF 2026 — Write-ups</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.342714a4.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,300i,400,400i,700,700i%7CJetBrains+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Inter";--md-code-font:"JetBrains Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+      <link rel="stylesheet" href="../../stylesheets/layer7.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="green" data-md-color-accent="green">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#tldr" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Layer7 CTF 2026 — Write-ups" class="md-header__button md-logo" aria-label="Layer7 CTF 2026 — Write-ups" data-md-component="logo">
+      
+  <img src="../../assets/layer7.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Layer7 CTF 2026 — Write-ups
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Prism Box
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="green" data-md-color-accent="green"  aria-label="Light mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="green" data-md-color-accent="green"  aria-label="Dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Dark mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/Fijarsatria/layer7-ctf-2026-writeups" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Layer7 CTF 2026 — Write-ups" class="md-nav__button md-logo" aria-label="Layer7 CTF 2026 — Write-ups" data-md-component="logo">
+      
+  <img src="../../assets/layer7.svg" alt="logo">
+
+    </a>
+    Layer7 CTF 2026 — Write-ups
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/Fijarsatria/layer7-ctf-2026-writeups" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Home
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../methodology/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Methodology
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reproducibility/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Reproducibility
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../evidence/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Evidence index
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../koth/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    KoTH
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_5" id="__nav_5_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            KoTH
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../koth/2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Glasshouse
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../koth/koth-stage-1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    KoTH Stage 1 — Glasshouse VM
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../koth/koth-stage-2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    KoTH Stage 2 — Glasshouse VM
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../koth/koth-stage-3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    KoTH Stage 3 — Glasshouse VM (Capability Confusion)
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../koth/koth-stage-4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    KoTH Stage 4 — Glasshouse VM
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../koth/koth-stage-5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    KoTH Stage 5 — Glasshouse VM
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../koth/koth-stage-6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    KoTH Stage 6 — Glasshouse VM (Split Decoder)
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    WEB
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            WEB
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../10-pipecake/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Pipecake
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../11-forgotten/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Forgotten
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../22-roupang/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Roupang
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    PWN
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            PWN
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../21-whos-your-bias/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    whos your bias
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../5-cartridge/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Cartridge
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../6-janus/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Janus
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../7-dead-letter/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Dead Letter
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    REV
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            REV
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../14-mad-rabbit/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Mad rabbit
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../17-false-friends/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    False Friends
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Prism Box
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    Prism Box
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#tldr" class="md-nav__link">
+    <span class="md-ellipsis">
+      TL;DR
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#recon" class="md-nav__link">
+    <span class="md-ellipsis">
+      Recon
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#analysis" class="md-nav__link">
+    <span class="md-ellipsis">
+      Analysis
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Analysis">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#input-format" class="md-nav__link">
+    <span class="md-ellipsis">
+      Input format
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#component-algebra" class="md-nav__link">
+    <span class="md-ellipsis">
+      Component algebra
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#per-tick-update-the-important-part" class="md-nav__link">
+    <span class="md-ellipsis">
+      Per-tick update (the important part)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#puzzle-reduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      Puzzle reduction
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exploit" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exploit
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Exploit">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#simulator-model-prism_modelpy" class="md-nav__link">
+    <span class="md-ellipsis">
+      Simulator model (prism_model.py)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#brute-force-search-brutec" class="md-nav__link">
+    <span class="md-ellipsis">
+      Brute-force search (brute.c)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#evidence" class="md-nav__link">
+    <span class="md-ellipsis">
+      Evidence
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#flag" class="md-nav__link">
+    <span class="md-ellipsis">
+      Flag
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#evidence_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Evidence
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Evidence">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#platform-submission" class="md-nav__link">
+    <span class="md-ellipsis">
+      Platform submission
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#captured-solver-transcript" class="md-nav__link">
+    <span class="md-ellipsis">
+      Captured solver transcript
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#flag_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Flag
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../8-autoby/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Autoby
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9" >
+        
+          
+          <label class="md-nav__link" for="__nav_9" id="__nav_9_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    MISC
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_9">
+            <span class="md-nav__icon md-icon"></span>
+            MISC
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1-mic-check/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    mic_check
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../3-human-top-1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    human top 1
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#tldr" class="md-nav__link">
+    <span class="md-ellipsis">
+      TL;DR
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#recon" class="md-nav__link">
+    <span class="md-ellipsis">
+      Recon
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#analysis" class="md-nav__link">
+    <span class="md-ellipsis">
+      Analysis
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Analysis">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#input-format" class="md-nav__link">
+    <span class="md-ellipsis">
+      Input format
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#component-algebra" class="md-nav__link">
+    <span class="md-ellipsis">
+      Component algebra
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#per-tick-update-the-important-part" class="md-nav__link">
+    <span class="md-ellipsis">
+      Per-tick update (the important part)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#puzzle-reduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      Puzzle reduction
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exploit" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exploit
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Exploit">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#simulator-model-prism_modelpy" class="md-nav__link">
+    <span class="md-ellipsis">
+      Simulator model (prism_model.py)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#brute-force-search-brutec" class="md-nav__link">
+    <span class="md-ellipsis">
+      Brute-force search (brute.c)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#evidence" class="md-nav__link">
+    <span class="md-ellipsis">
+      Evidence
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#flag" class="md-nav__link">
+    <span class="md-ellipsis">
+      Flag
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#evidence_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Evidence
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Evidence">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#platform-submission" class="md-nav__link">
+    <span class="md-ellipsis">
+      Platform submission
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#captured-solver-transcript" class="md-nav__link">
+    <span class="md-ellipsis">
+      Captured solver transcript
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#flag_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Flag
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="prism-box">Prism Box<a class="headerlink" href="#prism-box" title="Permanent link">&para;</a></h1>
+<p><span class="nx-badge nx-badge-verified">VERIFIED</span> <span class="nx-chip">REV</span> <span class="nx-chip">961 pts</span> <span class="nx-chip">id 20</span></p>
+
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Event</td>
+<td>Layer7 CTF 2026</td>
+</tr>
+<tr>
+<td>Category</td>
+<td><code>rev</code></td>
+</tr>
+<tr>
+<td>Points</td>
+<td><code>961</code></td>
+</tr>
+<tr>
+<td>Solved at</td>
+<td><code>2026-11-21 09:46:40+07:00</code></td>
+</tr>
+<tr>
+<td>Flag</td>
+<td><code>Layer7{548f4e663b377217e4ac164af4471996a6d8f42d3e2e6f798f8ad3e083cb6e9c}</code></td>
+</tr>
+<tr>
+<td>Status</td>
+<td><code>VERIFIED</code></td>
+</tr>
+</tbody>
+</table>
+<h1 id="prism-box_1">Prism Box<a class="headerlink" href="#prism-box_1" title="Permanent link">&para;</a></h1>
+<h2 id="tldr">TL;DR<a class="headerlink" href="#tldr" title="Permanent link">&para;</a></h2>
+<p><code>prism-box.zip</code> contains a stripped static ELF simulator (<code>prism</code>) and a <code>puzzle.json</code> describing 16 sockets, 4 component types (<code>P</code>, <code>J</code>, <code>D</code>, <code>L</code>), two recorded "exposures", and the detector readings to reproduce. The binary accepts a 16-character layout (one <code>type+rotation</code> pair per socket) plus a <code>PXB3</code> experiment stream. I reverse engineered the simulator into a Python model (verified byte-for-byte against the binary), then brute-forced the 16 socket choices under the <code>mounts</code> constraints and the "exactly 4 of each type" inventory rule. The unique working layout is:</p>
+<div class="highlight"><pre><span></span><code>P3P1J0L1J1P1L3L2J2L2D1J1P3D1D0D0
+</code></pre></div>
+<p>Submitting that layout to the challenge service passes both exposures (<code>mismatches: [0, 0]</code>) and returns the flag.</p>
+<h2 id="recon">Recon<a class="headerlink" href="#recon" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>$ python3 l7.py chall 20
+{&quot;id&quot;: 20, &quot;title&quot;: &quot;Prism Box&quot;, &quot;category&quot;: &quot;rev&quot;, &quot;points&quot;: 961,
+ &quot;description&quot;: &quot;All the components have been removed from an optical device...&quot;,
+ &quot;connection_info&quot;: &quot;nc 104.105.138.8 31342&quot;, &quot;file_name&quot;: &quot;prism-box.zip&quot;}
+
+$ python3 l7.py file 20
+[+] /home/bocil/ctf/layer7/work/20/prism-box.zip (350062 bytes)
+
+$ unzip -o prism-box.zip -d prism
+Archive:  prism-box.zip
+  inflating: prism/prism
+  inflating: prism/puzzle.json
+
+$ file prism/prism
+prism: ELF 64-bit LSB executable, x86-64, statically linked, stripped
+</code></pre></div>
+<p><code>puzzle.json</code> (<code>PrismBox/v5</code>, 4x4) contains:</p>
+<ul>
+<li><code>inventory</code>: <code>{"P":4,"J":4,"D":4,"L":4}</code></li>
+<li><code>mounts</code>: 16 entries, each <code>[P?, J?, D?, L?]</code> — the four allowed <code>piece+rotation</code> options for that socket</li>
+<li>two experiments: 24 injection frames of 16 cells x 4 channels, plus <code>detectors</code> (11 <code>[cell, channel]</code> pairs) and a sparse <code>target</code> (only ticks 16..23 are non-null; <code>null</code> means "ignore")</li>
+</ul>
+<p>The remote service confirms the task:</p>
+<div class="highlight"><pre><span></span><code>Answer: 32 characters, row-major piece+rotation pairs.
+Use 4 each of P/J/D/L; each cell must match puzzle.json mounts.
+Match both experiments; null targets are ignored. Each experiment resets.
+</code></pre></div>
+<p>The binary's usage is <code>prism ROTATIONS &lt; PXB3-experiment</code>.</p>
+<h2 id="analysis">Analysis<a class="headerlink" href="#analysis" title="Permanent link">&para;</a></h2>
+<h3 id="input-format">Input format<a class="headerlink" href="#input-format" title="Permanent link">&para;</a></h3>
+<p>Tracing <code>main</code> (0x401630) showed the stdin grammar is:</p>
+<div class="highlight"><pre><span></span><code>PXB3 &lt;W&gt; &lt;H&gt; &lt;N&gt; &lt;W*H type chars&gt;
+&lt;N lines, each W*H*4 decimal values in [0,7]&gt;
+</code></pre></div>
+<p><code>argv[1]</code> is a string of <code>W*H</code> decimal rotation digits (0..3). The type characters are one of <code>PJDL</code>. The binary prints <code>N</code> frames, each with <code>W*H</code> 4-channel sensor vectors.</p>
+<h3 id="component-algebra">Component algebra<a class="headerlink" href="#component-algebra" title="Permanent link">&para;</a></h3>
+<p>Each value is 3 bits; the only operations used are XOR, AND, NOT and a 3-bit rotate-left (<code>rotl(x) = ((x&lt;&lt;1)|(x&gt;&gt;2)) &amp; 7</code>).</p>
+<p>Initial component value of a socket:</p>
+<table>
+<thead>
+<tr>
+<th>piece</th>
+<th>base</th>
+<th>meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>P</code></td>
+<td>1</td>
+<td>bit 0</td>
+</tr>
+<tr>
+<td><code>J</code></td>
+<td>2</td>
+<td>bit 1</td>
+</tr>
+<tr>
+<td><code>D</code></td>
+<td>4</td>
+<td>bit 2</td>
+</tr>
+<tr>
+<td><code>L</code></td>
+<td>7</td>
+<td>all bits</td>
+</tr>
+</tbody>
+</table>
+<p>A clockwise turn digit <code>r</code> applies <code>rotl</code> <code>r</code> times. The 16 static values are mixed by 16 rounds of the cellular automaton</p>
+<div class="highlight"><pre><span></span><code>f[i] = (rotl(f[i]) &amp; f[(i+1) mod 16]) ^ rotl(f[(i-1) mod 16]) ^ f[i]
+</code></pre></div>
+<p>then</p>
+<div class="highlight"><pre><span></span><code>A = f
+B[i] = ((f[i] &gt;&gt; 2) ^ f[i]) &amp; 1
+C[i] = f[i-1] ^ rotl(f[i]) ^ (rotl(f[i]) &amp; f[i+1])
+F = f
+q = checksum over A:  q = rotl(q) ^ A[i] ^ (rotl(A[i]) &amp; q)
+</code></pre></div>
+<h3 id="per-tick-update-the-important-part">Per-tick update (the important part)<a class="headerlink" href="#per-tick-update-the-important-part" title="Permanent link">&para;</a></h3>
+<p>For each tick <code>t</code>, each cell <code>i</code> and channel <code>c</code>:</p>
+<ol>
+<li><code>temp[c] = injection[t][i][c]</code>; XOR the running checksum <code>q</code> into channel <code>(t+i) mod 4</code>.</li>
+<li>If <code>t &gt; 0</code>, XOR in <code>raw[t-1][neighbor][(c+2) mod 4]</code>, where the four channels point N/E/S/W and the neighbor is in that direction (<code>dr = [-1,0,1,0]</code>, <code>dc = [0,1,0,-1]</code>).</li>
+<li>Rotate the 4-channel vector by the socket's rotation: <code>w[d] = temp[(rot+d) mod 4]</code>.</li>
+<li>Apply the piece transform (<code>a=A[i]</code>, <code>b=B[i]</code>, <code>c=C[i]</code>, <code>w0..w3</code> are the rotated channels):</li>
+</ol>
+<div class="highlight"><pre><span></span><code>P: o = [c^w3, rotl(w0)^a, w1, rotl2(w2)];              A_new = w2^w0
+J: o = [w2^w3^a, rotl(w3)^w0^c, w1^a, rotl(w2)];       A_new = (w3&amp;w0)|(w1&amp;w2)
+D: o = [w2, a, c^w3, rotl(a)^w1];                      A_new = w0
+L: o = [a^w3, a&amp;w0, w1, rotl(a)^(w2^c)];               A_new = (a|w3)&amp;~w1
+</code></pre></div>
+<ol>
+<li>If <code>B[i] == 1</code>, rotate all four outputs by <code>rotl</code>.</li>
+<li><code>F_new = a ^ q ^ rotl(c) ^ w1 ^ (rotl(w3) &amp; w0)</code>, <code>B_new = B ^ ((w3&gt;&gt;2)&amp;1)</code>.</li>
+<li>Raw channel layout: <code>raw[t][i][(rot+d) mod 4] = o[d]</code>.</li>
+<li>Output is a delay line: <code>out[t] = raw[t] | rotl(raw[t-1]) | rotl2(raw[t-2])</code>.</li>
+<li>A second pass recomputes <code>C</code> from the current raw values and <code>F</code>, and advances <code>q</code>.</li>
+</ol>
+<p>The model was validated against the real binary over all 24 ticks, all 16 cells and all 4 channels for both experiments: <strong>0 differences</strong>. It also reproduces the remote service's tick-16 sensor display exactly.</p>
+<h3 id="puzzle-reduction">Puzzle reduction<a class="headerlink" href="#puzzle-reduction" title="Permanent link">&para;</a></h3>
+<p>For socket <code>i</code>, the pieces allowed are exactly the four entries of <code>mounts[i]</code> (one per type, each with a fixed rotation). Since the inventory demands exactly 4 <code>P</code>, 4 <code>J</code>, 4 <code>D</code> and 4 <code>L</code>, the search space is</p>
+<div class="highlight"><pre><span></span><code>16! / (4! * 4! * 4! * 4!) = 63,063,000
+</code></pre></div>
+<p>Each candidate is simulated over both exposures; the first mismatch at a non-null detector target (ticks 16..23) rejects it immediately. An OpenMP C brute force with 6 threads found the unique layout in 92 seconds.</p>
+<h2 id="exploit">Exploit<a class="headerlink" href="#exploit" title="Permanent link">&para;</a></h2>
+<p>The files are in <code>work/20/</code>:</p>
+<ul>
+<li><code>prism_model.py</code> — exact Python reimplementation of the simulator</li>
+<li><code>brute.c</code> + <code>data.h</code> — OpenMP search over the 63,063,000 layouts</li>
+<li><code>verify.py</code> — checks the recovered layout against <code>puzzle.json</code> <strong>and</strong> the original <code>prism</code> binary</li>
+<li><code>solution.txt</code> — the recovered layout</li>
+<li><code>remote_check.json</code>, <code>submit.json</code>, <code>brute.log</code> — evidence</li>
+</ul>
+<h3 id="simulator-model-prism_modelpy">Simulator model (<code>prism_model.py</code>)<a class="headerlink" href="#simulator-model-prism_modelpy" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">rotl</span><span class="p">(</span><span class="n">x</span><span class="p">):</span> <span class="k">return</span> <span class="p">((</span><span class="n">x</span><span class="o">*</span><span class="mi">2</span><span class="p">)</span><span class="o">|</span><span class="p">(</span><span class="n">x</span><span class="o">&gt;&gt;</span><span class="mi">2</span><span class="p">))</span><span class="o">&amp;</span><span class="mi">7</span>
+<span class="k">def</span> <span class="nf">rotln</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">n</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="o">&amp;</span><span class="mi">3</span><span class="p">):</span> <span class="n">x</span><span class="o">=</span><span class="n">rotl</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">x</span>
+<span class="n">BASE</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;P&#39;</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="s1">&#39;J&#39;</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span><span class="s1">&#39;D&#39;</span><span class="p">:</span><span class="mi">4</span><span class="p">,</span><span class="s1">&#39;L&#39;</span><span class="p">:</span><span class="mi">7</span><span class="p">}</span>
+<span class="n">DR</span><span class="o">=</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">];</span> <span class="n">DC</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+<span class="k">def</span> <span class="nf">init_state</span><span class="p">(</span><span class="n">types</span><span class="p">,</span><span class="n">rots</span><span class="p">):</span>
+    <span class="n">n</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">types</span><span class="p">)</span>
+    <span class="n">f</span><span class="o">=</span><span class="p">[</span><span class="n">rotln</span><span class="p">(</span><span class="n">BASE</span><span class="p">[</span><span class="n">t</span><span class="p">],</span><span class="n">r</span><span class="p">)</span> <span class="k">for</span> <span class="n">t</span><span class="p">,</span><span class="n">r</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">types</span><span class="p">,</span><span class="n">rots</span><span class="p">)]</span>
+    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">16</span><span class="p">):</span>
+        <span class="n">f</span><span class="o">=</span><span class="p">[((</span><span class="n">rotl</span><span class="p">(</span><span class="n">f</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">&amp;</span> <span class="n">f</span><span class="p">[(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">%</span><span class="n">n</span><span class="p">])</span> <span class="o">^</span> <span class="n">rotl</span><span class="p">(</span><span class="n">f</span><span class="p">[(</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">%</span><span class="n">n</span><span class="p">])</span> <span class="o">^</span> <span class="n">f</span><span class="p">[</span><span class="n">i</span><span class="p">])</span><span class="o">&amp;</span><span class="mi">7</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)]</span>
+    <span class="n">A</span><span class="o">=</span><span class="n">f</span><span class="p">[:]</span>
+    <span class="n">B</span><span class="o">=</span><span class="p">[((</span><span class="n">x</span><span class="o">&gt;&gt;</span><span class="mi">2</span><span class="p">)</span><span class="o">^</span><span class="n">x</span><span class="p">)</span><span class="o">&amp;</span><span class="mi">1</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">A</span><span class="p">]</span>
+    <span class="n">C</span><span class="o">=</span><span class="p">[(</span><span class="n">A</span><span class="p">[(</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">%</span><span class="n">n</span><span class="p">]</span> <span class="o">^</span> <span class="n">rotl</span><span class="p">(</span><span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">^</span> <span class="p">(</span><span class="n">rotl</span><span class="p">(</span><span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">&amp;</span> <span class="n">A</span><span class="p">[(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">%</span><span class="n">n</span><span class="p">]))</span><span class="o">&amp;</span><span class="mi">7</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)]</span>
+    <span class="n">F</span><span class="o">=</span><span class="n">f</span><span class="p">[:]</span>
+    <span class="n">q</span><span class="o">=</span><span class="mi">1</span>
+    <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">A</span><span class="p">:</span>
+        <span class="n">q</span><span class="o">=</span><span class="p">(</span><span class="n">rotl</span><span class="p">(</span><span class="n">q</span><span class="p">)</span><span class="o">^</span><span class="n">x</span><span class="o">^</span><span class="p">(</span><span class="n">rotl</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">&amp;</span><span class="n">q</span><span class="p">))</span><span class="o">&amp;</span><span class="mi">7</span>
+    <span class="k">return</span> <span class="n">A</span><span class="p">,</span><span class="n">B</span><span class="p">,</span><span class="n">C</span><span class="p">,</span><span class="n">F</span><span class="p">,</span><span class="n">q</span>
+
+<span class="k">def</span> <span class="nf">simulate</span><span class="p">(</span><span class="n">types</span><span class="p">,</span><span class="n">rots</span><span class="p">,</span><span class="n">injections</span><span class="p">,</span><span class="n">W</span><span class="p">,</span><span class="n">H</span><span class="p">):</span>
+    <span class="n">n</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">types</span><span class="p">);</span> <span class="n">T</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">injections</span><span class="p">)</span>
+    <span class="n">A</span><span class="p">,</span><span class="n">B</span><span class="p">,</span><span class="n">C</span><span class="p">,</span><span class="n">F</span><span class="p">,</span><span class="n">q</span><span class="o">=</span><span class="n">init_state</span><span class="p">(</span><span class="n">types</span><span class="p">,</span><span class="n">rots</span><span class="p">)</span>
+    <span class="n">raw</span><span class="o">=</span><span class="p">[[[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="mi">4</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)]</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">T</span><span class="p">)]</span>
+    <span class="n">out</span><span class="o">=</span><span class="p">[[[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="mi">4</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)]</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">T</span><span class="p">)]</span>
+    <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">T</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+            <span class="n">row</span><span class="p">,</span><span class="n">col</span><span class="o">=</span><span class="nb">divmod</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">W</span><span class="p">)</span>
+            <span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">c</span><span class="o">=</span><span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">],</span><span class="n">B</span><span class="p">[</span><span class="n">i</span><span class="p">],</span><span class="n">C</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+            <span class="n">temp</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="mi">4</span>
+            <span class="k">for</span> <span class="n">ch</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">):</span>
+                <span class="n">val</span><span class="o">=</span><span class="n">injections</span><span class="p">[</span><span class="n">e</span><span class="p">][</span><span class="n">i</span><span class="p">][</span><span class="n">ch</span><span class="p">]</span>
+                <span class="k">if</span> <span class="n">ch</span><span class="o">==</span><span class="p">((</span><span class="n">e</span><span class="o">+</span><span class="n">i</span><span class="p">)</span><span class="o">&amp;</span><span class="mi">3</span><span class="p">):</span> <span class="n">val</span><span class="o">^=</span><span class="n">q</span>
+                <span class="k">if</span> <span class="n">e</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">:</span>
+                    <span class="n">nr</span><span class="p">,</span><span class="n">nc</span><span class="o">=</span><span class="n">row</span><span class="o">+</span><span class="n">DR</span><span class="p">[</span><span class="n">ch</span><span class="p">],</span><span class="n">col</span><span class="o">+</span><span class="n">DC</span><span class="p">[</span><span class="n">ch</span><span class="p">]</span>
+                    <span class="k">if</span> <span class="mi">0</span><span class="o">&lt;=</span><span class="n">nr</span><span class="o">&lt;</span><span class="n">H</span> <span class="ow">and</span> <span class="mi">0</span><span class="o">&lt;=</span><span class="n">nc</span><span class="o">&lt;</span><span class="n">W</span><span class="p">:</span>
+                        <span class="n">val</span><span class="o">^=</span><span class="n">raw</span><span class="p">[</span><span class="n">e</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">nr</span><span class="o">*</span><span class="n">W</span><span class="o">+</span><span class="n">nc</span><span class="p">][(</span><span class="n">ch</span><span class="o">+</span><span class="mi">2</span><span class="p">)</span><span class="o">&amp;</span><span class="mi">3</span><span class="p">]</span>
+                <span class="n">temp</span><span class="p">[</span><span class="n">ch</span><span class="p">]</span><span class="o">=</span><span class="n">val</span><span class="o">&amp;</span><span class="mi">7</span>
+            <span class="n">r</span><span class="o">=</span><span class="n">rots</span><span class="p">[</span><span class="n">i</span><span class="p">];</span> <span class="n">w</span><span class="o">=</span><span class="p">[</span><span class="n">temp</span><span class="p">[(</span><span class="n">r</span><span class="o">+</span><span class="n">d</span><span class="p">)</span><span class="o">&amp;</span><span class="mi">3</span><span class="p">]</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">)]</span>
+            <span class="n">w0</span><span class="p">,</span><span class="n">w1</span><span class="p">,</span><span class="n">w2</span><span class="p">,</span><span class="n">w3</span><span class="o">=</span><span class="n">w</span><span class="p">;</span> <span class="n">t</span><span class="o">=</span><span class="n">types</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">t</span><span class="o">==</span><span class="s1">&#39;P&#39;</span><span class="p">:</span>
+                <span class="n">o</span><span class="o">=</span><span class="p">[</span><span class="n">c</span><span class="o">^</span><span class="n">w3</span><span class="p">,</span> <span class="n">rotl</span><span class="p">(</span><span class="n">w0</span><span class="p">)</span><span class="o">^</span><span class="n">a</span><span class="p">,</span> <span class="n">w1</span><span class="p">,</span> <span class="n">rotl</span><span class="p">(</span><span class="n">rotl</span><span class="p">(</span><span class="n">w2</span><span class="p">))];</span> <span class="n">Anew</span><span class="o">=</span><span class="n">w2</span><span class="o">^</span><span class="n">w0</span>
+            <span class="k">elif</span> <span class="n">t</span><span class="o">==</span><span class="s1">&#39;J&#39;</span><span class="p">:</span>
+                <span class="n">o</span><span class="o">=</span><span class="p">[</span><span class="n">w2</span><span class="o">^</span><span class="n">w3</span><span class="o">^</span><span class="n">a</span><span class="p">,</span> <span class="n">rotl</span><span class="p">(</span><span class="n">w3</span><span class="p">)</span><span class="o">^</span><span class="n">w0</span><span class="o">^</span><span class="n">c</span><span class="p">,</span> <span class="n">w1</span><span class="o">^</span><span class="n">a</span><span class="p">,</span> <span class="n">rotl</span><span class="p">(</span><span class="n">w2</span><span class="p">)];</span> <span class="n">Anew</span><span class="o">=</span><span class="p">(</span><span class="n">w3</span><span class="o">&amp;</span><span class="n">w0</span><span class="p">)</span><span class="o">|</span><span class="p">(</span><span class="n">w1</span><span class="o">&amp;</span><span class="n">w2</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">t</span><span class="o">==</span><span class="s1">&#39;D&#39;</span><span class="p">:</span>
+                <span class="n">o</span><span class="o">=</span><span class="p">[</span><span class="n">w2</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">c</span><span class="o">^</span><span class="n">w3</span><span class="p">,</span> <span class="n">rotl</span><span class="p">(</span><span class="n">a</span><span class="p">)</span><span class="o">^</span><span class="n">w1</span><span class="p">];</span> <span class="n">Anew</span><span class="o">=</span><span class="n">w0</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">o</span><span class="o">=</span><span class="p">[</span><span class="n">a</span><span class="o">^</span><span class="n">w3</span><span class="p">,</span> <span class="n">a</span><span class="o">&amp;</span><span class="n">w0</span><span class="p">,</span> <span class="n">w1</span><span class="p">,</span> <span class="n">rotl</span><span class="p">(</span><span class="n">a</span><span class="p">)</span><span class="o">^</span><span class="p">(</span><span class="n">w2</span><span class="o">^</span><span class="n">c</span><span class="p">)];</span> <span class="n">Anew</span><span class="o">=</span><span class="p">((</span><span class="n">a</span><span class="o">|</span><span class="n">w3</span><span class="p">)</span><span class="o">&amp;</span><span class="p">(</span><span class="o">~</span><span class="n">w1</span><span class="p">))</span><span class="o">&amp;</span><span class="mi">7</span>
+            <span class="k">if</span> <span class="n">b</span><span class="p">:</span> <span class="n">o</span><span class="o">=</span><span class="p">[</span><span class="n">rotl</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">o</span><span class="p">]</span>
+            <span class="n">Fnew</span><span class="o">=</span><span class="p">(</span><span class="n">a</span> <span class="o">^</span> <span class="n">q</span> <span class="o">^</span> <span class="n">rotl</span><span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="o">^</span> <span class="n">w1</span> <span class="o">^</span> <span class="p">(</span><span class="n">rotl</span><span class="p">(</span><span class="n">w3</span><span class="p">)</span><span class="o">&amp;</span><span class="n">w0</span><span class="p">))</span><span class="o">&amp;</span><span class="mi">7</span>
+            <span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">=</span><span class="n">Anew</span><span class="o">&amp;</span><span class="mi">7</span><span class="p">;</span> <span class="n">B</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">=</span><span class="p">(</span><span class="n">b</span><span class="o">^</span><span class="p">((</span><span class="n">w3</span><span class="o">&gt;&gt;</span><span class="mi">2</span><span class="p">)</span><span class="o">&amp;</span><span class="mi">1</span><span class="p">))</span><span class="o">&amp;</span><span class="mi">1</span><span class="p">;</span> <span class="n">F</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">=</span><span class="n">Fnew</span>
+            <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">):</span> <span class="n">raw</span><span class="p">[</span><span class="n">e</span><span class="p">][</span><span class="n">i</span><span class="p">][(</span><span class="n">r</span><span class="o">+</span><span class="n">d</span><span class="p">)</span><span class="o">&amp;</span><span class="mi">3</span><span class="p">]</span><span class="o">=</span><span class="n">o</span><span class="p">[</span><span class="n">d</span><span class="p">]</span><span class="o">&amp;</span><span class="mi">7</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">ch</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">):</span>
+                <span class="n">val</span><span class="o">=</span><span class="n">raw</span><span class="p">[</span><span class="n">e</span><span class="p">][</span><span class="n">i</span><span class="p">][</span><span class="n">ch</span><span class="p">]</span>
+                <span class="k">if</span> <span class="n">e</span><span class="o">&gt;=</span><span class="mi">1</span><span class="p">:</span> <span class="n">val</span><span class="o">|=</span><span class="n">rotl</span><span class="p">(</span><span class="n">raw</span><span class="p">[</span><span class="n">e</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">i</span><span class="p">][</span><span class="n">ch</span><span class="p">])</span>
+                <span class="k">if</span> <span class="n">e</span><span class="o">&gt;=</span><span class="mi">2</span><span class="p">:</span> <span class="n">val</span><span class="o">|=</span><span class="n">rotl</span><span class="p">(</span><span class="n">rotl</span><span class="p">(</span><span class="n">raw</span><span class="p">[</span><span class="n">e</span><span class="o">-</span><span class="mi">2</span><span class="p">][</span><span class="n">i</span><span class="p">][</span><span class="n">ch</span><span class="p">]))</span>
+                <span class="n">out</span><span class="p">[</span><span class="n">e</span><span class="p">][</span><span class="n">i</span><span class="p">][</span><span class="n">ch</span><span class="p">]</span><span class="o">=</span><span class="n">val</span><span class="o">&amp;</span><span class="mi">7</span>
+        <span class="n">Cnew</span><span class="o">=</span><span class="p">[(</span><span class="n">rotl</span><span class="p">(</span><span class="n">raw</span><span class="p">[</span><span class="n">e</span><span class="p">][</span><span class="n">i</span><span class="p">][(</span><span class="n">e</span><span class="o">+</span><span class="n">i</span><span class="p">)</span><span class="o">&amp;</span><span class="mi">3</span><span class="p">])</span> <span class="o">&amp;</span> <span class="n">F</span><span class="p">[(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">%</span><span class="n">n</span><span class="p">])</span> <span class="o">^</span> <span class="n">F</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">^</span> <span class="n">rotl</span><span class="p">(</span><span class="n">F</span><span class="p">[(</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">%</span><span class="n">n</span><span class="p">])</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)]</span>
+        <span class="n">C</span><span class="o">=</span><span class="p">[</span><span class="n">x</span><span class="o">&amp;</span><span class="mi">7</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">Cnew</span><span class="p">]</span>
+        <span class="n">q</span><span class="o">=</span><span class="n">rotl</span><span class="p">(</span><span class="n">q</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+            <span class="n">x</span><span class="o">=</span><span class="p">(</span><span class="n">rotl</span><span class="p">(</span><span class="n">raw</span><span class="p">[</span><span class="n">e</span><span class="p">][</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span> <span class="o">^</span> <span class="p">(</span><span class="n">raw</span><span class="p">[</span><span class="n">e</span><span class="p">][</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">^</span><span class="n">raw</span><span class="p">[</span><span class="n">e</span><span class="p">][</span><span class="n">i</span><span class="p">][</span><span class="mi">3</span><span class="p">])</span> <span class="o">^</span> <span class="n">rotl</span><span class="p">(</span><span class="n">rotl</span><span class="p">(</span><span class="n">raw</span><span class="p">[</span><span class="n">e</span><span class="p">][</span><span class="n">i</span><span class="p">][</span><span class="mi">2</span><span class="p">])))</span><span class="o">&amp;</span><span class="mi">7</span>
+            <span class="n">q</span><span class="o">=</span><span class="p">(</span><span class="n">rotl</span><span class="p">(</span><span class="n">q</span><span class="p">)</span><span class="o">^</span><span class="n">x</span><span class="o">^</span><span class="p">(</span><span class="n">rotl</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">&amp;</span><span class="n">q</span><span class="p">))</span><span class="o">&amp;</span><span class="mi">7</span>
+    <span class="k">return</span> <span class="n">out</span><span class="p">,</span><span class="n">raw</span>
+</code></pre></div>
+<h3 id="brute-force-search-brutec">Brute-force search (<code>brute.c</code>)<a class="headerlink" href="#brute-force-search-brutec" title="Permanent link">&para;</a></h3>
+<p><code>data.h</code> is generated from <code>puzzle.json</code> (option rotations, option base values, the two injection streams and the non-null detector targets). Full source:</p>
+<div class="highlight"><pre><span></span><code><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdio.h&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdint.h&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;string.h&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdlib.h&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;omp.h&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;data.h&quot;</span>
+
+<span class="k">static</span><span class="w"> </span><span class="kr">inline</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">rotl</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">x</span><span class="p">){</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="p">((</span><span class="n">x</span><span class="o">*</span><span class="mi">2</span><span class="p">)</span><span class="o">|</span><span class="p">(</span><span class="n">x</span><span class="o">&gt;&gt;</span><span class="mi">2</span><span class="p">))</span><span class="o">&amp;</span><span class="mi">7</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<span class="k">static</span><span class="w"> </span><span class="kr">inline</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">rotln</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="kt">int</span><span class="w"> </span><span class="n">n</span><span class="p">){</span><span class="w"> </span><span class="k">for</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">k</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">k</span><span class="o">&lt;</span><span class="p">(</span><span class="n">n</span><span class="o">&amp;</span><span class="mi">3</span><span class="p">);</span><span class="n">k</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="n">x</span><span class="o">=</span><span class="n">rotl</span><span class="p">(</span><span class="n">x</span><span class="p">);</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">x</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+
+<span class="c1">// simulate one experiment for given assignment; return number of matched targets (and *total)</span>
+<span class="k">static</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">sim_exp</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">exp</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">type</span><span class="p">[</span><span class="mi">16</span><span class="p">],</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="o">*</span><span class="n">matched</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="o">*</span><span class="n">total</span><span class="p">){</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">n</span><span class="o">=</span><span class="mi">16</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">A</span><span class="p">[</span><span class="mi">16</span><span class="p">],</span><span class="n">B</span><span class="p">[</span><span class="mi">16</span><span class="p">],</span><span class="n">C</span><span class="p">[</span><span class="mi">16</span><span class="p">],</span><span class="n">F</span><span class="p">[</span><span class="mi">16</span><span class="p">],</span><span class="n">q</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">rot</span><span class="p">[</span><span class="mi">16</span><span class="p">],</span><span class="n">comp</span><span class="p">[</span><span class="mi">16</span><span class="p">];</span>
+<span class="w">    </span><span class="k">for</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="mi">16</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">){</span><span class="w"> </span><span class="n">rot</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">=</span><span class="n">MOUNT_ROT</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">type</span><span class="p">[</span><span class="n">i</span><span class="p">]];</span><span class="w"> </span><span class="n">comp</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">=</span><span class="n">MOUNT_COMP</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">type</span><span class="p">[</span><span class="n">i</span><span class="p">]];</span><span class="w"> </span><span class="p">}</span>
+<span class="w">    </span><span class="c1">// init field</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">f</span><span class="p">[</span><span class="mi">16</span><span class="p">];</span>
+<span class="w">    </span><span class="k">for</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="mi">16</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="n">f</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">=</span><span class="n">comp</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+<span class="w">    </span><span class="k">for</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">r</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">r</span><span class="o">&lt;</span><span class="mi">16</span><span class="p">;</span><span class="n">r</span><span class="o">++</span><span class="p">){</span>
+<span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">g</span><span class="p">[</span><span class="mi">16</span><span class="p">];</span>
+<span class="w">        </span><span class="k">for</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="mi">16</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="n">g</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">=</span><span class="p">((</span><span class="n">rotl</span><span class="p">(</span><span class="n">f</span><span class="p">[</span><span class="n">i</span><span class="p">])</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">f</span><span class="p">[(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">&amp;</span><span class="mi">15</span><span class="p">])</span><span class="w"> </span><span class="o">^</span><span class="w"> </span><span class="n">rotl</span><span class="p">(</span><span class="n">f</span><span class="p">[(</span><span class="n">i</span><span class="mi">-1</span><span class="p">)</span><span class="o">&amp;</span><span class="mi">15</span><span class="p">])</span><span class="w"> </span><span class="o">^</span><span class="w"> </span><span class="n">f</span><span class="p">[</span><span class="n">i</span><span class="p">])</span><span class="o">&amp;</span><span class="mi">7</span><span class="p">;</span>
+<span class="w">        </span><span class="n">memcpy</span><span class="p">(</span><span class="n">f</span><span class="p">,</span><span class="n">g</span><span class="p">,</span><span class="k">sizeof</span><span class="p">(</span><span class="n">f</span><span class="p">));</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">for</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="mi">16</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">){</span><span class="w"> </span><span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">=</span><span class="n">f</span><span class="p">[</span><span class="n">i</span><span class="p">];</span><span class="w"> </span><span class="n">B</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">=</span><span class="p">((</span><span class="n">f</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">&gt;&gt;</span><span class="mi">2</span><span class="p">)</span><span class="o">^</span><span class="n">f</span><span class="p">[</span><span class="n">i</span><span class="p">])</span><span class="o">&amp;</span><span class="mi">1</span><span class="p">;</span><span class="w"> </span><span class="n">F</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">=</span><span class="n">f</span><span class="p">[</span><span class="n">i</span><span class="p">];</span><span class="w"> </span><span class="p">}</span>
+<span class="w">    </span><span class="k">for</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="mi">16</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="n">C</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">=</span><span class="p">(</span><span class="n">A</span><span class="p">[(</span><span class="n">i</span><span class="mi">-1</span><span class="p">)</span><span class="o">&amp;</span><span class="mi">15</span><span class="p">]</span><span class="w"> </span><span class="o">^</span><span class="w"> </span><span class="n">rotl</span><span class="p">(</span><span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">])</span><span class="w"> </span><span class="o">^</span><span class="w"> </span><span class="p">(</span><span class="n">rotl</span><span class="p">(</span><span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">])</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">A</span><span class="p">[(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">&amp;</span><span class="mi">15</span><span class="p">]))</span><span class="o">&amp;</span><span class="mi">7</span><span class="p">;</span>
+<span class="w">    </span><span class="n">q</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span><span class="w"> </span><span class="k">for</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="mi">16</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="n">q</span><span class="o">=</span><span class="p">(</span><span class="n">rotl</span><span class="p">(</span><span class="n">q</span><span class="p">)</span><span class="w"> </span><span class="o">^</span><span class="w"> </span><span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">^</span><span class="w"> </span><span class="p">(</span><span class="n">rotl</span><span class="p">(</span><span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">])</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">q</span><span class="p">))</span><span class="o">&amp;</span><span class="mi">7</span><span class="p">;</span>
+<span class="w">    </span><span class="k">static</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">DR</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span><span class="o">=</span><span class="p">{</span><span class="mi">-1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">},</span><span class="w"> </span><span class="n">DC</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span><span class="o">=</span><span class="p">{</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">-1</span><span class="p">};</span>
+<span class="w">    </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="n">raw</span><span class="p">[</span><span class="mi">24</span><span class="p">][</span><span class="mi">16</span><span class="p">][</span><span class="mi">4</span><span class="p">];</span>
+<span class="w">    </span><span class="o">*</span><span class="n">matched</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="o">*</span><span class="n">total</span><span class="o">=</span><span class="n">NTARG</span><span class="p">[</span><span class="n">exp</span><span class="p">];</span>
+<span class="w">    </span><span class="k">for</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">e</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">e</span><span class="o">&lt;</span><span class="mi">24</span><span class="p">;</span><span class="n">e</span><span class="o">++</span><span class="p">){</span>
+<span class="w">        </span><span class="k">for</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="mi">16</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">){</span>
+<span class="w">            </span><span class="kt">int</span><span class="w"> </span><span class="n">row</span><span class="o">=</span><span class="n">i</span><span class="o">&gt;&gt;</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="n">col</span><span class="o">=</span><span class="n">i</span><span class="o">&amp;</span><span class="mi">3</span><span class="p">;</span>
+<span class="w">            </span><span class="kt">int</span><span class="w"> </span><span class="n">a</span><span class="o">=</span><span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">],</span><span class="w"> </span><span class="n">b</span><span class="o">=</span><span class="n">B</span><span class="p">[</span><span class="n">i</span><span class="p">],</span><span class="w"> </span><span class="n">c</span><span class="o">=</span><span class="n">C</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+<span class="w">            </span><span class="kt">int</span><span class="w"> </span><span class="n">temp</span><span class="p">[</span><span class="mi">4</span><span class="p">];</span>
+<span class="w">            </span><span class="k">for</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">ch</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">ch</span><span class="o">&lt;</span><span class="mi">4</span><span class="p">;</span><span class="w"> </span><span class="n">ch</span><span class="o">++</span><span class="p">){</span>
+<span class="w">                </span><span class="kt">int</span><span class="w"> </span><span class="n">v</span><span class="o">=</span><span class="n">INJ</span><span class="p">[</span><span class="n">exp</span><span class="p">][</span><span class="n">e</span><span class="p">][</span><span class="n">i</span><span class="p">][</span><span class="n">ch</span><span class="p">]</span><span class="o">&amp;</span><span class="mi">7</span><span class="p">;</span>
+<span class="w">                </span><span class="k">if</span><span class="p">(</span><span class="n">ch</span><span class="o">==</span><span class="p">((</span><span class="n">e</span><span class="o">+</span><span class="n">i</span><span class="p">)</span><span class="o">&amp;</span><span class="mi">3</span><span class="p">))</span><span class="w"> </span><span class="n">v</span><span class="o">^=</span><span class="n">q</span><span class="p">;</span>
+<span class="w">                </span><span class="k">if</span><span class="p">(</span><span class="n">e</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">){</span>
+<span class="w">                    </span><span class="kt">int</span><span class="w"> </span><span class="n">nr</span><span class="o">=</span><span class="n">row</span><span class="o">+</span><span class="n">DR</span><span class="p">[</span><span class="n">ch</span><span class="p">],</span><span class="w"> </span><span class="n">nc</span><span class="o">=</span><span class="n">col</span><span class="o">+</span><span class="n">DC</span><span class="p">[</span><span class="n">ch</span><span class="p">];</span>
+<span class="w">                    </span><span class="k">if</span><span class="p">(</span><span class="n">nr</span><span class="o">&gt;=</span><span class="mi">0</span><span class="o">&amp;&amp;</span><span class="n">nr</span><span class="o">&lt;</span><span class="mi">4</span><span class="o">&amp;&amp;</span><span class="n">nc</span><span class="o">&gt;=</span><span class="mi">0</span><span class="o">&amp;&amp;</span><span class="n">nc</span><span class="o">&lt;</span><span class="mi">4</span><span class="p">)</span><span class="w"> </span><span class="n">v</span><span class="o">^=</span><span class="n">raw</span><span class="p">[</span><span class="n">e</span><span class="mi">-1</span><span class="p">][</span><span class="n">nr</span><span class="o">*</span><span class="mi">4</span><span class="o">+</span><span class="n">nc</span><span class="p">][(</span><span class="n">ch</span><span class="o">+</span><span class="mi">2</span><span class="p">)</span><span class="o">&amp;</span><span class="mi">3</span><span class="p">];</span>
+<span class="w">                </span><span class="p">}</span>
+<span class="w">                </span><span class="n">temp</span><span class="p">[</span><span class="n">ch</span><span class="p">]</span><span class="o">=</span><span class="n">v</span><span class="o">&amp;</span><span class="mi">7</span><span class="p">;</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">            </span><span class="kt">int</span><span class="w"> </span><span class="n">r</span><span class="o">=</span><span class="n">rot</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+<span class="w">            </span><span class="kt">int</span><span class="w"> </span><span class="n">w0</span><span class="o">=</span><span class="n">temp</span><span class="p">[(</span><span class="n">r</span><span class="o">+</span><span class="mi">0</span><span class="p">)</span><span class="o">&amp;</span><span class="mi">3</span><span class="p">],</span><span class="n">w1</span><span class="o">=</span><span class="n">temp</span><span class="p">[(</span><span class="n">r</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">&amp;</span><span class="mi">3</span><span class="p">],</span><span class="n">w2</span><span class="o">=</span><span class="n">temp</span><span class="p">[(</span><span class="n">r</span><span class="o">+</span><span class="mi">2</span><span class="p">)</span><span class="o">&amp;</span><span class="mi">3</span><span class="p">],</span><span class="n">w3</span><span class="o">=</span><span class="n">temp</span><span class="p">[(</span><span class="n">r</span><span class="o">+</span><span class="mi">3</span><span class="p">)</span><span class="o">&amp;</span><span class="mi">3</span><span class="p">];</span>
+<span class="w">            </span><span class="kt">int</span><span class="w"> </span><span class="n">o0</span><span class="p">,</span><span class="n">o1</span><span class="p">,</span><span class="n">o2</span><span class="p">,</span><span class="n">o3</span><span class="p">,</span><span class="n">anew</span><span class="p">;</span>
+<span class="w">            </span><span class="k">switch</span><span class="p">(</span><span class="n">type</span><span class="p">[</span><span class="n">i</span><span class="p">]){</span>
+<span class="w">                </span><span class="k">case</span><span class="w"> </span><span class="mi">0</span><span class="p">:</span><span class="w"> </span><span class="c1">// P</span>
+<span class="w">                    </span><span class="n">o0</span><span class="o">=</span><span class="n">c</span><span class="o">^</span><span class="n">w3</span><span class="p">;</span><span class="w"> </span><span class="n">o1</span><span class="o">=</span><span class="n">rotl</span><span class="p">(</span><span class="n">w0</span><span class="p">)</span><span class="o">^</span><span class="n">a</span><span class="p">;</span><span class="w"> </span><span class="n">o2</span><span class="o">=</span><span class="n">w1</span><span class="p">;</span><span class="w"> </span><span class="n">o3</span><span class="o">=</span><span class="n">rotl</span><span class="p">(</span><span class="n">rotl</span><span class="p">(</span><span class="n">w2</span><span class="p">));</span><span class="w"> </span><span class="n">anew</span><span class="o">=</span><span class="n">w2</span><span class="o">^</span><span class="n">w0</span><span class="p">;</span><span class="w"> </span><span class="k">break</span><span class="p">;</span>
+<span class="w">                </span><span class="k">case</span><span class="w"> </span><span class="mi">1</span><span class="p">:</span><span class="w"> </span><span class="c1">// J</span>
+<span class="w">                    </span><span class="n">o0</span><span class="o">=</span><span class="n">w2</span><span class="o">^</span><span class="n">w3</span><span class="o">^</span><span class="n">a</span><span class="p">;</span><span class="w"> </span><span class="n">o1</span><span class="o">=</span><span class="n">rotl</span><span class="p">(</span><span class="n">w3</span><span class="p">)</span><span class="o">^</span><span class="n">w0</span><span class="o">^</span><span class="n">c</span><span class="p">;</span><span class="w"> </span><span class="n">o2</span><span class="o">=</span><span class="n">w1</span><span class="o">^</span><span class="n">a</span><span class="p">;</span><span class="w"> </span><span class="n">o3</span><span class="o">=</span><span class="n">rotl</span><span class="p">(</span><span class="n">w2</span><span class="p">);</span><span class="w"> </span><span class="n">anew</span><span class="o">=</span><span class="p">(</span><span class="n">w3</span><span class="o">&amp;</span><span class="n">w0</span><span class="p">)</span><span class="o">|</span><span class="p">(</span><span class="n">w1</span><span class="o">&amp;</span><span class="n">w2</span><span class="p">);</span><span class="w"> </span><span class="k">break</span><span class="p">;</span>
+<span class="w">                </span><span class="k">case</span><span class="w"> </span><span class="mi">2</span><span class="p">:</span><span class="w"> </span><span class="c1">// D</span>
+<span class="w">                    </span><span class="n">o0</span><span class="o">=</span><span class="n">w2</span><span class="p">;</span><span class="w"> </span><span class="n">o1</span><span class="o">=</span><span class="n">a</span><span class="p">;</span><span class="w"> </span><span class="n">o2</span><span class="o">=</span><span class="n">c</span><span class="o">^</span><span class="n">w3</span><span class="p">;</span><span class="w"> </span><span class="n">o3</span><span class="o">=</span><span class="n">rotl</span><span class="p">(</span><span class="n">a</span><span class="p">)</span><span class="o">^</span><span class="n">w1</span><span class="p">;</span><span class="w"> </span><span class="n">anew</span><span class="o">=</span><span class="n">w0</span><span class="p">;</span><span class="w"> </span><span class="k">break</span><span class="p">;</span>
+<span class="w">                </span><span class="k">default</span><span class="o">:</span><span class="w"> </span><span class="c1">// L</span>
+<span class="w">                    </span><span class="n">o0</span><span class="o">=</span><span class="n">a</span><span class="o">^</span><span class="n">w3</span><span class="p">;</span><span class="w"> </span><span class="n">o1</span><span class="o">=</span><span class="n">a</span><span class="o">&amp;</span><span class="n">w0</span><span class="p">;</span><span class="w"> </span><span class="n">o2</span><span class="o">=</span><span class="n">w1</span><span class="p">;</span><span class="w"> </span><span class="n">o3</span><span class="o">=</span><span class="n">rotl</span><span class="p">(</span><span class="n">a</span><span class="p">)</span><span class="o">^</span><span class="p">(</span><span class="n">w2</span><span class="o">^</span><span class="n">c</span><span class="p">);</span><span class="w"> </span><span class="n">anew</span><span class="o">=</span><span class="p">(</span><span class="n">a</span><span class="o">|</span><span class="n">w3</span><span class="p">)</span><span class="o">&amp;</span><span class="p">(</span><span class="o">~</span><span class="n">w1</span><span class="p">);</span><span class="w"> </span><span class="k">break</span><span class="p">;</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">            </span><span class="k">if</span><span class="p">(</span><span class="n">b</span><span class="p">){</span><span class="w"> </span><span class="n">o0</span><span class="o">=</span><span class="n">rotl</span><span class="p">(</span><span class="n">o0</span><span class="p">);</span><span class="w"> </span><span class="n">o1</span><span class="o">=</span><span class="n">rotl</span><span class="p">(</span><span class="n">o1</span><span class="p">);</span><span class="w"> </span><span class="n">o2</span><span class="o">=</span><span class="n">rotl</span><span class="p">(</span><span class="n">o2</span><span class="p">);</span><span class="w"> </span><span class="n">o3</span><span class="o">=</span><span class="n">rotl</span><span class="p">(</span><span class="n">o3</span><span class="p">);</span><span class="w"> </span><span class="p">}</span>
+<span class="w">            </span><span class="kt">int</span><span class="w"> </span><span class="n">Fnew</span><span class="o">=</span><span class="p">(</span><span class="n">a</span><span class="w"> </span><span class="o">^</span><span class="w"> </span><span class="n">q</span><span class="w"> </span><span class="o">^</span><span class="w"> </span><span class="n">rotl</span><span class="p">(</span><span class="n">c</span><span class="p">)</span><span class="w"> </span><span class="o">^</span><span class="w"> </span><span class="n">w1</span><span class="w"> </span><span class="o">^</span><span class="w"> </span><span class="p">(</span><span class="n">rotl</span><span class="p">(</span><span class="n">w3</span><span class="p">)</span><span class="o">&amp;</span><span class="n">w0</span><span class="p">))</span><span class="o">&amp;</span><span class="mi">7</span><span class="p">;</span>
+<span class="w">            </span><span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">=</span><span class="n">anew</span><span class="o">&amp;</span><span class="mi">7</span><span class="p">;</span><span class="w"> </span><span class="n">B</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">=</span><span class="p">(</span><span class="n">b</span><span class="o">^</span><span class="p">((</span><span class="n">w3</span><span class="o">&gt;&gt;</span><span class="mi">2</span><span class="p">)</span><span class="o">&amp;</span><span class="mi">1</span><span class="p">))</span><span class="o">&amp;</span><span class="mi">1</span><span class="p">;</span><span class="w"> </span><span class="n">F</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">=</span><span class="n">Fnew</span><span class="p">;</span>
+<span class="w">            </span><span class="kt">int</span><span class="w"> </span><span class="n">o</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span><span class="o">=</span><span class="p">{</span><span class="n">o0</span><span class="p">,</span><span class="n">o1</span><span class="p">,</span><span class="n">o2</span><span class="p">,</span><span class="n">o3</span><span class="p">};</span>
+<span class="w">            </span><span class="k">for</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">d</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">d</span><span class="o">&lt;</span><span class="mi">4</span><span class="p">;</span><span class="w"> </span><span class="n">d</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="n">raw</span><span class="p">[</span><span class="n">e</span><span class="p">][</span><span class="n">i</span><span class="p">][(</span><span class="n">r</span><span class="o">+</span><span class="n">d</span><span class="p">)</span><span class="o">&amp;</span><span class="mi">3</span><span class="p">]</span><span class="o">=</span><span class="n">o</span><span class="p">[</span><span class="n">d</span><span class="p">]</span><span class="o">&amp;</span><span class="mi">7</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="c1">// output and target check</span>
+<span class="w">        </span><span class="k">for</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="mi">16</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">){</span>
+<span class="w">            </span><span class="k">for</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">ch</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">ch</span><span class="o">&lt;</span><span class="mi">4</span><span class="p">;</span><span class="w"> </span><span class="n">ch</span><span class="o">++</span><span class="p">){</span>
+<span class="w">                </span><span class="kt">int</span><span class="w"> </span><span class="n">val</span><span class="o">=</span><span class="n">raw</span><span class="p">[</span><span class="n">e</span><span class="p">][</span><span class="n">i</span><span class="p">][</span><span class="n">ch</span><span class="p">];</span>
+<span class="w">                </span><span class="k">if</span><span class="p">(</span><span class="n">e</span><span class="o">&gt;=</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="n">val</span><span class="o">|=</span><span class="n">rotl</span><span class="p">(</span><span class="n">raw</span><span class="p">[</span><span class="n">e</span><span class="mi">-1</span><span class="p">][</span><span class="n">i</span><span class="p">][</span><span class="n">ch</span><span class="p">]);</span>
+<span class="w">                </span><span class="k">if</span><span class="p">(</span><span class="n">e</span><span class="o">&gt;=</span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="n">val</span><span class="o">|=</span><span class="n">rotl</span><span class="p">(</span><span class="n">rotl</span><span class="p">(</span><span class="n">raw</span><span class="p">[</span><span class="n">e</span><span class="mi">-2</span><span class="p">][</span><span class="n">i</span><span class="p">][</span><span class="n">ch</span><span class="p">]));</span>
+<span class="w">                </span><span class="kt">int</span><span class="w"> </span><span class="n">out</span><span class="o">=</span><span class="n">val</span><span class="o">&amp;</span><span class="mi">7</span><span class="p">;</span>
+<span class="w">                </span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">out</span><span class="p">;</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="c1">// robust target check for tick e (in case order interleaves cells)</span>
+<span class="w">        </span><span class="c1">// (redundant but safe)</span>
+<span class="w">        </span><span class="k">if</span><span class="p">(</span><span class="n">e</span><span class="o">&gt;=</span><span class="mi">16</span><span class="p">){</span>
+<span class="w">            </span><span class="c1">// recompute out and check all targets with this tick</span>
+<span class="w">            </span><span class="k">for</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">k</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">k</span><span class="o">&lt;</span><span class="n">NTARG</span><span class="p">[</span><span class="n">exp</span><span class="p">];</span><span class="n">k</span><span class="o">++</span><span class="p">){</span>
+<span class="w">                </span><span class="kt">int</span><span class="w"> </span><span class="o">*</span><span class="n">T</span><span class="o">=</span><span class="n">TARGETS</span><span class="p">[</span><span class="n">exp</span><span class="p">][</span><span class="n">k</span><span class="p">];</span><span class="w"> </span><span class="k">if</span><span class="p">(</span><span class="n">T</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">!=</span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="k">continue</span><span class="p">;</span>
+<span class="w">                </span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="o">=</span><span class="n">T</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">ch</span><span class="o">=</span><span class="n">T</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span>
+<span class="w">                </span><span class="kt">int</span><span class="w"> </span><span class="n">val</span><span class="o">=</span><span class="n">raw</span><span class="p">[</span><span class="n">e</span><span class="p">][</span><span class="n">i</span><span class="p">][</span><span class="n">ch</span><span class="p">];</span>
+<span class="w">                </span><span class="k">if</span><span class="p">(</span><span class="n">e</span><span class="o">&gt;=</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="n">val</span><span class="o">|=</span><span class="n">rotl</span><span class="p">(</span><span class="n">raw</span><span class="p">[</span><span class="n">e</span><span class="mi">-1</span><span class="p">][</span><span class="n">i</span><span class="p">][</span><span class="n">ch</span><span class="p">]);</span>
+<span class="w">                </span><span class="k">if</span><span class="p">(</span><span class="n">e</span><span class="o">&gt;=</span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="n">val</span><span class="o">|=</span><span class="n">rotl</span><span class="p">(</span><span class="n">rotl</span><span class="p">(</span><span class="n">raw</span><span class="p">[</span><span class="n">e</span><span class="mi">-2</span><span class="p">][</span><span class="n">i</span><span class="p">][</span><span class="n">ch</span><span class="p">]));</span>
+<span class="w">                </span><span class="k">if</span><span class="p">((</span><span class="n">val</span><span class="o">&amp;</span><span class="mi">7</span><span class="p">)</span><span class="o">!=</span><span class="n">T</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="w">                </span><span class="p">(</span><span class="o">*</span><span class="n">matched</span><span class="p">)</span><span class="o">++</span><span class="p">;</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="c1">// C update</span>
+<span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">Cn</span><span class="p">[</span><span class="mi">16</span><span class="p">];</span>
+<span class="w">        </span><span class="k">for</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="mi">16</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="n">Cn</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">=</span><span class="p">(</span><span class="n">rotl</span><span class="p">(</span><span class="n">raw</span><span class="p">[</span><span class="n">e</span><span class="p">][</span><span class="n">i</span><span class="p">][(</span><span class="n">e</span><span class="o">+</span><span class="n">i</span><span class="p">)</span><span class="o">&amp;</span><span class="mi">3</span><span class="p">])</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">F</span><span class="p">[(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">&amp;</span><span class="mi">15</span><span class="p">])</span><span class="w"> </span><span class="o">^</span><span class="w"> </span><span class="n">F</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">^</span><span class="w"> </span><span class="n">rotl</span><span class="p">(</span><span class="n">F</span><span class="p">[(</span><span class="n">i</span><span class="mi">-1</span><span class="p">)</span><span class="o">&amp;</span><span class="mi">15</span><span class="p">]);</span>
+<span class="w">        </span><span class="k">for</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="mi">16</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="n">C</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">=</span><span class="n">Cn</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">&amp;</span><span class="mi">7</span><span class="p">;</span>
+<span class="w">        </span><span class="c1">// q update</span>
+<span class="w">        </span><span class="n">q</span><span class="o">=</span><span class="n">rotl</span><span class="p">(</span><span class="n">q</span><span class="p">);</span>
+<span class="w">        </span><span class="k">for</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="mi">16</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">){</span>
+<span class="w">            </span><span class="kt">int</span><span class="w"> </span><span class="n">x</span><span class="o">=</span><span class="p">(</span><span class="n">rotl</span><span class="p">(</span><span class="n">raw</span><span class="p">[</span><span class="n">e</span><span class="p">][</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span><span class="w"> </span><span class="o">^</span><span class="w"> </span><span class="p">(</span><span class="n">raw</span><span class="p">[</span><span class="n">e</span><span class="p">][</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">^</span><span class="n">raw</span><span class="p">[</span><span class="n">e</span><span class="p">][</span><span class="n">i</span><span class="p">][</span><span class="mi">3</span><span class="p">])</span><span class="w"> </span><span class="o">^</span><span class="w"> </span><span class="n">rotl</span><span class="p">(</span><span class="n">rotl</span><span class="p">(</span><span class="n">raw</span><span class="p">[</span><span class="n">e</span><span class="p">][</span><span class="n">i</span><span class="p">][</span><span class="mi">2</span><span class="p">])))</span><span class="o">&amp;</span><span class="mi">7</span><span class="p">;</span>
+<span class="w">            </span><span class="n">q</span><span class="o">=</span><span class="p">(</span><span class="n">rotl</span><span class="p">(</span><span class="n">q</span><span class="p">)</span><span class="o">^</span><span class="n">x</span><span class="o">^</span><span class="p">(</span><span class="n">rotl</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">&amp;</span><span class="n">q</span><span class="p">))</span><span class="o">&amp;</span><span class="mi">7</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">static</span><span class="w"> </span><span class="k">volatile</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">found</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+<span class="k">static</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="n">solstr</span><span class="p">[</span><span class="mi">64</span><span class="p">];</span>
+
+<span class="k">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">leaf</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">type</span><span class="p">[</span><span class="mi">16</span><span class="p">],</span><span class="w"> </span><span class="kt">uint64_t</span><span class="w"> </span><span class="o">*</span><span class="n">cnt</span><span class="p">){</span>
+<span class="w">    </span><span class="k">if</span><span class="p">(</span><span class="n">found</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">m0</span><span class="p">,</span><span class="n">t0</span><span class="p">,</span><span class="n">m1</span><span class="p">,</span><span class="n">t1</span><span class="p">;</span>
+<span class="w">    </span><span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">sim_exp</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">type</span><span class="p">,</span><span class="o">&amp;</span><span class="n">m0</span><span class="p">,</span><span class="o">&amp;</span><span class="n">t0</span><span class="p">))</span><span class="w"> </span><span class="k">return</span><span class="p">;</span>
+<span class="w">    </span><span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">sim_exp</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">type</span><span class="p">,</span><span class="o">&amp;</span><span class="n">m1</span><span class="p">,</span><span class="o">&amp;</span><span class="n">t1</span><span class="p">))</span><span class="w"> </span><span class="k">return</span><span class="p">;</span>
+<span class="w">    </span><span class="cp">#pragma omp critical</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">found</span><span class="p">){</span>
+<span class="w">            </span><span class="n">found</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span>
+<span class="w">            </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">p</span><span class="o">=</span><span class="n">solstr</span><span class="p">;</span>
+<span class="w">            </span><span class="k">for</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="mi">16</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">){</span><span class="w"> </span><span class="o">*</span><span class="n">p</span><span class="o">++=</span><span class="s">&quot;PJDL&quot;</span><span class="p">[</span><span class="n">type</span><span class="p">[</span><span class="n">i</span><span class="p">]];</span><span class="w"> </span><span class="o">*</span><span class="n">p</span><span class="o">++=</span><span class="sc">&#39;0&#39;</span><span class="o">+</span><span class="n">MOUNT_ROT</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">type</span><span class="p">[</span><span class="n">i</span><span class="p">]];</span><span class="w"> </span><span class="p">}</span>
+<span class="w">            </span><span class="o">*</span><span class="n">p</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+<span class="w">            </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;FOUND %s</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="n">solstr</span><span class="p">);</span><span class="w"> </span><span class="n">fflush</span><span class="p">(</span><span class="n">stdout</span><span class="p">);</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">rec</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">c0</span><span class="p">,</span><span class="kt">int</span><span class="w"> </span><span class="n">c1</span><span class="p">,</span><span class="kt">int</span><span class="w"> </span><span class="n">c2</span><span class="p">,</span><span class="kt">int</span><span class="w"> </span><span class="n">c3</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">type</span><span class="p">[</span><span class="mi">16</span><span class="p">]){</span>
+<span class="w">    </span><span class="k">if</span><span class="p">(</span><span class="n">found</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="p">;</span>
+<span class="w">    </span><span class="k">if</span><span class="p">(</span><span class="n">i</span><span class="o">==</span><span class="mi">16</span><span class="p">){</span><span class="w"> </span><span class="k">if</span><span class="p">(</span><span class="n">c0</span><span class="o">==</span><span class="mi">4</span><span class="o">&amp;&amp;</span><span class="n">c1</span><span class="o">==</span><span class="mi">4</span><span class="o">&amp;&amp;</span><span class="n">c2</span><span class="o">==</span><span class="mi">4</span><span class="o">&amp;&amp;</span><span class="n">c3</span><span class="o">==</span><span class="mi">4</span><span class="p">)</span><span class="w"> </span><span class="n">leaf</span><span class="p">(</span><span class="n">type</span><span class="p">,</span><span class="mi">0</span><span class="p">);</span><span class="w"> </span><span class="k">return</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">rem</span><span class="o">=</span><span class="mi">16</span><span class="o">-</span><span class="n">i</span><span class="p">;</span>
+<span class="w">    </span><span class="k">for</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">t</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">t</span><span class="o">&lt;</span><span class="mi">4</span><span class="p">;</span><span class="n">t</span><span class="o">++</span><span class="p">){</span>
+<span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="o">*</span><span class="n">c</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">t</span><span class="o">==</span><span class="mi">0</span><span class="o">?&amp;</span><span class="n">c0</span><span class="o">:</span><span class="n">t</span><span class="o">==</span><span class="mi">1</span><span class="o">?&amp;</span><span class="n">c1</span><span class="o">:</span><span class="n">t</span><span class="o">==</span><span class="mi">2</span><span class="o">?&amp;</span><span class="n">c2</span><span class="o">:&amp;</span><span class="n">c3</span><span class="p">;</span>
+<span class="w">        </span><span class="k">if</span><span class="p">(</span><span class="o">*</span><span class="n">c</span><span class="o">&gt;=</span><span class="mi">4</span><span class="p">)</span><span class="w"> </span><span class="k">continue</span><span class="p">;</span>
+<span class="w">        </span><span class="p">(</span><span class="o">*</span><span class="n">c</span><span class="p">)</span><span class="o">++</span><span class="p">;</span>
+<span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">ok</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="n">c</span><span class="o">&lt;=</span><span class="mi">4</span><span class="p">);</span>
+<span class="w">        </span><span class="k">if</span><span class="p">(</span><span class="n">ok</span><span class="p">){</span>
+<span class="w">            </span><span class="c1">// prune: remaining cells must be able to fill each type to 4</span>
+<span class="w">            </span><span class="kt">int</span><span class="w"> </span><span class="n">cnts</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span><span class="o">=</span><span class="p">{</span><span class="n">c0</span><span class="p">,</span><span class="n">c1</span><span class="p">,</span><span class="n">c2</span><span class="p">,</span><span class="n">c3</span><span class="p">};</span>
+<span class="w">            </span><span class="k">for</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">k</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">k</span><span class="o">&lt;</span><span class="mi">4</span><span class="p">;</span><span class="n">k</span><span class="o">++</span><span class="p">){</span><span class="w"> </span><span class="k">if</span><span class="p">(</span><span class="n">cnts</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="o">+</span><span class="p">(</span><span class="n">rem</span><span class="mi">-1</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">4</span><span class="p">)</span><span class="w"> </span><span class="n">ok</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="k">if</span><span class="p">(</span><span class="n">ok</span><span class="p">){</span><span class="w"> </span><span class="n">type</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">=</span><span class="n">t</span><span class="p">;</span><span class="w"> </span><span class="n">rec</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">c0</span><span class="p">,</span><span class="n">c1</span><span class="p">,</span><span class="n">c2</span><span class="p">,</span><span class="n">c3</span><span class="p">,</span><span class="n">type</span><span class="p">);</span><span class="w"> </span><span class="p">}</span>
+<span class="w">        </span><span class="p">(</span><span class="o">*</span><span class="n">c</span><span class="p">)</span><span class="o">--</span><span class="p">;</span>
+<span class="w">        </span><span class="k">if</span><span class="p">(</span><span class="n">found</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+
+
+<span class="k">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">dump_all</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">type</span><span class="p">[</span><span class="mi">16</span><span class="p">]){</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">n</span><span class="o">=</span><span class="mi">16</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">A</span><span class="p">[</span><span class="mi">16</span><span class="p">],</span><span class="n">B</span><span class="p">[</span><span class="mi">16</span><span class="p">],</span><span class="n">C</span><span class="p">[</span><span class="mi">16</span><span class="p">],</span><span class="n">F</span><span class="p">[</span><span class="mi">16</span><span class="p">],</span><span class="n">q</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">rot</span><span class="p">[</span><span class="mi">16</span><span class="p">],</span><span class="n">comp</span><span class="p">[</span><span class="mi">16</span><span class="p">];</span>
+<span class="w">    </span><span class="k">for</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="mi">16</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">){</span><span class="w"> </span><span class="n">rot</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">=</span><span class="n">MOUNT_ROT</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">type</span><span class="p">[</span><span class="n">i</span><span class="p">]];</span><span class="w"> </span><span class="n">comp</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">=</span><span class="n">MOUNT_COMP</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">type</span><span class="p">[</span><span class="n">i</span><span class="p">]];</span><span class="w"> </span><span class="p">}</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">f</span><span class="p">[</span><span class="mi">16</span><span class="p">];</span><span class="w"> </span><span class="k">for</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="mi">16</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="n">f</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">=</span><span class="n">comp</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+<span class="w">    </span><span class="k">for</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">r</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">r</span><span class="o">&lt;</span><span class="mi">16</span><span class="p">;</span><span class="n">r</span><span class="o">++</span><span class="p">){</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">g</span><span class="p">[</span><span class="mi">16</span><span class="p">];</span><span class="w"> </span><span class="k">for</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="mi">16</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="n">g</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">=</span><span class="p">((</span><span class="n">rotl</span><span class="p">(</span><span class="n">f</span><span class="p">[</span><span class="n">i</span><span class="p">])</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">f</span><span class="p">[(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">&amp;</span><span class="mi">15</span><span class="p">])</span><span class="w"> </span><span class="o">^</span><span class="w"> </span><span class="n">rotl</span><span class="p">(</span><span class="n">f</span><span class="p">[(</span><span class="n">i</span><span class="mi">-1</span><span class="p">)</span><span class="o">&amp;</span><span class="mi">15</span><span class="p">])</span><span class="w"> </span><span class="o">^</span><span class="w"> </span><span class="n">f</span><span class="p">[</span><span class="n">i</span><span class="p">])</span><span class="o">&amp;</span><span class="mi">7</span><span class="p">;</span><span class="w"> </span><span class="n">memcpy</span><span class="p">(</span><span class="n">f</span><span class="p">,</span><span class="n">g</span><span class="p">,</span><span class="k">sizeof</span><span class="p">(</span><span class="n">f</span><span class="p">));</span><span class="w"> </span><span class="p">}</span>
+<span class="w">    </span><span class="k">for</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="mi">16</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">){</span><span class="w"> </span><span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">=</span><span class="n">f</span><span class="p">[</span><span class="n">i</span><span class="p">];</span><span class="w"> </span><span class="n">B</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">=</span><span class="p">((</span><span class="n">f</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">&gt;&gt;</span><span class="mi">2</span><span class="p">)</span><span class="o">^</span><span class="n">f</span><span class="p">[</span><span class="n">i</span><span class="p">])</span><span class="o">&amp;</span><span class="mi">1</span><span class="p">;</span><span class="w"> </span><span class="n">F</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">=</span><span class="n">f</span><span class="p">[</span><span class="n">i</span><span class="p">];</span><span class="w"> </span><span class="p">}</span>
+<span class="w">    </span><span class="k">for</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="mi">16</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="n">C</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">=</span><span class="p">(</span><span class="n">A</span><span class="p">[(</span><span class="n">i</span><span class="mi">-1</span><span class="p">)</span><span class="o">&amp;</span><span class="mi">15</span><span class="p">]</span><span class="w"> </span><span class="o">^</span><span class="w"> </span><span class="n">rotl</span><span class="p">(</span><span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">])</span><span class="w"> </span><span class="o">^</span><span class="w"> </span><span class="p">(</span><span class="n">rotl</span><span class="p">(</span><span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">])</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">A</span><span class="p">[(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">&amp;</span><span class="mi">15</span><span class="p">]))</span><span class="o">&amp;</span><span class="mi">7</span><span class="p">;</span>
+<span class="w">    </span><span class="n">q</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span><span class="w"> </span><span class="k">for</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="mi">16</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="n">q</span><span class="o">=</span><span class="p">(</span><span class="n">rotl</span><span class="p">(</span><span class="n">q</span><span class="p">)</span><span class="w"> </span><span class="o">^</span><span class="w"> </span><span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">^</span><span class="w"> </span><span class="p">(</span><span class="n">rotl</span><span class="p">(</span><span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">])</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">q</span><span class="p">))</span><span class="o">&amp;</span><span class="mi">7</span><span class="p">;</span>
+<span class="w">    </span><span class="k">static</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">DR</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span><span class="o">=</span><span class="p">{</span><span class="mi">-1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">},</span><span class="w"> </span><span class="n">DC</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span><span class="o">=</span><span class="p">{</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">-1</span><span class="p">};</span>
+<span class="w">    </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="n">raw</span><span class="p">[</span><span class="mi">24</span><span class="p">][</span><span class="mi">16</span><span class="p">][</span><span class="mi">4</span><span class="p">];</span>
+<span class="w">    </span><span class="k">for</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">exp</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">exp</span><span class="o">&lt;</span><span class="mi">1</span><span class="p">;</span><span class="n">exp</span><span class="o">++</span><span class="p">){</span>
+<span class="w">    </span><span class="k">for</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">e</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">e</span><span class="o">&lt;</span><span class="mi">24</span><span class="p">;</span><span class="n">e</span><span class="o">++</span><span class="p">){</span>
+<span class="w">        </span><span class="k">for</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="mi">16</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">){</span>
+<span class="w">            </span><span class="kt">int</span><span class="w"> </span><span class="n">row</span><span class="o">=</span><span class="n">i</span><span class="o">&gt;&gt;</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="n">col</span><span class="o">=</span><span class="n">i</span><span class="o">&amp;</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="n">a</span><span class="o">=</span><span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">],</span><span class="w"> </span><span class="n">b</span><span class="o">=</span><span class="n">B</span><span class="p">[</span><span class="n">i</span><span class="p">],</span><span class="w"> </span><span class="n">c</span><span class="o">=</span><span class="n">C</span><span class="p">[</span><span class="n">i</span><span class="p">];</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">temp</span><span class="p">[</span><span class="mi">4</span><span class="p">];</span>
+<span class="w">            </span><span class="k">for</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">ch</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">ch</span><span class="o">&lt;</span><span class="mi">4</span><span class="p">;</span><span class="w"> </span><span class="n">ch</span><span class="o">++</span><span class="p">){</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">v</span><span class="o">=</span><span class="n">INJ</span><span class="p">[</span><span class="n">exp</span><span class="p">][</span><span class="n">e</span><span class="p">][</span><span class="n">i</span><span class="p">][</span><span class="n">ch</span><span class="p">]</span><span class="o">&amp;</span><span class="mi">7</span><span class="p">;</span><span class="w"> </span><span class="k">if</span><span class="p">(</span><span class="n">ch</span><span class="o">==</span><span class="p">((</span><span class="n">e</span><span class="o">+</span><span class="n">i</span><span class="p">)</span><span class="o">&amp;</span><span class="mi">3</span><span class="p">))</span><span class="w"> </span><span class="n">v</span><span class="o">^=</span><span class="n">q</span><span class="p">;</span>
+<span class="w">                </span><span class="k">if</span><span class="p">(</span><span class="n">e</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">){</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">nr</span><span class="o">=</span><span class="n">row</span><span class="o">+</span><span class="n">DR</span><span class="p">[</span><span class="n">ch</span><span class="p">],</span><span class="w"> </span><span class="n">nc</span><span class="o">=</span><span class="n">col</span><span class="o">+</span><span class="n">DC</span><span class="p">[</span><span class="n">ch</span><span class="p">];</span><span class="w"> </span><span class="k">if</span><span class="p">(</span><span class="n">nr</span><span class="o">&gt;=</span><span class="mi">0</span><span class="o">&amp;&amp;</span><span class="n">nr</span><span class="o">&lt;</span><span class="mi">4</span><span class="o">&amp;&amp;</span><span class="n">nc</span><span class="o">&gt;=</span><span class="mi">0</span><span class="o">&amp;&amp;</span><span class="n">nc</span><span class="o">&lt;</span><span class="mi">4</span><span class="p">)</span><span class="w"> </span><span class="n">v</span><span class="o">^=</span><span class="n">raw</span><span class="p">[</span><span class="n">e</span><span class="mi">-1</span><span class="p">][</span><span class="n">nr</span><span class="o">*</span><span class="mi">4</span><span class="o">+</span><span class="n">nc</span><span class="p">][(</span><span class="n">ch</span><span class="o">+</span><span class="mi">2</span><span class="p">)</span><span class="o">&amp;</span><span class="mi">3</span><span class="p">];</span><span class="w"> </span><span class="p">}</span>
+<span class="w">                </span><span class="n">temp</span><span class="p">[</span><span class="n">ch</span><span class="p">]</span><span class="o">=</span><span class="n">v</span><span class="o">&amp;</span><span class="mi">7</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<span class="w">            </span><span class="kt">int</span><span class="w"> </span><span class="n">r</span><span class="o">=</span><span class="n">rot</span><span class="p">[</span><span class="n">i</span><span class="p">];</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">w0</span><span class="o">=</span><span class="n">temp</span><span class="p">[(</span><span class="n">r</span><span class="o">+</span><span class="mi">0</span><span class="p">)</span><span class="o">&amp;</span><span class="mi">3</span><span class="p">],</span><span class="n">w1</span><span class="o">=</span><span class="n">temp</span><span class="p">[(</span><span class="n">r</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">&amp;</span><span class="mi">3</span><span class="p">],</span><span class="n">w2</span><span class="o">=</span><span class="n">temp</span><span class="p">[(</span><span class="n">r</span><span class="o">+</span><span class="mi">2</span><span class="p">)</span><span class="o">&amp;</span><span class="mi">3</span><span class="p">],</span><span class="n">w3</span><span class="o">=</span><span class="n">temp</span><span class="p">[(</span><span class="n">r</span><span class="o">+</span><span class="mi">3</span><span class="p">)</span><span class="o">&amp;</span><span class="mi">3</span><span class="p">];</span>
+<span class="w">            </span><span class="kt">int</span><span class="w"> </span><span class="n">o0</span><span class="p">,</span><span class="n">o1</span><span class="p">,</span><span class="n">o2</span><span class="p">,</span><span class="n">o3</span><span class="p">,</span><span class="n">anew</span><span class="p">;</span>
+<span class="w">            </span><span class="k">switch</span><span class="p">(</span><span class="n">type</span><span class="p">[</span><span class="n">i</span><span class="p">]){</span>
+<span class="w">                </span><span class="k">case</span><span class="w"> </span><span class="mi">0</span><span class="p">:</span><span class="w"> </span><span class="n">o0</span><span class="o">=</span><span class="n">c</span><span class="o">^</span><span class="n">w3</span><span class="p">;</span><span class="w"> </span><span class="n">o1</span><span class="o">=</span><span class="n">rotl</span><span class="p">(</span><span class="n">w0</span><span class="p">)</span><span class="o">^</span><span class="n">a</span><span class="p">;</span><span class="w"> </span><span class="n">o2</span><span class="o">=</span><span class="n">w1</span><span class="p">;</span><span class="w"> </span><span class="n">o3</span><span class="o">=</span><span class="n">rotl</span><span class="p">(</span><span class="n">rotl</span><span class="p">(</span><span class="n">w2</span><span class="p">));</span><span class="w"> </span><span class="n">anew</span><span class="o">=</span><span class="n">w2</span><span class="o">^</span><span class="n">w0</span><span class="p">;</span><span class="w"> </span><span class="k">break</span><span class="p">;</span>
+<span class="w">                </span><span class="k">case</span><span class="w"> </span><span class="mi">1</span><span class="p">:</span><span class="w"> </span><span class="n">o0</span><span class="o">=</span><span class="n">w2</span><span class="o">^</span><span class="n">w3</span><span class="o">^</span><span class="n">a</span><span class="p">;</span><span class="w"> </span><span class="n">o1</span><span class="o">=</span><span class="n">rotl</span><span class="p">(</span><span class="n">w3</span><span class="p">)</span><span class="o">^</span><span class="n">w0</span><span class="o">^</span><span class="n">c</span><span class="p">;</span><span class="w"> </span><span class="n">o2</span><span class="o">=</span><span class="n">w1</span><span class="o">^</span><span class="n">a</span><span class="p">;</span><span class="w"> </span><span class="n">o3</span><span class="o">=</span><span class="n">rotl</span><span class="p">(</span><span class="n">w2</span><span class="p">);</span><span class="w"> </span><span class="n">anew</span><span class="o">=</span><span class="p">(</span><span class="n">w3</span><span class="o">&amp;</span><span class="n">w0</span><span class="p">)</span><span class="o">|</span><span class="p">(</span><span class="n">w1</span><span class="o">&amp;</span><span class="n">w2</span><span class="p">);</span><span class="w"> </span><span class="k">break</span><span class="p">;</span>
+<span class="w">                </span><span class="k">case</span><span class="w"> </span><span class="mi">2</span><span class="p">:</span><span class="w"> </span><span class="n">o0</span><span class="o">=</span><span class="n">w2</span><span class="p">;</span><span class="w"> </span><span class="n">o1</span><span class="o">=</span><span class="n">a</span><span class="p">;</span><span class="w"> </span><span class="n">o2</span><span class="o">=</span><span class="n">c</span><span class="o">^</span><span class="n">w3</span><span class="p">;</span><span class="w"> </span><span class="n">o3</span><span class="o">=</span><span class="n">rotl</span><span class="p">(</span><span class="n">a</span><span class="p">)</span><span class="o">^</span><span class="n">w1</span><span class="p">;</span><span class="w"> </span><span class="n">anew</span><span class="o">=</span><span class="n">w0</span><span class="p">;</span><span class="w"> </span><span class="k">break</span><span class="p">;</span>
+<span class="w">                </span><span class="k">default</span><span class="o">:</span><span class="w"> </span><span class="n">o0</span><span class="o">=</span><span class="n">a</span><span class="o">^</span><span class="n">w3</span><span class="p">;</span><span class="w"> </span><span class="n">o1</span><span class="o">=</span><span class="n">a</span><span class="o">&amp;</span><span class="n">w0</span><span class="p">;</span><span class="w"> </span><span class="n">o2</span><span class="o">=</span><span class="n">w1</span><span class="p">;</span><span class="w"> </span><span class="n">o3</span><span class="o">=</span><span class="n">rotl</span><span class="p">(</span><span class="n">a</span><span class="p">)</span><span class="o">^</span><span class="p">(</span><span class="n">w2</span><span class="o">^</span><span class="n">c</span><span class="p">);</span><span class="w"> </span><span class="n">anew</span><span class="o">=</span><span class="p">(</span><span class="n">a</span><span class="o">|</span><span class="n">w3</span><span class="p">)</span><span class="o">&amp;</span><span class="p">(</span><span class="o">~</span><span class="n">w1</span><span class="p">);</span><span class="w"> </span><span class="k">break</span><span class="p">;</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">            </span><span class="k">if</span><span class="p">(</span><span class="n">b</span><span class="p">){</span><span class="w"> </span><span class="n">o0</span><span class="o">=</span><span class="n">rotl</span><span class="p">(</span><span class="n">o0</span><span class="p">);</span><span class="w"> </span><span class="n">o1</span><span class="o">=</span><span class="n">rotl</span><span class="p">(</span><span class="n">o1</span><span class="p">);</span><span class="w"> </span><span class="n">o2</span><span class="o">=</span><span class="n">rotl</span><span class="p">(</span><span class="n">o2</span><span class="p">);</span><span class="w"> </span><span class="n">o3</span><span class="o">=</span><span class="n">rotl</span><span class="p">(</span><span class="n">o3</span><span class="p">);</span><span class="w"> </span><span class="p">}</span>
+<span class="w">            </span><span class="kt">int</span><span class="w"> </span><span class="n">Fnew</span><span class="o">=</span><span class="p">(</span><span class="n">a</span><span class="w"> </span><span class="o">^</span><span class="w"> </span><span class="n">q</span><span class="w"> </span><span class="o">^</span><span class="w"> </span><span class="n">rotl</span><span class="p">(</span><span class="n">c</span><span class="p">)</span><span class="w"> </span><span class="o">^</span><span class="w"> </span><span class="n">w1</span><span class="w"> </span><span class="o">^</span><span class="w"> </span><span class="p">(</span><span class="n">rotl</span><span class="p">(</span><span class="n">w3</span><span class="p">)</span><span class="o">&amp;</span><span class="n">w0</span><span class="p">))</span><span class="o">&amp;</span><span class="mi">7</span><span class="p">;</span>
+<span class="w">            </span><span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">=</span><span class="n">anew</span><span class="o">&amp;</span><span class="mi">7</span><span class="p">;</span><span class="w"> </span><span class="n">B</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">=</span><span class="p">(</span><span class="n">b</span><span class="o">^</span><span class="p">((</span><span class="n">w3</span><span class="o">&gt;&gt;</span><span class="mi">2</span><span class="p">)</span><span class="o">&amp;</span><span class="mi">1</span><span class="p">))</span><span class="o">&amp;</span><span class="mi">1</span><span class="p">;</span><span class="w"> </span><span class="n">F</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">=</span><span class="n">Fnew</span><span class="p">;</span>
+<span class="w">            </span><span class="kt">int</span><span class="w"> </span><span class="n">o</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span><span class="o">=</span><span class="p">{</span><span class="n">o0</span><span class="p">,</span><span class="n">o1</span><span class="p">,</span><span class="n">o2</span><span class="p">,</span><span class="n">o3</span><span class="p">};</span><span class="w"> </span><span class="k">for</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">d</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">d</span><span class="o">&lt;</span><span class="mi">4</span><span class="p">;</span><span class="w"> </span><span class="n">d</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="n">raw</span><span class="p">[</span><span class="n">e</span><span class="p">][</span><span class="n">i</span><span class="p">][(</span><span class="n">r</span><span class="o">+</span><span class="n">d</span><span class="p">)</span><span class="o">&amp;</span><span class="mi">3</span><span class="p">]</span><span class="o">=</span><span class="n">o</span><span class="p">[</span><span class="n">d</span><span class="p">]</span><span class="o">&amp;</span><span class="mi">7</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;T%d &quot;</span><span class="p">,</span><span class="n">e</span><span class="p">);</span>
+<span class="w">        </span><span class="k">for</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="mi">16</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">){</span><span class="w"> </span><span class="k">for</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">ch</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">ch</span><span class="o">&lt;</span><span class="mi">4</span><span class="p">;</span><span class="w"> </span><span class="n">ch</span><span class="o">++</span><span class="p">){</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">val</span><span class="o">=</span><span class="n">raw</span><span class="p">[</span><span class="n">e</span><span class="p">][</span><span class="n">i</span><span class="p">][</span><span class="n">ch</span><span class="p">];</span><span class="w"> </span><span class="k">if</span><span class="p">(</span><span class="n">e</span><span class="o">&gt;=</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="n">val</span><span class="o">|=</span><span class="n">rotl</span><span class="p">(</span><span class="n">raw</span><span class="p">[</span><span class="n">e</span><span class="mi">-1</span><span class="p">][</span><span class="n">i</span><span class="p">][</span><span class="n">ch</span><span class="p">]);</span><span class="w"> </span><span class="k">if</span><span class="p">(</span><span class="n">e</span><span class="o">&gt;=</span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="n">val</span><span class="o">|=</span><span class="n">rotl</span><span class="p">(</span><span class="n">rotl</span><span class="p">(</span><span class="n">raw</span><span class="p">[</span><span class="n">e</span><span class="mi">-2</span><span class="p">][</span><span class="n">i</span><span class="p">][</span><span class="n">ch</span><span class="p">]));</span><span class="w"> </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;%d&quot;</span><span class="p">,</span><span class="n">val</span><span class="o">&amp;</span><span class="mi">7</span><span class="p">);}</span><span class="w"> </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot; &quot;</span><span class="p">);</span><span class="w"> </span><span class="p">}</span>
+<span class="w">        </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">Cn</span><span class="p">[</span><span class="mi">16</span><span class="p">];</span><span class="w"> </span><span class="k">for</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="mi">16</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="n">Cn</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">=</span><span class="p">(</span><span class="n">rotl</span><span class="p">(</span><span class="n">raw</span><span class="p">[</span><span class="n">e</span><span class="p">][</span><span class="n">i</span><span class="p">][(</span><span class="n">e</span><span class="o">+</span><span class="n">i</span><span class="p">)</span><span class="o">&amp;</span><span class="mi">3</span><span class="p">])</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">F</span><span class="p">[(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">&amp;</span><span class="mi">15</span><span class="p">])</span><span class="w"> </span><span class="o">^</span><span class="w"> </span><span class="n">F</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">^</span><span class="w"> </span><span class="n">rotl</span><span class="p">(</span><span class="n">F</span><span class="p">[(</span><span class="n">i</span><span class="mi">-1</span><span class="p">)</span><span class="o">&amp;</span><span class="mi">15</span><span class="p">]);</span>
+<span class="w">        </span><span class="k">for</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="mi">16</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="n">C</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">=</span><span class="n">Cn</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">&amp;</span><span class="mi">7</span><span class="p">;</span>
+<span class="w">        </span><span class="n">q</span><span class="o">=</span><span class="n">rotl</span><span class="p">(</span><span class="n">q</span><span class="p">);</span><span class="w"> </span><span class="k">for</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="mi">16</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">){</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">x</span><span class="o">=</span><span class="p">(</span><span class="n">rotl</span><span class="p">(</span><span class="n">raw</span><span class="p">[</span><span class="n">e</span><span class="p">][</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span><span class="w"> </span><span class="o">^</span><span class="w"> </span><span class="p">(</span><span class="n">raw</span><span class="p">[</span><span class="n">e</span><span class="p">][</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">^</span><span class="n">raw</span><span class="p">[</span><span class="n">e</span><span class="p">][</span><span class="n">i</span><span class="p">][</span><span class="mi">3</span><span class="p">])</span><span class="w"> </span><span class="o">^</span><span class="w"> </span><span class="n">rotl</span><span class="p">(</span><span class="n">rotl</span><span class="p">(</span><span class="n">raw</span><span class="p">[</span><span class="n">e</span><span class="p">][</span><span class="n">i</span><span class="p">][</span><span class="mi">2</span><span class="p">])))</span><span class="o">&amp;</span><span class="mi">7</span><span class="p">;</span><span class="w"> </span><span class="n">q</span><span class="o">=</span><span class="p">(</span><span class="n">rotl</span><span class="p">(</span><span class="n">q</span><span class="p">)</span><span class="o">^</span><span class="n">x</span><span class="o">^</span><span class="p">(</span><span class="n">rotl</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">&amp;</span><span class="n">q</span><span class="p">))</span><span class="o">&amp;</span><span class="mi">7</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}}</span>
+<span class="p">}</span>
+
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">argc</span><span class="p">,</span><span class="kt">char</span><span class="o">**</span><span class="n">argv</span><span class="p">){</span>
+<span class="w">    </span><span class="k">if</span><span class="p">(</span><span class="n">argc</span><span class="o">&gt;</span><span class="mi">1</span><span class="p">){</span>
+<span class="w">        </span><span class="c1">// test layout string</span>
+<span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">type</span><span class="p">[</span><span class="mi">16</span><span class="p">];</span><span class="w"> </span><span class="k">for</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="mi">16</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">){</span><span class="w"> </span><span class="n">type</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">=</span><span class="n">strchr</span><span class="p">(</span><span class="s">&quot;PJDL&quot;</span><span class="p">,</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">2</span><span class="o">*</span><span class="n">i</span><span class="p">])</span><span class="o">-</span><span class="s">&quot;PJDL&quot;</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<span class="w">        </span><span class="k">if</span><span class="p">(</span><span class="n">argc</span><span class="o">&gt;</span><span class="mi">2</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">strcmp</span><span class="p">(</span><span class="n">argv</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span><span class="s">&quot;dump&quot;</span><span class="p">)</span><span class="o">==</span><span class="mi">0</span><span class="p">){</span><span class="w"> </span><span class="n">dump_all</span><span class="p">(</span><span class="n">type</span><span class="p">);</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">m0</span><span class="p">,</span><span class="n">t0</span><span class="p">,</span><span class="n">m1</span><span class="p">,</span><span class="n">t1</span><span class="p">;</span>
+<span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">r0</span><span class="o">=</span><span class="n">sim_exp</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">type</span><span class="p">,</span><span class="o">&amp;</span><span class="n">m0</span><span class="p">,</span><span class="o">&amp;</span><span class="n">t0</span><span class="p">),</span><span class="w"> </span><span class="n">r1</span><span class="o">=</span><span class="n">sim_exp</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">type</span><span class="p">,</span><span class="o">&amp;</span><span class="n">m1</span><span class="p">,</span><span class="o">&amp;</span><span class="n">t1</span><span class="p">);</span>
+<span class="w">        </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;exp0 passed=%d matched=%d/%d</span><span class="se">\n</span><span class="s">exp1 passed=%d matched=%d/%d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="n">r0</span><span class="p">,</span><span class="n">m0</span><span class="p">,</span><span class="n">t0</span><span class="p">,</span><span class="n">r1</span><span class="p">,</span><span class="n">m1</span><span class="p">,</span><span class="n">t1</span><span class="p">);</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="n">t0</span><span class="o">=</span><span class="n">omp_get_wtime</span><span class="p">();</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">SPLIT</span><span class="o">=</span><span class="mi">6</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">total</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span><span class="w"> </span><span class="k">for</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">k</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">k</span><span class="o">&lt;</span><span class="n">SPLIT</span><span class="p">;</span><span class="n">k</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="n">total</span><span class="o">*=</span><span class="mi">4</span><span class="p">;</span>
+<span class="w">    </span><span class="cp">#pragma omp parallel for schedule(dynamic)</span>
+<span class="w">    </span><span class="k">for</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">idx</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">idx</span><span class="o">&lt;</span><span class="n">total</span><span class="p">;</span><span class="w"> </span><span class="n">idx</span><span class="o">++</span><span class="p">){</span>
+<span class="w">        </span><span class="k">if</span><span class="p">(</span><span class="n">found</span><span class="p">)</span><span class="w"> </span><span class="k">continue</span><span class="p">;</span>
+<span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">type</span><span class="p">[</span><span class="mi">16</span><span class="p">];</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">x</span><span class="o">=</span><span class="n">idx</span><span class="p">;</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">c</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span><span class="o">=</span><span class="p">{</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">};</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">ok</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span>
+<span class="w">        </span><span class="k">for</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="n">SPLIT</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">){</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">t</span><span class="o">=</span><span class="n">x</span><span class="o">&amp;</span><span class="mi">3</span><span class="p">;</span><span class="w"> </span><span class="n">x</span><span class="o">&gt;&gt;=</span><span class="mi">2</span><span class="p">;</span><span class="w"> </span><span class="n">type</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">=</span><span class="n">t</span><span class="p">;</span><span class="w"> </span><span class="n">c</span><span class="p">[</span><span class="n">t</span><span class="p">]</span><span class="o">++</span><span class="p">;</span><span class="w"> </span><span class="k">if</span><span class="p">(</span><span class="n">c</span><span class="p">[</span><span class="n">t</span><span class="p">]</span><span class="o">&gt;</span><span class="mi">4</span><span class="p">)</span><span class="w"> </span><span class="n">ok</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<span class="w">        </span><span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">ok</span><span class="p">)</span><span class="w"> </span><span class="k">continue</span><span class="p">;</span>
+<span class="w">        </span><span class="n">rec</span><span class="p">(</span><span class="n">SPLIT</span><span class="p">,</span><span class="n">c</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">c</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">c</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span><span class="n">c</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span><span class="n">type</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;done found=%d %s elapsed=%.2f</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="n">found</span><span class="p">,</span><span class="n">solstr</span><span class="p">,</span><span class="n">omp_get_wtime</span><span class="p">()</span><span class="o">-</span><span class="n">t0</span><span class="p">);</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Compile and run:</p>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span><span class="nb">cd</span><span class="w"> </span>work/20
+$<span class="w"> </span>gcc<span class="w"> </span>-O3<span class="w"> </span>-march<span class="o">=</span>native<span class="w"> </span>-fopenmp<span class="w"> </span>-o<span class="w"> </span>brute<span class="w"> </span>brute.c
+$<span class="w"> </span><span class="nv">OMP_NUM_THREADS</span><span class="o">=</span><span class="m">6</span><span class="w"> </span>./brute
+FOUND<span class="w"> </span>P3P1J0L1J1P1L3L2J2L2D1J1P3D1D0D0
+<span class="k">done</span><span class="w"> </span><span class="nv">found</span><span class="o">=</span><span class="m">1</span><span class="w"> </span>P3P1J0L1J1P1L3L2J2L2D1J1P3D1D0D0<span class="w"> </span><span class="nv">elapsed</span><span class="o">=</span><span class="m">92</span>.12
+</code></pre></div>
+<h2 id="evidence">Evidence<a class="headerlink" href="#evidence" title="Permanent link">&para;</a></h2>
+<p>Structural and semantic verification:</p>
+<div class="highlight"><pre><span></span><code>$ python3 verify.py
+[*] mounts + inventory OK: {&#39;P&#39;: 4, &#39;J&#39;: 4, &#39;D&#39;: 4, &#39;L&#39;: 4}
+[*] Exposure 1: 29/29 target readings matched (binary == model)
+[*] Exposure 2: 30/30 target readings matched (binary == model)
+[*] LAYOUT P3P1J0L1J1P1L3L2J2L2D1J1P3D1D0D0
+</code></pre></div>
+<p>Independent check against the original stripped binary (the Python model and <code>prism</code> output are compared for every tick/cell/channel):</p>
+<div class="highlight"><pre><span></span><code>$ ./brute P3P1J0L1J1P1L3L2J2L2D1J1P3D1D0D0
+exp0 passed=1 matched=29/29
+exp1 passed=1 matched=30/30
+</code></pre></div>
+<p>Remote service (fresh session, <code>set</code> then <code>check</code>):</p>
+<div class="highlight"><pre><span></span><code>$ python3 - &lt;&lt;&#39;EOF&#39;
+... connect to 104.105.138.8:31342, send &quot;set P3P1J0L1J1P1L3L2J2L2D1J1P3D1D0D0\n&quot;, then &quot;check\n&quot; ...
+EOF
+{
+  &quot;accepted&quot;: true,
+  &quot;mismatches&quot;: [
+    0,
+    0
+  ],
+  &quot;flag&quot;: &quot;Layer7{548f4e663b377217e4ac164af4471996a6d8f42d3e2e6f798f8ad3e083cb6e9c}&quot;
+}
+</code></pre></div>
+<p>Platform submission:</p>
+<div class="highlight"><pre><span></span><code>$ python3 l7.py submit 20 &#39;Layer7{548f4e663b377217e4ac164af4471996a6d8f42d3e2e6f798f8ad3e083cb6e9c}&#39;
+200 {&quot;correct&quot;: true, &quot;ctf_state&quot;: &quot;active&quot;}
+</code></pre></div>
+<p><code>work/20/submit.json</code> contains the same response.</p>
+<h2 id="flag">Flag<a class="headerlink" href="#flag" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>Layer7{548f4e663b377217e4ac164af4471996a6d8f42d3e2e6f798f8ad3e083cb6e9c}
+</code></pre></div>
+<h2 id="evidence_1">Evidence<a class="headerlink" href="#evidence_1" title="Permanent link">&para;</a></h2>
+<h3 id="platform-submission">Platform submission<a class="headerlink" href="#platform-submission" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;submitted_at&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2026-11-21T02:46:40.721201+00:00&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;challenge_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;20&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;flag&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Layer7{548f4e663b377217e4ac164af4471996a6d8f42d3e2e6f798f8ad3e083cb6e9c}&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;http_status&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">200</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;response&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;correct&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;ctf_state&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;active&quot;</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p><img alt="Platform submission" src="../../assets/20-prism-box/00-platform-submission.png" /></p>
+<h3 id="captured-solver-transcript">Captured solver transcript<a class="headerlink" href="#captured-solver-transcript" title="Permanent link">&para;</a></h3>
+<p>Full raw log: <a href="../../evidence/20-prism-box-transcript.txt"><code>evidence/20-prism-box-transcript.txt</code></a></p>
+<p><img alt="Solver transcript" src="../../assets/20-prism-box/01-solver-transcript.png" /></p>
+<h2 id="flag_1">Flag<a class="headerlink" href="#flag_1" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>Layer7{548f4e663b377217e4ac164af4471996a6d8f42d3e2e6f798f8ad3e083cb6e9c}
+</code></pre></div>
+<blockquote>
+<p>Submitted and accepted on the platform at <code>2026-11-21 09:46:40+07:00</code> (Asia/Jakarta).</p>
+</blockquote>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Layer7 CTF 2026 · write-ups by B0TCIL
+    </div>
+  
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.sections", "navigation.top", "navigation.tracking", "navigation.path", "navigation.indexes", "toc.follow", "search.suggest", "search.highlight", "content.code.copy", "content.tabs.link"], "search": "../../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.13a4f30d.min.js"></script>
+      
+        <script src="../../javascripts/nx.js"></script>
+      
+    
+  </body>
+</html>

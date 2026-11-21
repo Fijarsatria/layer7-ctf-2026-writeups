@@ -1,0 +1,381 @@
+captured_at=2026-11-21T01:30:01.231974+00:00 rc=124 tag=3-human-top-1
+Ark Base tour TPWND Dark Cave (Exotic)
+tPWND-CggxU | Instalando Cluster Apache Nifi (CFM) no Cloudera Manager
+jtIGB_xsj8A | Ark small tribes day 1 farming\\for dark cave
+TWzEN_fN2bw | BLOODY ARK - BASETOUR - SEASON 1 - DuoToxic
+== "tpwnd" roblox 1
+XZNQCKnzbRY | (THE FORGOTTEN REALM fiber) oil cave base tour
+== "jonnybones" roblox 7
+GM7wu-ZFr4A | YourRAGE Shocked By Jon Jones WIN!!!😱
+JuQ19uE9Z44 | Does Jigawoo Remind You of Anyone? • 9.1 Match Rating PRS WC Group Stage GW1
+MYRZi2_bxM4 | Speed Buys Beast PC I Ishowspeed Brand New Computer Shopping
+jAz8OYYhX7w | Джон Джонс | Лучшие Моменты
+P-1vvFtpzuQ | IShowSpeed blessed a mom’s son a gaming PC and monitor then helped load the heavy PC into their
+zonIOZWN0Vg | Desi Arnaz Jr. in Mr. \u0026 Mrs. Bo Jo Jones
+lmM3TYswSi4 | John Cena VS Jon Jones - The Fight That UFC Fears Most
+> build · deepseek-flash
+[0m◈ [0mWeb Search via Exa ""jonnybones" ark survival evolved tpwnd" 
+[0m$ [0mcd /home/bocil/ctf/layer7/work/3 && for v in F8dIYpjc-og 31NDTtBe-tI 2BoGuMOPcSI; do echo "== $v"; curl -s -A 'Mozilla/5.0' "https://www.youtube.com/watch?v=$v" | grep -oE '<meta name="description" content="[^"]*"|<meta property="og:title" content="[^"]*"|<meta itemprop="datePublished" content="[^"]*"' | head -5; done
+== F8dIYpjc-og
+<meta name="description" content="Nikmati video dan musik yang Anda suka, upload konten asli, dan bagikan kepada teman, keluarga, dan dunia di YouTube."
+== 31NDTtBe-tI
+<meta name="description" content="Nikmati video dan musik yang Anda suka, upload konten asli, dan bagikan kepada teman, keluarga, dan dunia di YouTube."
+== 2BoGuMOPcSI
+<meta name="description" content="Nikmati video dan musik yang Anda suka, upload konten asli, dan bagikan kepada teman, keluarga, dan dunia di YouTube."
+> build · deepseek-flash
+[0m$ [0mcd /home/bocil/ctf/layer7/work/3 && sleep 30; python3 - <<'EOF'
+import requests,uuid,json,time
+s=requests.Session(); s.headers.update({'User-Agent':'Mozilla/5.0','Accept':'application/json'})
+for q in ['ir','linear circle','sweets']:
+    sid=str(uuid.uuid4())
+    u='https://apis.roblox.com/search-api/omni-search'
+    r=s.get(u,params={'searchQuery':q,'pageToken':'','sessionId':sid,'pageType':'all'},timeout=30)
+    print('==',q,r.status_code, r.text[:300])
+    if r.status_code==200:
+        try:
+            d=r.json()
+            for grp in d.get('searchResults',[]):
+                for it in grp.get('contents',[]):
+                    print('  ',it.get('universeId'),it.get('name'),it.get('rootPlaceId'))
+        except Exception as e: print(e)
+    time.sleep(4)
+EOF
+== ir 200 {"searchResults":[{"contentGroupType":"Game","contents":[{"universeId":1686885941,"name":"Brookhaven 🏡RP","description":"","playerCount":456670,"totalUpVotes":8776519,"totalDownVotes":1439428,"emphasis":false,"isSponsored":false,"nativeAdData":"","creatorName":"","creatorHasVerifiedBadge":false,"cre
+   1686885941 Brookhaven 🏡RP 4924922222
+   6035872082 [🎯] RIVALS 17625359962
+   10563114921 Steal An Egg 107778070777162
+   5720553711 NewSmith 🏡 RP 16625391970
+   7429019019 Happy Town RP 99367813061539
+   3310460039 🚨BARRY'S PRISON RUN! (OBBY) 8712817601
+   4197966812 Seaside RP🏡🌴 City RP 11862502039
+   8322865535 Palmhaven City Life RP🏡 71174733280934
+   3204175584 [COMPANIONS 👶!] Redcliff City 🏡RP 8369888266
+   4540138978 Metro Life 🏡 City RP 12985361032
+   5887211857 Deermont 🏡RP 17192092512
+   2273199208 BayView RP 🏠 6202744791
+   6353751159 Main Street 🏡RP 18753889337
+   2549475383 Livetopia 🏡 RP 6737970321
+   6521100398 Dreamville 🏡 RP [Pets! 😺] 74395953411817
+   5484165112 Highland Park 🏡RP 15859503151
+   8997122546 Live Town RP 82692033630776
+   3240075297 Berry Avenue 🏠 RP 8481844229
+   4686994428 Boxywood 🏠🌴 RP 13473615074
+   4839802560 LifeTogether 🏠 RP [💃🏻 STEPS] 13967668166
+   371263894 Greenville RP 891852901
+   9910245722 Iron Soul: Dungeon 117533937949084
+   6774320049 Dubai 🏡 RP [Pets! 🐶🐱] 122485613019196
+   9062512410 Fun Town RP 92565026516505
+   9452911130 Paradise City RP 76450631556030
+   7429037011 LiveCity RP 106264137260174
+   1852226622 Gacha Online 🎃 RP 5289509545
+   9154528541 Cozy Town RP 81858923575739
+   4645056651 My Town Life RP 🏡 13335777118
+   3358820946 LewisLife 🏡 RP 8881972529
+   4671010462 Paradise 🏠 RP 13421266463
+   9855761734 San Diego Roleplay 136020512003847
+   10771126453 Big Town RP 135481874324608
+   63951305 RoCitizens 🎪 137877687
+   10530290159 Dreamy Town RP 84740389816110
+   6868537689 🏝️Tropical Beach Roleplay! 110497944711412
+   1892760830 🎀ADOPT TWINS🎀Seaboard City RP🌴 5407396567
+   2992873140 Emergency Hamburg 7711635737
+   7235130477 Apple iPad Original 128248561501148
+   10767218742 [⛵🌊] You and Me in Cali 🏡 RP 89227656273268
+== linear circle 429 {"errors":[{"code":0,"message":""}]}
+
+== sweets 200 {"searchResults":[{"contentGroupType":"Game","contents":[{"universeId":9584852943,"name":"+1 Speed Keyboard Escape | Candy & Chocolate","description":"","playerCount":18337,"totalUpVotes":10126706,"totalDownVotes":348201,"emphasis":false,"isSponsored":false,"nativeAdData":"","creatorName":"","creato
+   9584852943 +1 Speed Keyboard Escape | Candy & Chocolate 95082159892680
+   5997239470 🍰☕ Tea Time  || Dessert Buffet 17521026721
+   10771800287 Make Viral Candy! 🍬 92696280499166
+   6052033819 [UPD🍓] Cake Off! 17670743999
+   10533638982 🍰 Eat the Cake Mountain 🥄 83733952151811
+   10761122507 [🏆X99] +1 Speed Sweets ASMR Escape 123980367860832
+   10773543004 [🍫] Make A Chocolate 119435054159097
+   10776124937 Become the Sweet Potato! 75402910303190
+   9324612347 🎃 My Ice Cream Truck 101838505347173
+   9978329815 Mukbang Game [Testing]🥤🎍! 74188431054457
+   8507699752 Poison Treats 🧁🧪 73257710123935
+   1229590289 🍦ice cream club best game ever 3454695069
+   10767380385 Sell Fries! [Anomaly] 🍟 94891079210424
+   6691951602 Mega Easy Fun Candy Obby 78394574194586
+   9565041031 Find A Candy [187] 112454601329879
+   10769850160 [❄️] Eat THE Ice Cream  122457853396363
+   10771928551 🍦Cozy Lucky Scoop Order 70976799643592
+   10764980068 +1 Roll Ice Cream 102571509172583
+   3356879750 🍭Escape Candyland Obby! 8875351291
+   10772749430  My Cookie Store 🍪[BETA] 83407793249469
+   4987075366 Build a Chocolate Store🍫 14435593737
+   10033740377 🍪 Roll Your Cookie 108632069675268
+   7296376397 Chocolate Bar Factory 80548653110210
+   10768186319 Make Chocolate 🍫 79304054788529
+   10563114921 Steal An Egg 107778070777162
+   10771004600 +1 Ice Cream Vs Platforms 🍦 109193756018013
+   2963531345 Sweet Spot Speedway 7628800052
+   9863959227 Jump Into Chocolate Pool Obby 136685150922381
+   10769188452 [RANKED] Eat Everything In A Grocery Store 128201586883489
+   10770674395 [🦃] Ice Cream Shop [Anomaly] 🍦 89178939262183
+   10012615072 [👶👶 TWINS & TRIPLETS] SweetPit City 🏠 RP 131375003442913
+   10060907901 My Candy Factory 94358936937549
+   10145746188 Steal a Sweetino 2 132853534682031
+   6527109215 🍗🍟 Eating in Jollibee [MUKBANG] 139024203670885
+   5130435535 Wonka's [STORY] 🍫 14890932138
+   3459048362 Chocolate Obby! 9228830112
+   10772444867 Clean All the Candy 🍭 72247734238398
+   5695806445 🍫Easy Chocolate Obby For Vip! 🍫 16544543032
+   10086113865 🍪 Cookie Dough Factory Tycoon 126402702375720
+   3146665434 SWEET TOOTH BAKERY ESCAPE! (OBBY) 8192892095
+> build · deepseek-flash
+[0m$ [0mcd /home/bocil/ctf/layer7/work/3 && python3 - <<'EOF'
+import sympy as sp
+from sympy.polys.galoistools import gf_from_int_poly, gf_factor, gf_to_int_poly
+C=312452345234523345634564523452345
+print('bit_length',C.bit_length())
+# polynomial coefficients over GF(2), low to high
+coeffs=[(C>>i)&1 for i in range(C.bit_length())]
+print('low bits',coeffs[:10],'high',coeffs[-10:])
+# sympy gf_factor expects list high->low
+poly=list(reversed(coeffs))
+factors=gf_factor(poly,2,sp.ZZ)
+print(factors)
+for f,e in factors[1]:
+    deg=len(f)-1
+    print('factor degree',deg,'exp',e,'poly',f)
+EOF
+bit_length 108
+low bits [1, 0, 0, 1, 1, 1, 0, 1, 1, 1] high [1, 0, 0, 1, 1, 0, 1, 1, 1, 1]
+(1, [([mpz(1), mpz(1)], 1), ([mpz(1), mpz(0), mpz(1), mpz(0), mpz(1), mpz(0), mpz(1), mpz(0), mpz(0), mpz(0), mpz(1), mpz(1), mpz(0), mpz(1), mpz(1), mpz(0), mpz(0), mpz(1)], 1), ([mpz(1), mpz(0), mpz(0), mpz(0), mpz(1), mpz(1), mpz(0), mpz(1), mpz(1), mpz(1), mpz(1), mpz(1), mpz(0), mpz(0), mpz(1), mpz(0), mpz(1), mpz(0), mpz(1), mpz(1), mpz(1), mpz(0), mpz(0), mpz(1), mpz(1), mpz(0), mpz(0), mpz(0), mpz(0), mpz(1), mpz(1), mpz(0), mpz(1), mpz(1), mpz(0), mpz(0), mpz(0), mpz(0), mpz(1), mpz(1), mpz(1), mpz(0), mpz(1), mpz(1), mpz(1), mpz(1), mpz(0), mpz(0), mpz(0), mpz(1), mpz(0), mpz(1), mpz(1), mpz(0), mpz(0), mpz(1), mpz(0), mpz(0), mpz(0), mpz(1), mpz(0), mpz(0), mpz(0), mpz(0), mpz(0), mpz(0), mpz(1), mpz(1), mpz(1), mpz(1), mpz(1), mpz(1), mpz(1), mpz(0), mpz(1), mpz(0), mpz(1), mpz(1), mpz(0), mpz(0), mpz(0), mpz(1), mpz(1), mpz(1), mpz(0), mpz(1), mpz(1), mpz(1), mpz(1), mpz(1)], 1)])
+factor degree 1 exp 1 poly [mpz(1), mpz(1)]
+factor degree 17 exp 1 poly [mpz(1), mpz(0), mpz(1), mpz(0), mpz(1), mpz(0), mpz(1), mpz(0), mpz(0), mpz(0), mpz(1), mpz(1), mpz(0), mpz(1), mpz(1), mpz(0), mpz(0), mpz(1)]
+factor degree 89 exp 1 poly [mpz(1), mpz(0), mpz(0), mpz(0), mpz(1), mpz(1), mpz(0), mpz(1), mpz(1), mpz(1), mpz(1), mpz(1), mpz(0), mpz(0), mpz(1), mpz(0), mpz(1), mpz(0), mpz(1), mpz(1), mpz(1), mpz(0), mpz(0), mpz(1), mpz(1), mpz(0), mpz(0), mpz(0), mpz(0), mpz(1), mpz(1), mpz(0), mpz(1), mpz(1), mpz(0), mpz(0), mpz(0), mpz(0), mpz(1), mpz(1), mpz(1), mpz(0), mpz(1), mpz(1), mpz(1), mpz(1), mpz(0), mpz(0), mpz(0), mpz(1), mpz(0), mpz(1), mpz(1), mpz(0), mpz(0), mpz(1), mpz(0), mpz(0), mpz(0), mpz(1), mpz(0), mpz(0), mpz(0), mpz(0), mpz(0), mpz(0), mpz(1), mpz(1), mpz(1), mpz(1), mpz(1), mpz(1), mpz(1), mpz(0), mpz(1), mpz(0), mpz(1), mpz(1), mpz(0), mpz(0), mpz(0), mpz(1), mpz(1), mpz(1), mpz(0), mpz(1), mpz(1), mpz(1), mpz(1), mpz(1)]
+> build · deepseek-flash
+[0m$ [0mcd /home/bocil/ctf/layer7/work/3 && python3 - <<'EOF'
+import base64, sympy as sp
+X=20250428
+P17=2**17-1
+P89=2**89-1
+print('P17',P17,sp.isprime(P17))
+print('P89',P89,sp.isprime(P89))
+P=P17*P89
+print('P',P,'digits',len(str(P)),'bits',P.bit_length())
+print('P*X',P*X,'digits',len(str(P*X)))
+def b64s(n):
+    s=base64.b64encode(str(n).encode()).decode()
+    return s, len(s), s.replace('+','')
+def b64b(n):
+    b=n.to_bytes((n.bit_length()+7)//8,'big')
+    s=base64.b64encode(b).decode()
+    return s, len(s), len(b), s.replace('+','')
+for name,v in [('P',P),('P*X',P*X),('P89',P89),('P89*X',P89*X),('P17',P17)]:
+    print('==',name)
+    print('dec b64',b64s(v))
+    print('byte b64',b64b(v))
+# subagent candidate decode
+for s in ['MTcxMDQ4MTE2NTUyNDM0ODI4MjkzOTk4NzE4MzQyMA==','MzQ2Mzc5NzU2ODc4MDY4OTcxNTA1OTk4Mzg3Nzg3Njk1MDM3NjA=']:
+    print(s,'->',base64.b64decode(s).decode())
+EOF
+P17 131071 True
+P89 618970019642690137449562111 True
+P 81129019444587039005651555450881 digits 32 bits 106
+P*X 1642897366973209823117138416746073227068 digits 40
+== P
+dec b64 ('ODExMjkwMTk0NDQ1ODcwMzkwMDU2NTE1NTU0NTA4ODE=', 44, 'ODExMjkwMTk0NDQ1ODcwMzkwMDU2NTE1NTU0NTA4ODE=')
+byte b64 ('A//9///////////+AAE=', 20, 14, 'A//9///////////AAE=')
+== P*X
+dec b64 ('MTY0Mjg5NzM2Njk3MzIwOTgyMzExNzEzODQxNjc0NjA3MzIyNzA2OA==', 56, 'MTY0Mjg5NzM2Njk3MzIwOTgyMzExNzEzODQxNjc0NjA3MzIyNzA2OA==')
+byte b64 ('BNP6hgGH///////9lgK8/zw=', 24, 17, 'BNP6hgGH///////9lgK8/zw=')
+== P89
+dec b64 ('NjE4OTcwMDE5NjQyNjkwMTM3NDQ5NTYyMTEx', 36, 'NjE4OTcwMDE5NjQyNjkwMTM3NDQ5NTYyMTEx')
+byte b64 ('Af//////////////', 16, 12, 'Af//////////////')
+== P89*X
+dec b64 ('MTI1MzQ0MDc4MTY5MzI4ODIzNTQ3MzI0NjExNjAzMzM1MDg=', 48, 'MTI1MzQ0MDc4MTY5MzI4ODIzNTQ3MzI0NjExNjAzMzM1MDg=')
+byte b64 ('Amn+d//////////+ywDE', 20, 15, 'Amnd//////////ywDE')
+== P17
+dec b64 ('MTMxMDcx', 8, 'MTMxMDcx')
+byte b64 ('Af//', 4, 3, 'Af//')
+MTcxMDQ4MTE2NTUyNDM0ODI4MjkzOTk4NzE4MzQyMA== -> 1710481165524348282939987183420
+MzQ2Mzc5NzU2ODc4MDY4OTcxNTA1OTk4Mzg3Nzg3Njk1MDM3NjA= -> 34637975687806897150599838778769503760
+> build · deepseek-flash
+[0m$ [0mcd /home/bocil/ctf/layer7/work/3 && python3 - <<'EOF'
+import base64
+C=312452345234523345634564523452345
+X=20250428
+bits=C.bit_length()
+print('C bits',bits)
+def b64(n,label):
+    s=base64.b64encode(str(n).encode()).decode()
+    print(label,'digits',len(str(n)),'b64len',len(s),'plus',s.count('+'),'=',s)
+# A: affine LFSR f=(f<<1)^C each step, masked to C.bit_length()-1? Try variants
+for maskbits in [C.bit_length()-1, C.bit_length(), 128, 256]:
+    m=(1<<maskbits)-1
+    for seed in [0,1,C,1<<(maskbits-1)]:
+        f=seed
+        for _ in range(X):
+            f=((f<<1)^C)&m
+        b64(f,f'A mask{maskbits} seed{seed}')
+# fast modular exponentiation for x^X mod C over GF(2) polynomials
+def gf_mul(a,b):
+    r=0
+    while b:
+        if b&1: r^=a
+        b>>=1; a<<=1
+    return r
+def gf_mod(a,m):
+    dm=m.bit_length()-1
+    while a.bit_length()-1>=dm:
+        a^=m<<(a.bit_length()-1-dm)
+    return a
+def gf_pow(base,e,m):
+    r=1
+    while e:
+        if e&1: r=gf_mod(gf_mul(r,base),m)
+        base=gf_mod(gf_mul(base,base),m); e>>=1
+    return r
+v=gf_pow(2,X,C)
+b64(v,'2^X mod C')
+# also x^X mod C using base=2 polynomial (same)
+# order P
+P=(2**17-1)*(2**89-1)
+b64(P,'P')
+b64(P*X,'P*X')
+b64((P*X)%(1<<107),'P*X mod2^107')
+b64(P//2,'P//2')
+EOF
+Command moved to the background (shell ID: sh_1fbb6a16a001LTw1VfrOldnVBw).
+PID: 79212
+Output is streaming to: /home/bocil/.local/share/opencode/shell/01a126b68893d058c6758eaf6b0babc286ef55ca/sh_1fbb6a16a001LTw1VfrOldnVBw.out
+
+The command did not finish within its timeout of 120 seconds and was moved to the background. Do not start another copy while it is running.
+> build · deepseek-flash
+[0m$ [0mcd /home/bocil/ctf/layer7/work/3 && timeout 30 python3 - <<'EOF'
+import base64
+C=312452345234523345634564523452345
+X=20250428
+def gf_mul(a,b):
+    r=0
+    while b:
+        if b&1: r^=a
+        b>>=1; a<<=1
+    return r
+def gf_mod(a,m):
+    dm=m.bit_length()-1
+    while a.bit_length()-1>=dm:
+        a^=m<<(a.bit_length()-1-dm)
+    return a
+def gf_pow(base,e,m):
+    r=1
+    while e:
+        if e&1: r=gf_mod(gf_mul(r,base),m)
+        base=gf_mod(gf_mul(base,base),m); e>>=1
+    return r
+P=(2**17-1)*(2**89-1)
+print('P',P)
+print('2^P mod C',gf_pow(2,P,C), 'should be 1')
+v=gf_pow(2,X,C)
+print('2^X mod C',v,'digits',len(str(v)),'bits',v.bit_length())
+s=base64.b64encode(str(v).encode()).decode()
+print('b64',s,'len',len(s),'plus',s.count('+'),'flag',f'Layer7{{{s.replace("+","")}}}',len(f'Layer7{{{s.replace("+","")}}}'))
+# P base64
+for name,n in [('P',P),('P*X',P*X),('P//2',P//2),('P+X',P+X),('P^X',P^X)]:
+    s=base64.b64encode(str(n).encode()).decode()
+    print(name,'digits',len(str(n)),'b64len',len(s),'plus',s.count('+'),s)
+EOF
+P 81129019444587039005651555450881
+2^P mod C 1 should be 1
+2^X mod C 7115930662830885458065230267043 digits 31 bits 103
+b64 NzExNTkzMDY2MjgzMDg4NTQ1ODA2NTIzMDI2NzA0Mw== len 44 plus 0 flag Layer7{NzExNTkzMDY2MjgzMDg4NTQ1ODA2NTIzMDI2NzA0Mw==} 52
+P digits 32 b64len 44 plus 0 ODExMjkwMTk0NDQ1ODcwMzkwMDU2NTE1NTU0NTA4ODE=
+P*X digits 40 b64len 56 plus 0 MTY0Mjg5NzM2Njk3MzIwOTgyMzExNzEzODQxNjc0NjA3MzIyNzA2OA==
+P//2 digits 32 b64len 44 plus 0 NDA1NjQ1MDk3MjIyOTM1MTk1MDI4MjU3Nzc3MjU0NDA=
+P+X digits 32 b64len 44 plus 0 ODExMjkwMTk0NDQ1ODcwMzkwMDU2NTE1NzU3MDEzMDk=
+P^X digits 32 b64len 44 plus 0 ODExMjkwMTk0NDQ1ODcwMzkwMDU2NTE1MzUzMzExMzM=
+> build · deepseek-flash
+[0m$ [0mcd /home/bocil/ctf/layer7/work/3 && python3 - <<'EOF'
+import base64
+C=312452345234523345634564523452345
+# GF(2) polynomial division by x+1 (0b11)
+def gf_divmod(a,b):
+    q=0; db=b.bit_length()-1
+    while a.bit_length()>=b.bit_length():
+        s=a.bit_length()-b.bit_length()
+        q^=1<<s
+        a^=b<<s
+    return q,a
+q,r=gf_divmod(C,0b11)
+print('C/(x+1) quotient',q,'digits',len(str(q)),'bits',q.bit_length(),'remainder',r)
+s=base64.b64encode(str(q).encode()).decode()
+print('b64',s,len(s),s.count('+'))
+print('flag',f'Layer7{{{s.replace("+","")}}}',len(f'Layer7{{{s.replace("+","")}}}'))
+print('observed affine',104150785069756056853839768199831)
+print('match',q==104150785069756056853839768199831)
+# verify fixed point: q == (q<<1)^C mod 2^107?
+for m in [2**107-1,2**108-1]:
+    print('fixed', ((q<<1)^C)&m == q)
+# also C/3 as integer
+print('C//3',C//3, 'C%3',C%3)
+EOF
+C/(x+1) quotient 104150785069756056853839768199831 digits 33 bits 107 remainder 0
+b64 MTA0MTUwNzg1MDY5NzU2MDU2ODUzODM5NzY4MTk5ODMx 44 0
+flag Layer7{MTA0MTUwNzg1MDY5NzU2MDU2ODUzODM5NzY4MTk5ODMx} 52
+observed affine 104150785069756056853839768199831
+match True
+fixed True
+fixed True
+C//3 104150781744841115211521507817448 C%3 1
+> build · deepseek-flash
+[0m$ [0mcd /home/bocil/ctf/layer7/work/3 && python3 - <<'EOF'
+import base64
+X=20250428
+fstar=104150785069756056853839768199831
+P=81129019444587039005651555450881
+cands={
+ 'fstar':fstar,
+ 'fstar*X':fstar*X,
+ 'P':P,
+ 'P*X':P*X,
+ 'fstar*P':fstar*P,
+ 'fstar*P*X':fstar*P*X,
+ 'fstar+X':fstar+X,
+ 'fstar-X':fstar-X,
+ 'P+X':P+X,
+ 'P-X':P-X,
+ 'fstar*P+X':fstar*P+X,
+}
+for name,v in cands.items():
+    s=base64.b64encode(str(v).encode()).decode()
+    print(f'{name:12} digits={len(str(v)):3} b64len={len(s):3} plus={s.count("+"):2} flaglen={8+len(s.replace("+","")):3} {s}')
+EOF
+fstar        digits= 33 b64len= 44 plus= 0 flaglen= 52 MTA0MTUwNzg1MDY5NzU2MDU2ODUzODM5NzY4MTk5ODMx
+fstar*X      digits= 40 b64len= 56 plus= 0 flaglen= 64 MjEwOTA5Nzk3NDE5ODU3MDAwNjg4MjU4ODc0OTQ2NzM2NzI3NzY2OA==
+P            digits= 32 b64len= 44 plus= 0 flaglen= 52 ODExMjkwMTk0NDQ1ODcwMzkwMDU2NTE1NTU0NTA4ODE=
+P*X          digits= 40 b64len= 56 plus= 0 flaglen= 64 MTY0Mjg5NzM2Njk3MzIwOTgyMzExNzEzODQxNjc0NjA3MzIyNzA2OA==
+fstar*P      digits= 64 b64len= 88 plus= 0 flaglen= 96 ODQ0OTY1MTA2NzA5MzI0NDYwNjEzNzExNDQ4MzI3ODQ3ODYzNTEyNzUwNzY3MTg5MzcyNDQxMjkxMzAwMTExMQ==
+fstar*P*X    digits= 72 b64len= 96 plus= 0 flaglen=104 MTcxMTA5MDUwNTU5Mjk0OTE5MTgyOTY3OTk0OTcxMzg4MDM1NTUwMTg3ODY0OTI5MTMxNDg5ODc1NTM2OTk5MjYyMjI1NTA4
+fstar+X      digits= 33 b64len= 44 plus= 0 flaglen= 52 MTA0MTUwNzg1MDY5NzU2MDU2ODUzODM5Nzg4NDUwMjU5
+fstar-X      digits= 33 b64len= 44 plus= 0 flaglen= 52 MTA0MTUwNzg1MDY5NzU2MDU2ODUzODM5NzQ3OTQ5NDAz
+P+X          digits= 32 b64len= 44 plus= 0 flaglen= 52 ODExMjkwMTk0NDQ1ODcwMzkwMDU2NTE1NzU3MDEzMDk=
+P-X          digits= 32 b64len= 44 plus= 0 flaglen= 52 ODExMjkwMTk0NDQ1ODcwMzkwMDU2NTE1MzUyMDA0NTM=
+fstar*P+X    digits= 64 b64len= 88 plus= 0 flaglen= 96 ODQ0OTY1MTA2NzA5MzI0NDYwNjEzNzExNDQ4MzI3ODQ3ODYzNTEyNzUwNzY3MTg5MzcyNDQxMjkzMzI1MTUzOQ==
+> build · deepseek-flash
+[0m$ [0mcd /home/bocil/ctf/layer7/work/3 && python3 - <<'EOF'
+import base64
+X=20250428
+f=104150785069756056853839768199831
+P=81129019444587039005651555450881
+def enc(n,name):
+    b=n.to_bytes((n.bit_length()+7)//8,'big')
+    s=base64.b64encode(b).decode()
+    t=s.replace('+','')
+    print(f'{name:14} bits={n.bit_length():3} bytes={len(b):2} b64len={len(s):2} plus={s.count("+"):2} minuspluslen={len(t):2} flaglen={8+len(t):3} {s}')
+for name,v in [('f',f),('P',P),('f*X',f*X),('P*X',P*X),('f*P',f*P),('f*P*X',f*P*X),('f*f*X',f*f*X),('P*P*X',P*P*X),('f*P*X*X',f*P*X*X)]:
+    enc(v,name)
+EOF
+f              bits=107 bytes=14 b64len=20 plus= 1 minuspluslen=19 flaglen= 27 BSKRVjEfBI+MqBDwIpc=
+P              bits=106 bytes=14 b64len=20 plus= 1 minuspluslen=19 flaglen= 27 A//9///////////+AAE=
+f*X            bits=131 bytes=17 b64len=24 plus= 0 minuspluslen=24 flaglen= 32 BjK1fpIEcuWFSPTBLMhohGQ=
+P*X            bits=131 bytes=17 b64len=24 plus= 0 minuspluslen=24 flaglen= 32 BNP6hgGH///////9lgK8/zw=
+f*P            bits=213 bytes=27 b64len=36 plus= 1 minuspluslen=35 flaglen= 43 FIo7E6HPsAApgSpmI14xARgn/+s/asfLwiKX
+f*P*X          bits=237 bytes=30 b64len=40 plus= 1 minuspluslen=39 flaglen= 47 GMrJlN0Up40vWMhmZDp+EjSjcWhTm8abMFu/oIRk
+f*f*X          bits=237 bytes=30 b64len=40 plus= 3 minuspluslen=37 flaglen= 45 H9PMYq+ZDMmAa4Yp5BRyLoQLHMTKYqFh3+p0+178
+P*P*X          bits=237 bytes=30 b64len=40 plus= 2 minuspluslen=38 flaglen= 46 E0/gcBET/O/////ssB+P7uwDEAAAAATT+BwERP88
+f*P*X*X        bits=261 bytes=33 b64len=44 plus= 0 minuspluslen=44 flaglen= 52 HeyyVWyD9PmZ3hGjnYw1bzEDV5XKFya2DU/tRoEVzqNw
+> build · deepseek-flash

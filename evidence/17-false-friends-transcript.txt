@@ -1,0 +1,392 @@
+captured_at=2026-11-21T02:58:21.248104+00:00 rc=124 tag=17-false-friends
+W=(W1 if lane==1 else W2); W=premix(W,M); M=yield_mix(M,W)
+        if lane==1: W1=W
+        else: W2=W
+    return M,W1,W2
+EOF
+python3 - <<'EOF'
+exec(open('/tmp/opencode/full.py').read())
+import subprocess,json
+def recover(line):
+    p,F,Q=line['probe'],int(line['snapshot'],16),int(line['quotient'],16)
+    d=(p<<1)|1; q=s64(F)//s64(d)
+    B=(Q^rol(F,29)^q^C5d)&M64
+    A=(F^p^rol(B,17)^C5c)&M64
+    A,B=inv_capture((A,B),p,0)
+    for j in range(p-1,-1,-1): A,B=inv_capture((A,B),j,0)
+    return (A,B)
+seq="012021012102021210120121"; jobs=load_jobs()
+for k in range(0,25):
+    src=open('/tmp/opencode/replay_probe.lua').read().replace('KJOBS',str(k))
+    open('/tmp/opencode/rp.lua','w').write(src)
+    out=subprocess.run(['/home/bocil/ctf/layer7/work/17/ext/friends','-E','/tmp/opencode/rp.lua',seq],capture_output=True,text=True,cwd='/home/bocil/ctf/layer7/work/17/ext').stdout.strip()
+    rec=recover(json.loads(out.splitlines()[0]))
+    M,W1,W2=start_resumes(INIT,seed(INIT),seed(INIT))
+    for idx,(a0,b0,d0) in enumerate(jobs[:k]):
+        M,W1,W2=sim_job3(M,W1,W2,idx+1,int(seq[idx]),(a0,b0,d0))
+    print(k,'MATCH' if rec==M else 'DIFF')
+    if rec!=M:
+        print(hex(rec[0]),hex(rec[1]),'|',hex(M[0]),hex(M[1])); break
+EOF
+0 MATCH
+1 MATCH
+2 MATCH
+3 MATCH
+4 MATCH
+5 DIFF
+0xd08ca2cf53a02884 0xd9c71db564b73987 | 0x49311a734e65fe4e 0xa141e9ef96afc7a0
+> build · deepseek-flash
+[0m$ [0mcd /tmp/opencode && python3 - <<'EOF'
+exec(open('/tmp/opencode/full.py').read())
+jobs=load_jobs(); seq="012021012102021210120121"
+M,W1,W2=start_resumes(INIT,seed(INIT),seed(INIT))
+for idx in range(4):
+    M,W1,W2=sim_job3(M,W1,W2,idx+1,int(seq[idx]),jobs[idx])
+print('after 4 M',hex(M[0]),hex(M[1]),'W1',hex(W1[0]),hex(W1[1]),'W2',hex(W2[0]),hex(W2[1]))
+# job5 trace
+i=5;m=2;a0,b0,d0=jobs[4]
+W=premix(W1,M); print('premix',hex(W[0]),hex(W[1]))
+W,args=scramble(W,[a0^m,b0^i,i]); print('args',args,hex(W[0]),hex(W[1]))
+rx,ry,ri=args
+la=a0^(rx&0xffff);lb=b0^((ry>>8)&0xffff);ld=(d0^(ri&0x3ff))|1
+print('la',hex(la),'lb',hex(lb),'ld',hex(ld))
+W,Fa,ca=capture(W,la,0); print('cap a',hex(Fa) if Fa else None,ca)
+W,Fb,cb=capture(W,lb,1); print('cap b',hex(Fb) if Fb else None,cb)
+W,qval,q=division(W,la,ld); print('q',hex(qval),q)
+a=la^0x1234;b=lb^0x5678
+x=Fa if ca else a; y=Fb if cb else b
+branch=(x^y^qval)&3
+print('branch',branch)
+M1=yield_mix(M,W)
+if branch!=0:
+    W=premix(W,M1); W,args2=scramble(W,[b0^0x5a,a0^0xa5,i^m]); u,v,k=args2
+    print('args2',args2)
+    if branch==1: print('late abort')
+    else:
+        z=(u^((v<<1)&M64)^((k<<17)&M64))&M64
+        W,Fz,cz=capture(W,z,0); z2=z^0x2468; echo=Fz if cz else z2
+        print('z',hex(z),'cz',cz,'echo',hex(echo),'cond',((echo^branch)&1))
+        if ((echo^branch)&1)!=0:
+            m2=b0^(u&0xffff); n=(d0^(k&0x3ff))|1
+            print('div2 operands',hex(m2),hex(n))
+            W,Q2,q2=division(W,m2,n)
+    M2=yield_mix(M1,W)
+    print('final M',hex(M2[0]),hex(M2[1]))
+EOF
+cd /home/bocil/ctf/layer7/work/17/ext && python3 - <<'EOF'
+s=open('replay.lua').read()
+s=s.replace("for i, job in ipairs(jobs) do","for i, job in ipairs(jobs) do\n  if i > 5 then break end",1)
+# debug prints in mode2
+s=s.replace("          local branch = (x ~ y ~ q) & 3","          local branch = (x ~ y ~ q) & 3\n          print(string.format('BR branch=%d q=%d x=%s y=%s',branch,q,tostring(x),tostring(y)))",1)
+s=s.replace("          local echo = g()","          local echo = g()\n          print(string.format('ECHO echo=%s z=%d',tostring(echo),z))",1)
+s=s.replace("          local u, v, k = coroutine.yield('pending')","          local u, v, k = coroutine.yield('pending')\n          print(string.format('MID u=%s v=%s k=%s',tostring(u),tostring(v),tostring(k)))",1)
+idx=s.index("pending.stop = true")
+s=s[:idx]+"diagnostic(99)\n"
+open('/tmp/opencode/rpdbg5.lua','w').write(s)
+EOF
+./friends -E /tmp/opencode/rpdbg5.lua 012021012102021210120121 2>&1 | grep -E 'BR|ECHO|MID'
+after 4 M 0xbc6ddd49cb017eb0 0xec359347c6d151c0 W1 0x3142479c638bf79b 0x6c9dfec8f3ce6096 W2 0xef9561ddb10ab009 0x8e2d53a0d8f91185
+premix 0x14f158544019170d 0x791f78c0b78f7855
+args (5, 67547424107322, 134132544948220) 0xae963b8429603368 0x1491b4b374700f6b
+la 0x3d6f1c382b3d lb 0x79fe2ab1ffd2 ld 0x4e75
+cap a None False
+cap b None False
+q 0x9233046d08c256bf 3363078123
+branch 0
+BR branch=3 q=8488148419139897410 x=2643472313016706000 y=198644977242105
+MID u=198644977244108 v=152415888129939 k=1
+ECHO echo=-2880453572675049470 z=459134402120834
+BR branch=0 q=-7911975254014929217 x=67547424110857 y=134132544940458
+> build · deepseek-flash
+[0m$ [0mcd /home/bocil/ctf/layer7/work/17/ext && python3 - <<'EOF'
+s=open('/tmp/opencode/rpdbg5.lua').read()
+s=s.replace("      pending.live_a = pending.a ~ (rx & 0xffff)","      print(string.format('WRK rx=%d ry=%d ri=%d a=%d b=%d d=%d',rx,ry,ri,pending.a,pending.b,pending.d))\n      pending.live_a = pending.a ~ (rx & 0xffff)",1)
+s=s.replace("      pending.live_d = (pending.d ~ (ri & 0x3ff)) | 1","      pending.live_d = (pending.d ~ (ri & 0x3ff)) | 1\n      print(string.format('LIVE la=%d lb=%d ld=%d',pending.live_a,pending.live_b,pending.live_d))",1)
+open('/tmp/opencode/rpdbg6.lua','w').write(s)
+EOF
+./friends -E /tmp/opencode/rpdbg6.lua 012021012102021210120121 2>&1 | grep -E 'WRK|LIVE|BR' | tail -8
+echo "--- our sim job5 details"
+cd /tmp/opencode && python3 - <<'EOF'
+exec(open('/tmp/opencode/full.py').read())
+jobs=load_jobs(); a0,b0,d0=jobs[4]
+print('job5 a0',hex(a0),'b0',hex(b0),'d',d0)
+print('passed args',a0^2,b0^5,5)
+EOF
+WRK rx=152415888129844 ry=198644977244053 ri=3 a=152415888129846 b=198644977244054 d=1519
+LIVE la=152415888080898 lb=198644977260929 ld=1517
+BR branch=3 q=8488148419139897410 x=2643472313016706000 y=198644977242105
+WRK rx=117364876839084 ry=4 ri=11339525897830 a=11339525897830 b=117364876839080 d=29241
+LIVE la=11339525895882 lb=117364876839080 ld=28767
+WRK rx=5 ry=67547424107322 ri=134132544948220 a=67547424107320 b=134132544948217 d=19849
+LIVE la=67547424107325 lb=134132544962514 ld=20085
+BR branch=0 q=-7911975254014929217 x=67547424110857 y=134132544940458
+--- our sim job5 details
+job5 a0 0x3d6f1c382b38 b0 0x79fe2ab1c7f9 d 19849
+passed args 67547424107322 134132544948220 5
+> build · deepseek-flash
+[0m$ [0mcd /home/bocil/ctf/layer7/work/17/ext && python3 - <<'EOF'
+src=open('/tmp/opencode/replay_probe.lua').read().replace('KJOBS','5')
+open('/tmp/opencode/rp5.lua','w').write(src)
+EOF
+cat > /tmp/opencode/gdb5 <<'EOF'
+set pagination off
+set confirm off
+set disable-randomization on
+break *0x555555554000+0x39110
+commands
+silent
+printf "DIV L=%p A=%016lx B=%016lx x=%ld y=%ld\n", $rdi, *(unsigned long*)($rdi+0xd8), *(unsigned long*)($rdi+0xe0), $rsi, $rdx
+continue
+end
+break *0x555555554000+0x8198
+commands
+silent
+printf "PREMIX r13=%p A13=%016lx B13=%016lx r14=%p A14=%016lx B14=%016lx\n", $r13,*(unsigned long*)($r13+0xd8),*(unsigned long*)($r13+0xe0),$r14,*(unsigned long*)($r14+0xd8),*(unsigned long*)($r14+0xe0)
+continue
+end
+run
+kill
+quit
+EOF
+gdb -q -batch -x /tmp/opencode/gdb5 --args ./friends -E /tmp/opencode/rp5.lua 012021012102021210120121 2>&1 | grep -E 'DIV|PREMIX' | tail -8
+PREMIX r13=0x5555555ae1c8 A13=0437bcc758a437db B13=5fe26a60a3a3ea91 r14=0x5555555a02a8 A14=c68c1eef4b42479f B14=60213d1b5e6a4cb7
+DIV L=0x5555555ae1c8 A=0d0b4816fdd62667 B=b1b1b964b6e49546 x=152415888080898 y=1517
+PREMIX r13=0x5555555ae1c8 A13=064ebc148c50f4b4 B13=2972f5d459ac9170 r14=0x5555555a02a8 A14=13fe92cff4805b26 B14=a69bdeef7bbf8750
+DIV L=0x5555555ae1c8 A=a47da517cae99c85 B=3e6916deba565339 x=198644977238106 y=1519
+PREMIX r13=0x5555555ae1c8 A13=be69f238621c3b3c B13=e56313f47e2d82a4 r14=0x5555555a02a8 A14=da2ff33acb8e11dd B14=5d9ca929cedd4ffe
+PREMIX r13=0x5555555ae1c8 A13=3142479c638bf79b B13=6c9dfec8f3ce6096 r14=0x5555555a02a8 A14=bc6ddd49cb017eb0 B14=ec359347c6d151c0
+DIV L=0x5555555ae1c8 A=f7e7360c7647f121 B=57158e7a296592ac x=67547424107325 y=20085
+DIV L=0x5555555a02a8 A=71711664b6c6a14f B=84c05dd8f4811a9b x=-7275813731514595204 y=25
+> build · deepseek-flash
+[0m$ [0mcd /tmp/opencode && python3 - <<'EOF'
+exec(open('/tmp/opencode/full.py').read())
+jobs=load_jobs(); seq="012021012102021210120121"
+M,W1,W2=start_resumes(INIT,seed(INIT),seed(INIT))
+for idx in range(4):
+    M,W1,W2=sim_job3(M,W1,W2,idx+1,int(seq[idx]),jobs[idx])
+print('after4 M',hex(M[0]),hex(M[1]),'W1',hex(W1[0]),hex(W1[1]))
+i=5;m=2;a0,b0,d0=jobs[4]
+W=premix(W1,M); W,args=scramble(W,[a0^m,b0^i,i]); print('scr state',hex(W[0]),hex(W[1]),'args',args)
+rx,ry,ri=args; la=a0^(rx&0xffff); lb=b0^((ry>>8)&0xffff); ld=(d0^(ri&0x3ff))|1
+W,Fa,ca=capture(W,la,0); W,Fb,cb=capture(W,lb,1)
+print('pre-div state',hex(W[0]),hex(W[1]),'expect f7e7360c7647f121 57158e7a296592ac')
+W,qval,q=division(W,la,ld)
+print('post-div',hex(W[0]),hex(W[1]),'q',hex(qval),q)
+Mnew=yield_mix(M,W)
+print('M after job5',hex(Mnew[0]),hex(Mnew[1]))
+print('oracle d08ca2cf53a02884 d9c71db564b73987')
+EOF
+after4 M 0xbc6ddd49cb017eb0 0xec359347c6d151c0 W1 0x3142479c638bf79b 0x6c9dfec8f3ce6096
+scr state 0xae963b8429603368 0x1491b4b374700f6b args (5, 67547424107322, 134132544948220)
+pre-div state 0xf7e7360c7647f121 0x57158e7a296592ac expect f7e7360c7647f121 57158e7a296592ac
+post-div 0x6da2b57a0c26bf94 0x93bd20e9e8ba513c q 0x9233046d08c256bf 3363078123
+M after job5 0x49311a734e65fe4e 0xa141e9ef96afc7a0
+oracle d08ca2cf53a02884 d9c71db564b73987
+> build · deepseek-flash
+[0m$ [0mcd /home/bocil/ctf/layer7/work/17/ext && cat > /tmp/opencode/gdb5b <<'EOF'
+set pagination off
+set confirm off
+set disable-randomization on
+break *0x555555554000+0x391bc
+commands
+silent
+printf "DIVRET L=%p A=%016lx B=%016lx ret=%016lx\n", $rdi, *(unsigned long*)($rdi+0xd8), *(unsigned long*)($rdi+0xe0), $rax
+continue
+end
+break *0x555555554000+0x8198
+commands
+silent
+printf "PREMIX r13=%p A13=%016lx B13=%016lx r14=%p A14=%016lx B14=%016lx\n", $r13,*(unsigned long*)($r13+0xd8),*(unsigned long*)($r13+0xe0),$r14,*(unsigned long*)($r14+0xd8),*(unsigned long*)($r14+0xe0)
+continue
+end
+run
+kill
+quit
+EOF
+gdb -q -batch -x /tmp/opencode/gdb5b --args ./friends -E /tmp/opencode/rp5.lua 012021012102021210120121 2>&1 | grep -E 'DIVRET|PREMIX' | tail -8
+PREMIX r13=0x5555555ae1c8 A13=0437bcc758a437db B13=5fe26a60a3a3ea91 r14=0x5555555a02a8 A14=c68c1eef4b42479f B14=60213d1b5e6a4cb7
+DIVRET L=0x5555555ae1c8 A=064ebc148c50f4b4 B=2972f5d459ac9170 ret=75cbf603dba08842
+PREMIX r13=0x5555555ae1c8 A13=064ebc148c50f4b4 B13=2972f5d459ac9170 r14=0x5555555a02a8 A14=13fe92cff4805b26 B14=a69bdeef7bbf8750
+DIVRET L=0x5555555ae1c8 A=be69f238621c3b3c B=e56313f47e2d82a4 ret=4ca159bbc1307692
+PREMIX r13=0x5555555ae1c8 A13=be69f238621c3b3c B13=e56313f47e2d82a4 r14=0x5555555a02a8 A14=da2ff33acb8e11dd B14=5d9ca929cedd4ffe
+PREMIX r13=0x5555555ae1c8 A13=3142479c638bf79b B13=6c9dfec8f3ce6096 r14=0x5555555a02a8 A14=bc6ddd49cb017eb0 B14=ec359347c6d151c0
+DIVRET L=0x5555555ae1c8 A=6da2b57a0c26bf94 B=93bd20e9e8ba513c ret=9233046d08c256bf
+DIVRET L=0x5555555a02a8 A=549ae21f38bd7b4a B=820df18b01f0cef8 ret=e0b2e0d7150d590f
+> build · deepseek-flash
+[0m$ [0mcd /home/bocil/ctf/layer7/work/17/ext && cat > /tmp/opencode/gdb5c <<'EOF'
+set pagination off
+set confirm off
+set disable-randomization on
+break *0x555555554000+0x84ab
+commands
+silent
+printf "YIELDMIX r13=%p A13=%016lx B13=%016lx r14=%p A14=%016lx B14=%016lx\n", $r13,*(unsigned long*)($r13+0xd8),*(unsigned long*)($r13+0xe0),$r14,*(unsigned long*)($r14+0xd8),*(unsigned long*)($r14+0xe0)
+continue
+end
+run
+kill
+quit
+EOF
+gdb -q -batch -x /tmp/opencode/gdb5c --args ./friends -E /tmp/opencode/rp5.lua 012021012102021210120121 2>&1 | grep YIELDMIX | tail -8
+YIELDMIX r13=0x5555555ae1c8 A13=270567d1800b69ac B13=06c9c447e9318501 r14=0x5555555a02a8 A14=a34cf139672db805 B14=5e2d58d8b3c417a1
+YIELDMIX r13=0x5555555ac6d8 A13=07e049979fa984fa B13=e956ac17b5435a38 r14=0x5555555a02a8 A14=38ddf652b51e0b16 B14=f0e9e518f7426630
+YIELDMIX r13=0x5555555ae1c8 A13=0437bcc758a437db B13=5fe26a60a3a3ea91 r14=0x5555555a02a8 A14=a71b615a39a9a21c B14=c54a9b92f74dd7b6
+YIELDMIX r13=0x5555555ac6d8 A13=ef9561ddb10ab009 B13=8e2d53a0d8f91185 r14=0x5555555a02a8 A14=f44ce209dcbce425 B14=4b188f5270bd5f09
+YIELDMIX r13=0x5555555ae1c8 A13=064ebc148c50f4b4 B13=2972f5d459ac9170 r14=0x5555555a02a8 A14=c68c1eef4b42479f B14=60213d1b5e6a4cb7
+YIELDMIX r13=0x5555555ae1c8 A13=be69f238621c3b3c B13=e56313f47e2d82a4 r14=0x5555555a02a8 A14=13fe92cff4805b26 B14=a69bdeef7bbf8750
+YIELDMIX r13=0x5555555ae1c8 A13=3142479c638bf79b B13=6c9dfec8f3ce6096 r14=0x5555555a02a8 A14=da2ff33acb8e11dd B14=5d9ca929cedd4ffe
+YIELDMIX r13=0x5555555ae1c8 A13=ae963b8429603368 B13=0d113c93db5f0db3 r14=0x5555555a02a8 A14=bc6ddd49cb017eb0 B14=ec359347c6d151c0
+> build · deepseek-flash
+[0m$ [0mcd /home/bocil/ctf/layer7/work/17/ext && cat > /tmp/opencode/gdbw <<'EOF'
+set pagination off
+set confirm off
+set disable-randomization on
+break *0x555555554000+0x391bc if *(unsigned long*)($rdi+0xd8)==0x6da2b57a0c26bf94
+run
+printf "GOT DIVRET L=%p A=%016lx B=%016lx\n",$rdi,*(unsigned long*)($rdi+0xd8),*(unsigned long*)($rdi+0xe0)
+set $L=$rdi
+watch *(unsigned long*)($L+0xd8)
+watch *(unsigned long*)($L+0xe0)
+continue
+printf "W1 L=%p A=%016lx B=%016lx pc=%p\n",$L,*(unsigned long*)($L+0xd8),*(unsigned long*)($L+0xe0),$pc
+bt 3
+continue
+printf "W2 L=%p A=%016lx B=%016lx pc=%p\n",$L,*(unsigned long*)($L+0xd8),*(unsigned long*)($L+0xe0),$pc
+bt 3
+continue
+printf "W3 L=%p A=%016lx B=%016lx pc=%p\n",$L,*(unsigned long*)($L+0xd8),*(unsigned long*)($L+0xe0),$pc
+bt 3
+continue
+kill
+quit
+EOF
+gdb -q -batch -x /tmp/opencode/gdbw --args ./friends -E /tmp/opencode/rp5.lua 012021012102021210120121 2>&1 | grep -E 'GOT|W1|W2|W3|Hardware|#$' | head -40
+GOT DIVRET L=0x5555555ae1c8 A=6da2b57a0c26bf94 B=93bd20e9e8ba513c
+Hardware watchpoint 2: *(unsigned long*)($L+0xd8)
+Hardware watchpoint 3: *(unsigned long*)($L+0xe0)
+Hardware watchpoint 3: *(unsigned long*)($L+0xe0)
+W1 L=0x5555555ae1c8 A=ae963b8429603368 B=0d113c93db5f0db3 pc=0x55555557141a
+> build · deepseek-flash
+[0m$ [0mcd /home/bocil/ctf/layer7/work/17/ext && objdump -d --start-address=0x1d300 --stop-address=0x1d445 -M intel friends
+friends:     file format elf64-x86-64
+
+
+Disassembly of section .text:
+
+000000000001d300 <.text+0x17d40>:
+   1d300:	c1 e0 04             	shl    eax,0x4
+   1d303:	49 89 4f 10          	mov    QWORD PTR [r15+0x10],rcx
+   1d307:	48 8b 4a f0          	mov    rcx,QWORD PTR [rdx-0x10]
+   1d30b:	4c 01 c0             	add    rax,r8
+   1d30e:	48 89 08             	mov    QWORD PTR [rax],rcx
+   1d311:	0f b6 52 f8          	movzx  edx,BYTE PTR [rdx-0x8]
+   1d315:	88 50 08             	mov    BYTE PTR [rax+0x8],dl
+   1d318:	e8 63 e8 01 00       	call   3bb80 <__cxa_finalize@plt+0x36600>
+   1d31d:	e9 d1 fe ff ff       	jmp    1d1f3 <__cxa_finalize@plt+0x17c73>
+   1d322:	66 0f 1f 44 00 00    	nop    WORD PTR [rax+rax*1+0x0]
+   1d328:	41 89 c1             	mov    r9d,eax
+   1d32b:	66 41 c1 e9 0a       	shr    r9w,0xa
+   1d330:	66 41 83 e1 07       	and    r9w,0x7
+   1d335:	75 17                	jne    1d34e <__cxa_finalize@plt+0x17dce>
+   1d337:	83 e0 ef             	and    eax,0xffffffef
+   1d33a:	66 89 43 52          	mov    WORD PTR [rbx+0x52],ax
+   1d33e:	48 8b 43 28          	mov    rax,QWORD PTR [rbx+0x28]
+   1d342:	49 89 87 c0 00 00 00 	mov    QWORD PTR [r15+0xc0],rax
+   1d349:	e9 d3 fe ff ff       	jmp    1d221 <__cxa_finalize@plt+0x17ca1>
+   1d34e:	83 e0 01             	and    eax,0x1
+   1d351:	48 63 73 38          	movsxd rsi,DWORD PTR [rbx+0x38]
+   1d355:	45 0f b7 c1          	movzx  r8d,r9w
+   1d359:	49 03 77 30          	add    rsi,QWORD PTR [r15+0x30]
+   1d35d:	41 88 47 0b          	mov    BYTE PTR [r15+0xb],al
+   1d361:	44 89 c2             	mov    edx,r8d
+   1d364:	b9 01 00 00 00       	mov    ecx,0x1
+   1d369:	4c 89 ff             	mov    rdi,r15
+   1d36c:	44 89 4d c8          	mov    DWORD PTR [rbp-0x38],r9d
+   1d370:	44 89 45 cc          	mov    DWORD PTR [rbp-0x34],r8d
+   1d374:	e8 b7 f9 ff ff       	call   1cd30 <__cxa_finalize@plt+0x177b0>
+   1d379:	44 8b 4d c8          	mov    r9d,DWORD PTR [rbp-0x38]
+   1d37d:	44 8b 45 cc          	mov    r8d,DWORD PTR [rbp-0x34]
+   1d381:	66 41 83 f9 04       	cmp    r9w,0x4
+   1d386:	0f 85 96 00 00 00    	jne    1d422 <__cxa_finalize@plt+0x17ea2>
+   1d38c:	49 8b 57 18          	mov    rdx,QWORD PTR [r15+0x18]
+   1d390:	48 8b 92 10 01 00 00 	mov    rdx,QWORD PTR [rdx+0x110]
+   1d397:	48 89 10             	mov    QWORD PTR [rax],rdx
+   1d39a:	0f b6 52 08          	movzx  edx,BYTE PTR [rdx+0x8]
+   1d39e:	83 ca 40             	or     edx,0x40
+   1d3a1:	88 50 08             	mov    BYTE PTR [rax+0x8],dl
+   1d3a4:	48 83 c0 10          	add    rax,0x10
+   1d3a8:	4c 89 ff             	mov    rdi,r15
+   1d3ab:	49 89 47 10          	mov    QWORD PTR [r15+0x10],rax
+   1d3af:	44 89 4d c8          	mov    DWORD PTR [rbp-0x38],r9d
+   1d3b3:	44 89 45 cc          	mov    DWORD PTR [rbp-0x34],r8d
+   1d3b7:	e8 14 95 ff ff       	call   168d0 <__cxa_finalize@plt+0x11350>
+   1d3bc:	44 8b 4d c8          	mov    r9d,DWORD PTR [rbp-0x38]
+   1d3c0:	f3 0f 7e 43 40       	movq   xmm0,QWORD PTR [rbx+0x40]
+   1d3c5:	48 ba 95 ef 82 de 43 	movabs rdx,0xd1342543de82ef95
+   1d3cc:	25 34 d1 
+   1d3cf:	44 8b 45 cc          	mov    r8d,DWORD PTR [rbp-0x34]
+   1d3d3:	41 0f b7 c1          	movzx  eax,r9w
+   1d3d7:	41 8d 49 05          	lea    ecx,[r9+0x5]
+   1d3db:	48 0f af c2          	imul   rax,rdx
+   1d3df:	48 8b 53 40          	mov    rdx,QWORD PTR [rbx+0x40]
+   1d3e3:	0f b7 c9             	movzx  ecx,cx
+   1d3e6:	48 33 43 48          	xor    rax,QWORD PTR [rbx+0x48]
+   1d3ea:	48 d3 c2             	rol    rdx,cl
+   1d3ed:	48 31 d0             	xor    rax,rdx
+   1d3f0:	48 ba eb 11 31 13 bb 	movabs rdx,0x94d049bb133111eb
+   1d3f7:	49 d0 94 
+   1d3fa:	48 c1 c0 11          	rol    rax,0x11
+   1d3fe:	48 01 d0             	add    rax,rdx
+   1d401:	49 8b 57 20          	mov    rdx,QWORD PTR [r15+0x20]
+   1d405:	66 48 0f 6e c8       	movq   xmm1,rax
+   1d40a:	0f b7 43 52          	movzx  eax,WORD PTR [rbx+0x52]
+   1d40e:	66 0f 6c c1          	punpcklqdq xmm0,xmm1
+   1d412:	41 0f 11 87 d8 00 00 	movups XMMWORD PTR [r15+0xd8],xmm0
+   1d419:	00 
+   1d41a:	80 e4 e3             	and    ah,0xe3
+   1d41d:	e9 15 ff ff ff       	jmp    1d337 <__cxa_finalize@plt+0x17db7>
+   1d422:	49 8b 57 10          	mov    rdx,QWORD PTR [r15+0x10]
+   1d426:	48 8b 4a f0          	mov    rcx,QWORD PTR [rdx-0x10]
+   1d42a:	48 89 08             	mov    QWORD PTR [rax],rcx
+   1d42d:	0f b6 52 f8          	movzx  edx,BYTE PTR [rdx-0x8]
+   1d431:	e9 6b ff ff ff       	jmp    1d3a1 <__cxa_finalize@plt+0x17e21>
+   1d436:	66 2e 0f 1f 84 00 00 	cs nop WORD PTR [rax+rax*1+0x0]
+   1d43d:	00 00 00 
+   1d440:	55                   	push   rbp
+   1d441:	48 89 e5             	mov    rbp,rsp
+   1d444:	41                   	rex.B
+> build · deepseek-flash
+[0m$ [0mcd /home/bocil/ctf/layer7/work/17/ext && cat > /tmp/opencode/gdberr <<'EOF'
+set pagination off
+set confirm off
+set disable-randomization on
+break *0x555555554000+0x1d412
+commands
+silent
+printf "ERRSTATE rbx=%p r9=%08x p40=%016lx p48=%016lx r15=%p\n",$rbx,$r9d,*(unsigned long*)($rbx+0x40),*(unsigned long*)($rbx+0x48),$r15
+continue
+end
+run
+kill
+quit
+EOF
+gdb -q -batch -x /tmp/opencode/gdberr --args ./friends -E /tmp/opencode/rp5.lua 012021012102021210120121 2>&1 | grep ERRSTATE
+ERRSTATE rbx=0x5555555acb10 r9=00000002 p40=ae963b8429603368 p48=1491b4b374700f6b r15=0x5555555ae1c8
+> build · deepseek-flash
+[0m$ [0mcd /tmp/opencode && python3 - <<'EOF'
+exec(open('/tmp/opencode/full.py').read())
+K=0xd1342543de82ef95;K2=0x94d049bb133111eb
+S=(0xae963b8429603368,0x1491b4b374700f6b)
+status=2
+A,B=S
+Bnew=(rol(((status*K)&M64)^B^rol(A,(status+5)&0xffff),17)+K2)&M64
+print('B_err',hex(Bnew),'expect 0d113c93db5f0db3')
+# now job5: after error state (A, Bnew); yield mix with M after4
+M=(0xbc6ddd49cb017eb0,0xec359347c6d151c0)
+W=(A,Bnew)
+Mnew=yield_mix(M,W)
+print('M after5',hex(Mnew[0]),hex(Mnew[1]),'expect d08ca2cf53a02884 d9c71db564b73987')
+EOF
+B_err 0xd113c93db5f0db3 expect 0d113c93db5f0db3
+M after5 0xd08ca2cf53a02884 0xd9c71db564b73987 expect d08ca2cf53a02884 d9c71db564b73987
+> build · deepseek-flash

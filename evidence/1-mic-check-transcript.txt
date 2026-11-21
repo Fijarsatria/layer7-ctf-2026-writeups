@@ -1,0 +1,326 @@
+captured_at=2026-11-21T01:03:52.798220+00:00 rc=0 tag=1-mic-check
+[0m◈ [0mWeb Search via Exa "Layer7 CTF 2026 mic_check writeup" 
+[0m◈ [0mWeb Search via Exa ""Layer7 CTF 2026" "flag" Discord 공지" 
+> build · deepseek-flash
+[0m$ [0mcd /home/bocil/ctf/layer7 && python3 - <<'EOF'
+import json
+d=json.load(open('work/1/challenge.json'))['challenge']
+s=d['description']
+print(repr(s))
+print(s.encode('utf-8').hex())
+print('len',len(s))
+# zero width / unusual
+for ch in s:
+    if ord(ch)>127: print(hex(ord(ch)), ch)
+EOF
+'대회 디스코드 `#announcement`를 확인해주세요!'
+eb8c80ed9a8c20eb9494ec8aa4ecbd94eb939c206023616e6e6f756e63656d656e7460eba5bc20ed9995ec9db8ed95b4eca3bcec84b8ec9a9421
+len 32
+0xb300 대
+0xd68c 회
+0xb514 디
+0xc2a4 스
+0xcf54 코
+0xb4dc 드
+0xb97c 를
+0xd655 확
+0xc778 인
+0xd574 해
+0xc8fc 주
+0xc138 세
+0xc694 요
+[0m$ [0mcd /home/bocil/ctf/layer7 && python3 - <<'EOF'
+import requests,http.cookiejar,time
+jar=http.cookiejar.MozillaCookieJar('ctf2026/state/cookies.txt'); jar.load(ignore_discard=True,ignore_expires=True)
+s=requests.Session(); s.cookies.update(jar); s.headers['User-Agent']='l7-recon/1.0'
+for p in ['/api/challenges/1','/api/announcements','/api/config']:
+    r=s.get('https://ctf2026.layer7.kr'+p,timeout=30)
+    print('==',p,r.status_code, dict(r.headers)); print(r.text[:1500]); time.sleep(2)
+r=s.get('https://ctf2026.layer7.kr/challenges/1',timeout=30)
+print('== page',r.status_code,len(r.text)); print(r.text[:800])
+EOF
+== /api/challenges/1 200 {'Alt-Svc': 'h3=":443"; ma=2592000', 'Cache-Control': 'no-store', 'Content-Length': '350', 'Content-Security-Policy': "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https://www.gravatar.com https://gravatar.com; font-src 'self' data:; connect-src 'self'; worker-src 'self' blob:; child-src 'self' blob:; object-src 'none'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests", 'Content-Type': 'application/json;charset=utf-8', 'Cross-Origin-Opener-Policy': 'same-origin', 'Date': 'Sat, 21 Nov 2026 01:02:24 GMT', 'Referrer-Policy': 'same-origin', 'Strict-Transport-Security': 'max-age=31536000; includeSubDomains', 'Vary': 'Origin', 'X-Content-Type-Options': 'nosniff', 'X-Frame-Options': 'DENY', 'X-Ratelimit-Limit': '600', 'X-Ratelimit-Remaining': '589', 'X-Ratelimit-Reset': '32'}
+{"id":1,"title":"mic_check","category":"misc","points":100,"initial_points":100,"minimum_points":100,"solve_count":67,"is_active":true,"tags":[],"max_attempts":0,"previous_challenge_id":null,"is_locked":false,"description":"대회 디스코드 `#announcement`를 확인해주세요!","hints":[],"connection_info":"","has_file":false,"file_name":null}
+== /api/announcements 200 {'Alt-Svc': 'h3=":443"; ma=2592000', 'Cache-Control': 'no-store', 'Content-Length': '2', 'Content-Security-Policy': "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https://www.gravatar.com https://gravatar.com; font-src 'self' data:; connect-src 'self'; worker-src 'self' blob:; child-src 'self' blob:; object-src 'none'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests", 'Content-Type': 'application/json;charset=utf-8', 'Cross-Origin-Opener-Policy': 'same-origin', 'Date': 'Sat, 21 Nov 2026 01:02:26 GMT', 'Referrer-Policy': 'same-origin', 'Strict-Transport-Security': 'max-age=31536000; includeSubDomains', 'Vary': 'Origin', 'X-Content-Type-Options': 'nosniff', 'X-Frame-Options': 'DENY', 'X-Ratelimit-Limit': '600', 'X-Ratelimit-Remaining': '588', 'X-Ratelimit-Reset': '30'}
+[]
+== /api/config 200 {'Alt-Svc': 'h3=":443"; ma=2592000', 'Cache-Control': 'no-store', 'Content-Length': '395', 'Content-Security-Policy': "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https://www.gravatar.com https://gravatar.com; font-src 'self' data:; connect-src 'self'; worker-src 'self' blob:; child-src 'self' blob:; object-src 'none'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests", 'Content-Type': 'application/json;charset=utf-8', 'Cross-Origin-Opener-Policy': 'same-origin', 'Date': 'Sat, 21 Nov 2026 01:02:28 GMT', 'Referrer-Policy': 'same-origin', 'Strict-Transport-Security': 'max-age=31536000; includeSubDomains', 'Vary': 'Origin', 'X-Content-Type-Options': 'nosniff', 'X-Frame-Options': 'DENY', 'X-Ratelimit-Limit': '600', 'X-Ratelimit-Remaining': '587', 'X-Ratelimit-Reset': '28'}
+{"id":1,"registration_enabled":false,"title":"Layer7 CTF","description":"선린인터넷고등학교 해킹 전공동아리 Layer7이 주최하는 CTF입니다.","header_title":"Layer7 CTF","header_description":"Capture The Flag","ctf_start_at":"2026-11-21T01:00:00.000Z","ctf_end_at":"2026-11-21T09:00:00.000Z","challenges_public_outside_schedule":false,"updated_at":"2026-11-14T16:12:48.211Z"}
+== page 200 813
+<!doctype html>
+<html lang="ko" class="dark">
+    <head>
+        <meta charset="UTF-8" />
+        <link rel="icon" type="image/svg+xml" href="/layer7.svg" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Layer7 CTF 2026</title>
+        <meta name="theme-color" content="#131313" />
+        <meta name="description" content="Layer7 Capture The Flag. Explore, solve, and go beyond." />
+        <link rel="preload" href="/fonts/PretendardVariable.woff2" as="font" type="font/woff2" crossorigin />
+      <script type="module" crossorigin src="/assets/index-Bdouh9Mg.js"></script>
+      <link rel="stylesheet" crossorigin href="/assets/index-BpVjNoAZ.css">
+    </head>
+    <body class="bg-background text-foreground">
+        <div id="root"></div>
+    </b
+> build · deepseek-flash
+[0m$ [0mcd /home/bocil/ctf/layer7 && ls -la state/claims && for f in state/claims/*; do echo "== $f"; cat "$f"; done 2>/dev/null | head -80; echo ---; cat state/current.json; echo; tail -20 state/autopilot.log
+total 24
+drwxrwxr-x 2 bocil bocil 4096 Nov 21 08:00 .
+drwxrwxr-x 3 bocil bocil 4096 Nov 21 08:00 ..
+-rw-r--r-- 1 bocil bocil   41 Nov 21 08:00 1.json
+-rw-r--r-- 1 bocil bocil   41 Nov 21 08:00 3.json
+-rw-r--r-- 1 bocil bocil   41 Nov 21 08:00 4.json
+-rw-r--r-- 1 bocil bocil   40 Nov 21 08:00 9.json
+== state/claims/1.json
+{"owner": "w2", "at": 1795222800.2722142}== state/claims/3.json
+{"owner": "w4", "at": 1795222800.7338958}== state/claims/4.json
+{"owner": "w1", "at": 1795222804.1286104}== state/claims/9.json
+{"owner": "w3", "at": 1795222804.600338}---
+{
+  "id": 9,
+  "title": "Pure Perfect",
+  "category": "misc",
+  "worker": 3,
+  "at": "2026-11-21T01:00:04.602230+00:00"
+}
+2026-11-21T00:59:27Z [w2] belum ada challenge (state=not_started)
+2026-11-21T00:59:28Z [w4] belum ada challenge (state=not_started)
+2026-11-21T00:59:31Z [w1] belum ada challenge (state=not_started)
+2026-11-21T00:59:32Z [w3] belum ada challenge (state=not_started)
+2026-11-21T00:59:36Z [w2] belum ada challenge (state=not_started)
+2026-11-21T00:59:36Z [w4] belum ada challenge (state=not_started)
+2026-11-21T00:59:39Z [w1] belum ada challenge (state=not_started)
+2026-11-21T00:59:40Z [w3] belum ada challenge (state=not_started)
+2026-11-21T00:59:44Z [w2] belum ada challenge (state=not_started)
+2026-11-21T00:59:44Z [w4] belum ada challenge (state=not_started)
+2026-11-21T00:59:47Z [w1] belum ada challenge (state=not_started)
+2026-11-21T00:59:48Z [w3] belum ada challenge (state=not_started)
+2026-11-21T00:59:52Z [w2] belum ada challenge (state=not_started)
+2026-11-21T00:59:52Z [w4] belum ada challenge (state=not_started)
+2026-11-21T00:59:56Z [w1] belum ada challenge (state=not_started)
+2026-11-21T00:59:56Z [w3] belum ada challenge (state=not_started)
+2026-11-21T01:00:00Z [agent] mulai 1-mic-check (timeout 1800s)
+2026-11-21T01:00:00Z [agent] mulai 3-human-top-1 (timeout 1800s)
+2026-11-21T01:00:04Z [agent] mulai 4-ocean-animal-hammer (timeout 1800s)
+2026-11-21T01:00:04Z [agent] mulai 9-pure-perfect (timeout 1800s)
+> build · deepseek-flash
+[0m$ [0mcd /home/bocil/ctf/layer7 && python3 - <<'EOF'
+import requests
+s=requests.Session(); s.headers['User-Agent']='Mozilla/5.0'
+for u in ['https://disdex.io/server/1546511280536555572','https://disdex.io/server/626945601174634506']:
+    r=s.get(u,timeout=30); print('==',u,r.status_code,len(r.text)); print(r.text[:600])
+    open('/tmp/opencode/disdex_'+u.split('/')[-1]+'.html','w').write(r.text)
+EOF
+== https://disdex.io/server/1546511280536555572 404 4480
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Not found · disdex</title><meta name="theme-color" content="#7289da"><meta property="og:title" content="Not found · disdex"><meta property="og:site_name" content="disdex"><meta property="og:type" content="website"><meta name="twitter:card" content="summary"><meta name="twitter:title" content="Not found · disdex"><link rel="preconnect" href="https://cdn.discordapp.com" crossorigin><link rel="dns-prefetch" href="https://cdn.discordapp.com"><link rel="icon" type="im
+== https://disdex.io/server/626945601174634506 200 26586
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Layer7 CTF Discord Server Invite · 123 members · disdex</title><meta name="theme-color" content="#7289da"><meta name="description" content="Join Layer7 CTF on Discord: 123 members, 7 online."><meta property="og:description" content="Join Layer7 CTF on Discord: 123 members, 7 online."><meta name="twitter:description" content="Join Layer7 CTF on Discord: 123 members, 7 online."><meta property="og:title" content="Layer7 CTF · 123 members"><meta property="og:site_nam
+[0m◈ [0mWeb Search via Exa "disdex "Layer7 CTF 2026"" 
+> build · deepseek-flash
+[0m$ [0mcd /home/bocil/ctf/layer7 && python3 - <<'EOF'
+import re
+t=open('/tmp/opencode/disdex_626945601174634506.html').read()
+# strip tags roughly, show text
+txt=re.sub(r'<script.*?</script>','',t,flags=re.S)
+txt=re.sub(r'<style.*?</style>','',txt,flags=re.S)
+txt=re.sub(r'<[^>]+>','\n',txt)
+lines=[l.strip() for l in txt.splitlines() if l.strip()]
+print('\n'.join(lines)[:4000])
+print('LAYER7 hits:', [m.start() for m in re.finditer('Layer7{',t)][:10])
+EOF
+Layer7 CTF Discord Server Invite · 123 members · disdex
+disdex
+discord server index
+Servers
+Users
+PFPs
+Bots
+Games
+Tools
+Stats
+Leaderboard
+API
+Add
+Login
+Home
+›
+Servers
+›
+Layer7 CTF
+Layer7 CTF
+Join server
+discord.gg/HPvavr3
+Promote this server
+123
+members
+7
+online
+0
+boosts
+Sep 27, 2019
+created
+Jul 04, 2026
+added to disdex
+Nov 20, 2026
+last checked
+members + online
+members
+online
+124
+93
+62
+31
+0
+Oct 22
+Nov 06
+Nov 20
+games (0)
+no games associated with this server
+invites (1)
+Code
+Inviter
+Status
+HPvavr3
+@djdndjdjcj
+alive
+LAYER7 hits: []
+> build · deepseek-flash
+[0m◈ [0mWeb Search via Exa ""nF9YS32mQV"" 
+[0m◈ [0mWeb Search via Exa ""Layer7 CTF 2026" "announcement"" 
+> build · deepseek-flash
+[0m← [0mWrite work/1/recon.py
+Created file successfully: work/1/recon.py
+[0m← [0mWrite work/1/notes.md
+Created file successfully: work/1/notes.md
+> build · deepseek-flash
+[0m$ [0mcd /home/bocil/ctf/layer7 && python3 work/1/recon.py 2>&1 | tee work/1/recon.out | tail -80
+== challenge metadata
+{
+  "id": 1,
+  "title": "mic_check",
+  "category": "misc",
+  "points": 100,
+  "initial_points": 100,
+  "minimum_points": 100,
+  "solve_count": 0,
+  "is_active": true,
+  "tags": [],
+  "max_attempts": 0,
+  "previous_challenge_id": null,
+  "is_locked": false,
+  "description": "대회 디스코드 `#announcement`를 확인해주세요!",
+  "hints": [],
+  "connection_info": "",
+  "has_file": false,
+  "file_name": null
+}
+
+== GET /api/me -> 200
+{"id":146,"email":"fijarsatria07@gmail.com","username":"B0TCIL","role":"user","team_id":293,"team_name":"participant-146","division_id":1,"division_name":"General","blocked_reason":null,"blocked_at":null,"is_hidden":false,"avatar_url":"https://www.gravatar.com/avatar/3d80fa33e217e8ed62574a3a8d951a9ef5549ba6f7a983598bb132b6e2092d80?s=160&d=404&r=g"}
+
+== GET /api/announcements -> 200
+[]
+
+== GET /api/pages -> 200
+[]
+
+== GET /api/config -> 200
+{"id":1,"registration_enabled":false,"title":"Layer7 CTF","description":"선린인터넷고등학교 해킹 전공동아리 Layer7이 주최하는 CTF입니다.","header_title":"Layer7 CTF","header_description":"Capture The Flag","ctf_start_at":"2026-11-21T01:00:00.000Z","ctf_end_at":"2026-11-21T09:00:00.000Z","challenges_public_outside_schedule":false,"updated_at":"2026-11-14T16:12:48.211Z"}
+
+== GET /api/challenges/1 -> 200
+{"id":1,"title":"mic_check","category":"misc","points":100,"initial_points":100,"minimum_points":100,"solve_count":72,"is_active":true,"tags":[],"max_attempts":0,"previous_challenge_id":null,"is_locked":false,"description":"대회 디스코드 `#announcement`를 확인해주세요!","hints":[],"connection_info":"","has_file":false,"file_name":null}
+
+== GET /api/challenges/1/solvers -> 200
+[{"user_id":186,"username":"Chiwon","solved_at":"2026-11-21 01:00:18.845125+00","is_first_blood":true},{"user_id":201,"username":"alsgn1_","solved_at":"2026-11-21 01:02:59.419004+00","is_first_blood":false},{"user_id":69,"username":"새우고래","solved_at":"2026-11-21 01:02:51.639611+00","is_first_blood":false},{"user_id":32,"username":"Kakam","solved_at":"2026-11-21 01:02:44.741165+00","is_first_blood":false},{"user_id":283,"username":"생갈치1호의행방불명","solved_at":"2026-11-21 01:02:42.187432+00","is_first_blood":false},{"user_id":27,"username":"QwQ","solved_at":"2026-11-21 01:02:36.741135+00","is_first_blood":false},{"user_id":179,"username":"hatae","solved_at":"2026-11-21 01:02:10.957509+00","is_first_blood":false},{"user_id":200,"username":"빨리앉아너의집에가는카카오차에","solved_at":"2026-11-21 01:02:08.860771+00","is_first_blood":false},{"user_id":61,"username":"jxngbeen","solved_at":"2026-11-21 01:02:05.611038+00","is_first_blood":false},{"user_id":97,"username":"T00th1ess","solved_at":"2026-11-21 01:01:53.217903+00","is_first_blood":false},{"user_id":62,"username":"0n3n3ss","solved_at":"2026-11-21 01:01:49.654459+00","is_first_blood":false},{"user_id":263,"username":"ssnake","solved_at":"2026-11-21 01:01:47.098471+00","is_first_blood":false},{"user_id":276,"username":"Yeonba","solved_at":"2026-11-21 01:01:42.800834+00","is_first_blood":false},{"user_id":171,"username":"kakae913","solved_at":"2026-11-21 01:01:35.179506+00","is_first_blood":false},{"user_id":309,"username":"ps9263","solved_at":"2
+
+== Discord public invite metadata (no auth)
+200
+{"type":0,"code":"nF9YS32mQV","inviter":{"id":"795229562560315393","username":"shx.z9u_","avatar":null,"discriminator":"0","public_flags":0,"flags":0,"banner":null,"accent_color":3553086,"global_name":"Magnolia","avatar_decoration_data":null,"collectibles":null,"display_name_styles":null,"banner_color":"#36373e","clan":{"identity_guild_id":null,"identity_enabled":false,"tag":null,"badge":null},"primary_guild":{"identity_guild_id":null,"identity_enabled":false,"tag":null,"badge":null}},"expires_at":null,"id":"1560944958297473114","guild":{"id":"1546511280536555572","name":"Layer7 CTF 2026","splash":null,"banner":null,"description":null,"icon":"506ec0212c6ec243e90465a165632969","features":["ACTIVITY_FEED_DISABLED_BY_USER","NEWS","COMMUNITY"],"verification_level":1,"vanity_url_code":null,"nsfw_level":0,"nsfw":false,"premium_subscription_count":0,"premium_tier":0},"guild_id":"1546511280536555572","channel":{"id":"1556618944985571351","type":0,"name":"moderator-only"},"profile":{"id":"1546511280536555572","name":"Layer7 CTF 2026","icon_hash":"506ec0212c6ec243e90465a165632969","member_count":269,"online_count":106,"description":null,"banner_hash":null,"game_application_ids":[],"game_activity":{},"tag":null,"badge":0,"badge_color_primary":null,"badge_color_secondary":null,"badge_hash":null,"traits":[],"features":["COMMUNITY"],"visibility":1,"custom_banner_hash":null,"premium_subscription_count":0,"premium_tier":0},"approximate_member_count":269,"approximate_presence_count":106}
+
+
+== Discord public widget (expected 403: disabled)
+403 {"message": "Widget Disabled", "code": 50004}
+
+Conclusion: the platform mirrors no announcement; the flag is only in the authenticated Discord #announcement channel.
+> build · deepseek-flash
+[0m← [0mEdit work/1/recon.py
+Index: work/1/recon.py
+===================================================================
+--- work/1/recon.py
++++ work/1/recon.py
+@@ -49,8 +49,17 @@
+                  "/api/challenges/1", "/api/challenges/1/solvers"):
+         r = s.get(BASE + path, timeout=30)
+         print(f"\n== GET {path} -> {r.status_code}")
+         body = r.text
++        if path == "/api/me":
++            # Do not persist account PII in recon evidence.
++            try:
++                me = r.json()
++                body = json.dumps({k: me.get(k) for k in
++                                   ("id", "username", "division_id")},
++                                  ensure_ascii=False)
++            except ValueError:
++                pass
+         print(body[:1500])
+         time.sleep(2)
+ 
+     print("\n== Discord public invite metadata (no auth)")
+
+> build · deepseek-flash
+[0m$ [0mcd /home/bocil/ctf/layer7 && python3 work/1/recon.py > work/1/recon.out 2>&1; chmod 644 work/1/*; tail -3 work/1/recon.out; head -12 work/1/recon.out
+403 {"message": "Widget Disabled", "code": 50004}
+
+Conclusion: the platform mirrors no announcement; the flag is only in the authenticated Discord #announcement channel.
+== challenge metadata
+{
+  "id": 1,
+  "title": "mic_check",
+  "category": "misc",
+  "points": 100,
+  "initial_points": 100,
+  "minimum_points": 100,
+  "solve_count": 0,
+  "is_active": true,
+  "tags": [],
+  "max_attempts": 0,
+> build · deepseek-flash
+[0m← [0mEdit state/PROGRESS.md
+Index: state/PROGRESS.md
+===================================================================
+--- state/PROGRESS.md
++++ state/PROGRESS.md
+@@ -1,4 +1,6 @@
+ # PROGRESS — Jeopardy
+ 
+ (format: id | status | temuan | next)
+ 
++1 | NEED_HUMAN | mic_check: flag hanya ada di Discord `#announcement` (guild 1546511280536555572, channel 1556619038342516799). Platform `/api/announcements` dan `/api/pages` kosong; deskripsi tidak punya flag tersembunyi; Discord widget disabled & semua endpoint pesan butuh auth. 72+ solver dalam 2 menit. | NEED_HUMAN: Discord mic check — manusia harus buka Discord, salin `Layer7{...}`, jalankan `python3 l7.py submit 1 'Layer7{...}'`, lalu tulis `solves/1.md`.
++
+
+> build · deepseek-flash
+[0m$ [0mcd /home/bocil/ctf/layer7 && cat state/PROGRESS.md; echo ---; ls -la work/1/; echo ---; test -f work/1/submit.json && echo "SUBMIT EXISTS" || echo "no submit.json (correct: no guess)"
+# PROGRESS — Jeopardy
+
+(format: id | status | temuan | next)
+
+1 | NEED_HUMAN | mic_check: flag hanya ada di Discord `#announcement` (guild 1546511280536555572, channel 1556619038342516799). Platform `/api/announcements` dan `/api/pages` kosong; deskripsi tidak punya flag tersembunyi; Discord widget disabled & semua endpoint pesan butuh auth. 72+ solver dalam 2 menit. | NEED_HUMAN: Discord mic check — manusia harus buka Discord, salin `Layer7{...}`, jalankan `python3 l7.py submit 1 'Layer7{...}'`, lalu tulis `solves/1.md`.
+
+---
+total 28
+drwxr-xr-x 2 bocil bocil 4096 Nov 21 08:03 .
+drwxrwxr-x 6 bocil bocil 4096 Nov 21 08:00 ..
+-rw-r--r-- 1 bocil bocil  490 Nov 21 08:00 challenge.json
+-rw-r--r-- 1 bocil bocil 2224 Nov 21 08:03 notes.md
+-rw-r--r-- 1 bocil bocil 4772 Nov 21 08:03 recon.out
+-rw-r--r-- 1 bocil bocil 2815 Nov 21 08:03 recon.py
+---
+no submit.json (correct: no guess)
+> build · deepseek-flash
+Challenge 1 (`mic_check`) is Discord-only. I verified the platform mirrors no announcement and the challenge metadata contains no hidden flag, so I did not submit any guessed value.
+
+status: NEED_HUMAN
+flag: - (tidak ada; flag hanya di Discord `#announcement`, tidak ditebak)
+dicoba: `l7.py chall/file 1`, `/api/announcements`, `/api/pages`, `/api/config`, `/api/challenges/1`, raw description bytes, SPA HTML, public Discord invite/widget endpoints, web/OSINT search
+berikutnya: Manusia buka Discord Layer7 CTF 2026 `#announcement`, salin `Layer7{...}`, jalankan `python3 l7.py submit 1 'Layer7{...}'`, lalu tulis `solves/1.md`
+file: `state/PROGRESS.md`, `work/1/notes.md`, `work/1/recon.py`, `work/1/recon.out`

@@ -1,0 +1,467 @@
+captured_at=2026-11-21T02:38:02.291360+00:00 rc=143 tag=6-janus
+48895308       mov qword [rbx + 8], rdx
+│ ││││││╎   0x000020ce      488d5318       lea rdx, [rbx + 0x18]
+│ ││││││╎   0x000020d2      48898bb00200.  mov qword [rbx + 0x2b0], rcx
+│ ││││││╎   0x000020d9      4889d1         mov rcx, rdx
+│ ││││││╎   0x000020dc      4829f9         sub rcx, rdi
+│ ││││││╎   0x000020df      81c1a0020000   add ecx, 0x2a0
+│ ││││││╎   0x000020e5      c1e903         shr ecx, 3
+│ ││││││╎   0x000020e8      f348ab         rep stosq qword [rdi], rax
+│ ││││││╎   0x000020eb      0f114318       movups xmmword [rbx + 0x18], xmm0
+│ ││││││╎   0x000020ef      4889df         mov rdi, rbx                ; int64_t arg1
+│ ││││││╎   0x000020f2      48b8616c616e.  movabs rax, 0x6465636e616c61 ; 'alanced'
+│ ││││││╎   0x000020fc      48894327       mov qword [rbx + 0x27], rax
+│ ││││││╎   0x00002100      e8dbf6ffff     call fcn.000017e0
+│ ││││││╎   0x00002105      488d7c2440     lea rdi, [var_40h]
+│ ││││││╎   0x0000210a      b963000000     mov ecx, 0x63               ; 'c'
+│ ││││││╎   0x0000210f      4531c0         xor r8d, r8d
+│ ││││││╎   0x00002112      48894310       mov qword [rbx + 0x10], rax
+│ ││││││╎   0x00002116      488d35831000.  lea rsi, [0x000031a0]       ; " "
+│ ││││││╎   0x0000211d      31d2           xor edx, edx
+│ ││││││╎   0x0000211f      31c0           xor eax, eax
+│ ││││││╎   0x00002121      f348a5         rep movsq qword [rdi], qword ptr [rsi]
+│ ││││││╎   0x00002124      be01000000     mov esi, 1
+│ ││││││╎   0x00002129      bf26000000     mov edi, 0x26               ; '&'
+│ ││││││╎   0x0000212e      66c744243063.  mov word [var_30h], 0x63    ; 'c'
+│ ││││││╎                                                              ; [0x63:2]=0
+│ ││││││╎   0x00002135      4c896c2438     mov qword [var_38h], r13
+│ ││││││╎   0x0000213a      e811f3ffff     call sym.imp.prctl
+│ ││││││╎   0x0000213f      85c0           test eax, eax
+│ ────────< 0x00002141      0f8529010000   jne 0x2270
+│ ││││││╎   0x00002147      4c8d642430     lea r12, [var_30h]
+│ ││││││╎   0x0000214c      ba01000000     mov edx, 1
+│ ││││││╎   0x00002151      be01000000     mov esi, 1
+│ ││││││╎   0x00002156      bf3d010000     mov edi, 0x13d
+│ ││││││╎   0x0000215b      4c89e1         mov rcx, r12
+│ ││││││╎   0x0000215e      e8ddf2ffff     call sym.imp.syscall
+│ ││││││╎   0x00002163      85c0           test eax, eax
+│ ────────< 0x00002165      0f8505010000   jne 0x2270
+│ ││││││╎   0x0000216b      488d3da60f00.  lea rdi, str.JANUS_ledger_v4_nnew_SIDE_SIZE__reflect_ID__turn_ID__drop_ID__forget_ID_npeek_ID_OFFSET_LENGTH__mark_ID_OFFSET_HEX__audit__quit_n ; 0x3118 ; "JANUS ledger v4\nnew SIDE SIZE | reflect ID | turn ID | drop ID | forget ID\npeek ID OFFSET LENGTH | mark ID OFFSET HEX | audit | quit\n" ; int64_t arg1
+│ ││││││╎   0x00002172      e809faffff     call fcn.00001b80
+│ ││││││╎   ; XREFS(24)
+│ ────────> 0x00002177      bb02000000     mov ebx, 2
+│ ││││││╎   0x0000217c      488d2d810e00.  lea rbp, [0x00003004]       ; "> "
+│ ────────< 0x00002183      eb0f           jmp 0x2194
+..
+│ ││││││╎   ; CODE XREF from fcn.00001bd0 @ 0x21a7
+│ ────────> 0x00002188      4801c5         add rbp, rax
+│ ││││││╎   0x0000218b      4829c3         sub rbx, rax
+│ ────────< 0x0000218e      0f8487000000   je 0x221b
+│ ││││││╎   ; CODE XREF from fcn.00001bd0 @ 0x2183
+│ ────────> 0x00002194      4889da         mov rdx, rbx                ; size_t nbytes
+│ ││││││╎   0x00002197      4889ee         mov rsi, rbp                ; const char *ptr
+│ ││││││╎   0x0000219a      bf01000000     mov edi, 1                  ; int fd
+│ ││││││╎   0x0000219f      e87cf1ffff     call sym.imp.write          ; ssize_t write(int fd, const char *ptr, size_t nbytes)
+│ ││││││╎   0x000021a4      4885c0         test rax, rax
+│ ────────< 0x000021a7      7fdf           jg 0x2188
+│ ││││││╎   ; XREFS: CODE 0x00002499  CODE 0x000025a0  CODE 0x000025d4  
+│ ││││││╎   ; XREFS: CODE 0x00002657  CODE 0x000026ab  CODE 0x00002788  
+│ ││││││╎   ; XREFS: CODE 0x000027fe  CODE 0x00002832  CODE 0x0000291f  
+│ ││││││╎   ; XREFS: CODE 0x0000299e  CODE 0x00002b1b  CODE 0x00002c5c  
+│ ││││││╎   ; XREFS: CODE 0x00002c90  CODE 0x00002d95  CODE 0x00002de6  
+│ ││││││╎   ; XREFS: CODE 0x00002e22  CODE 0x00002e56  CODE 0x00002ea2  
+│ ││││││╎   ; XREFS: CODE 0x00002ee7  CODE 0x00002f1b  
+│ ────────> 0x000021a9      31ff           xor edi, edi
+│ ││││││╎   0x000021ab      e840f1ffff     call sym.imp._exit
+│ ││││││╎   ; CODE XREF from fcn.00001bd0 @ 0x2243
+│ ────────> 0x000021b0      e81bf1ffff     call sym.imp.__errno_location
+│ ││││││╎   0x000021b5      833804         cmp dword [rax], 4
+│ ────────< 0x000021b8      0f84d5000000   je 0x2293
+│ ││││││╎   ; XREFS: CODE 0x00001d3f  CODE 0x00001d70  CODE 0x00001e36  
+│ ││││││╎   ; XREFS: CODE 0x00001ef0  CODE 0x00002427  CODE 0x0000265f  
+│ ││││││╎   ; XREFS: CODE 0x00002669  
+│ ────────> 0x000021be      488b8424f80a.  mov rax, qword [var_af8h]
+│ ││││││╎   0x000021c6      64482b042528.  sub rax, qword fs:[0x28]
+│ ────────< 0x000021cf      0f85b9000000   jne 0x228e
+│ ││││││╎   0x000021d5      4881c4080b00.  add rsp, 0xb08
+│ ││││││╎   0x000021dc      5b             pop rbx
+│ ││││││╎   0x000021dd      5d             pop rbp
+│ ││││││╎   0x000021de      415c           pop r12
+│ ││││││╎   0x000021e0      415d           pop r13
+│ ││││││╎   0x000021e2      415e           pop r14
+│ ││││││╎   0x000021e4      415f           pop r15
+│ ││││││╎   0x000021e6      c3             ret
+│ ││││││╎   ; XREFS: CODE 0x00001c2f  CODE 0x00001c42  CODE 0x00001c55  
+│ ││││││╎   ; XREFS: CODE 0x00001c6d  CODE 0x00001c98  CODE 0x00001cc8  
+│ └└└└└└──> 0x000021e7      488b8424f80a.  mov rax, qword [var_af8h]
+│       ╎   0x000021ef      64482b042528.  sub rax, qword fs:[0x28]
+│       ╎   0x000021f8      488d3d900e00.  lea rdi, str.ERR_workers_n  ; 0x308f ; "ERR workers\n"
+│      ┌──< 0x000021ff      0f8589000000   jne 0x228e
+│      │╎   ; CODE XREF from fcn.00001bd0 @ 0x2288
+│     ┌───> 0x00002205      4881c4080b00.  add rsp, 0xb08
+│     ╎│╎   0x0000220c      5b             pop rbx
+│     ╎│╎   0x0000220d      5d             pop rbp
+│     ╎│╎   0x0000220e      415c           pop r12
+│     ╎│╎   0x00002210      415d           pop r13
+│     ╎│╎   0x00002212      415e           pop r14
+│     ╎│╎   0x00002214      415f           pop r15
+│     ╎│└─< 0x00002216      e965f9ffff     jmp fcn.00001b80
+│     ╎│    ; CODE XREF from fcn.00001bd0 @ 0x218e
+│ ────────> 0x0000221b      4531f6         xor r14d, r14d
+│     ╎│    0x0000221e      bd01000000     mov ebp, 1
+│     ╎│    0x00002223      4c8dbc24f005.  lea r15, [var_5f0h]
+│     ╎│    ; CODE XREF from fcn.00001bd0 @ 0x226e
+│     ╎│┌─> 0x0000222b      31ff           xor edi, edi                ; int fildes
+│     ╎│╎   0x0000222d      ba01000000     mov edx, 1                  ; size_t nbyte
+│     ╎│╎   0x00002232      4c89e6         mov rsi, r12                ; void *buf
+│     ╎│╎   0x00002235      e8c6f1ffff     call sym.imp.read           ; ssize_t read(int fildes, void *buf, size_t nbyte)
+│     ╎│╎   0x0000223a      4885c0         test rax, rax
+│    ┌────< 0x0000223d      0f8419040000   je 0x265c
+│ ────────< 0x00002243      0f8867ffffff   js 0x21b0
+│    │╎│╎   0x00002249      0fb6442430     movzx eax, byte [var_30h]
+│    │╎│╎   0x0000224e      4c89ff         mov rdi, r15
+│    │╎│╎   0x00002251      4b8d1437       lea rdx, [r15 + r14]
+│    │╎│╎   0x00002255      3c0a           cmp al, 0xa
+│   ┌─────< 0x00002257      7449           je 0x22a2
+│   ││╎│╎   0x00002259      8802           mov byte [rdx], al
+│   ││╎│╎   0x0000225b      488d4501       lea rax, [rbp + 1]
+│   ││╎│╎   0x0000225f      4881fdff0400.  cmp rbp, 0x4ff
+│  ┌──────< 0x00002266      7434           je 0x229c
+│  │││╎│╎   ; CODE XREF from fcn.00001bd0 @ 0x229a
+│ ┌───────> 0x00002268      4989ee         mov r14, rbp
+│ ╎│││╎│╎   0x0000226b      4889c5         mov rbp, rax
+│ ╎│││╎│└─< 0x0000226e      ebbb           jmp 0x222b
+│ ╎│││╎│    ; CODE XREFS from fcn.00001bd0 @ 0x2141, 0x2165
+│ ────────> 0x00002270      488b8424f80a.  mov rax, qword [var_af8h]
+│ ╎│││╎│    0x00002278      64482b042528.  sub rax, qword fs:[0x28]
+│ ╎│││╎│    0x00002281      488d3d140e00.  lea rdi, str.ERR_sandbox_n  ; 0x309c ; "ERR sandbox\n"
+│ ╎│││└───< 0x00002288      0f8477ffffff   je 0x2205
+│ ╎│││ │    ; CODE XREFS from fcn.00001bd0 @ 0x21cf, 0x21ff
+> build · deepseek-flash
+[0m$ [0mcd /home/bocil/ctf/layer7/work/6 && strings -a -t x janus | grep -i flag; echo "---"; r2 -q -e scr.color=0 -c 'ps @ 0x31a0; px 0x330 @ 0x31a0' janus 2>/dev/null | head -40
+---
+ 
+- offset -   0 1  2 3  4 5  6 7  8 9  A B  C D  E F  0123456789ABCDEF
+0x000031a0  2000 0000 0400 0000 1500 0100 3e00 00c0   ...........>...
+0x000031b0  0600 0000 0000 0080 2000 0000 0000 0000  ........ .......
+0x000031c0  1500 0001 3b00 0000 0600 0000 0100 0500  ....;...........
+0x000031d0  1500 0001 4201 0000 0600 0000 0100 0500  ....B...........
+0x000031e0  1500 0001 3900 0000 0600 0000 0100 0500  ....9...........
+0x000031f0  1500 0001 3a00 0000 0600 0000 0100 0500  ....:...........
+0x00003200  1500 0001 3800 0000 0600 0000 0100 0500  ....8...........
+0x00003210  1500 0001 b301 0000 0600 0000 0100 0500  ................
+0x00003220  1500 0001 3e00 0000 0600 0000 0100 0500  ....>...........
+0x00003230  1500 0001 c800 0000 0600 0000 0100 0500  ................
+0x00003240  1500 0001 ea00 0000 0600 0000 0100 0500  ................
+0x00003250  1500 0001 6500 0000 0600 0000 0100 0500  ....e...........
+0x00003260  1500 0001 3601 0000 0600 0000 0100 0500  ....6...........
+0x00003270  1500 0001 3701 0000 0600 0000 0100 0500  ....7...........
+0x00003280  1500 0001 b201 0000 0600 0000 0100 0500  ................
+0x00003290  1500 0001 b601 0000 0600 0000 0100 0500  ................
+0x000032a0  1500 0001 a801 0000 0600 0000 0100 0500  ................
+0x000032b0  1500 0001 2900 0000 0600 0000 0100 0500  ....)...........
+0x000032c0  1500 0001 3500 0000 0600 0000 0100 0500  ....5...........
+0x000032d0  1500 0001 2a00 0000 0600 0000 0100 0500  ....*...........
+0x000032e0  1500 0001 3100 0000 0600 0000 0100 0500  ....1...........
+0x000032f0  1500 0001 3200 0000 0600 0000 0100 0500  ....2...........
+0x00003300  1500 0001 2b00 0000 0600 0000 0100 0500  ....+...........
+0x00003310  1500 0001 2001 0000 0600 0000 0100 0500  .... ...........
+0x00003320  1500 0001 a500 0000 0600 0000 0100 0500  ................
+0x00003330  1500 0001 a600 0000 0600 0000 0100 0500  ................
+0x00003340  1500 0001 9b00 0000 0600 0000 0100 0500  ................
+0x00003350  1500 0001 a100 0000 0600 0000 0100 0500  ................
+0x00003360  1500 0001 1001 0000 0600 0000 0100 0500  ................
+0x00003370  1500 0001 3401 0000 0600 0000 0100 0500  ....4...........
+0x00003380  1500 0001 4101 0000 0600 0000 0100 0500  ....A...........
+0x00003390  1500 0001 2a01 0000 0600 0000 0100 0500  ....*...........
+0x000033a0  1500 0001 4301 0000 0600 0000 0100 0500  ....C...........
+0x000033b0  1500 0001 a901 0000 0600 0000 0100 0500  ................
+0x000033c0  1500 0001 3001 0000 0600 0000 0100 0500  ....0...........
+0x000033d0  1500 0001 5700 0000 0600 0000 0100 0500  ....W...........
+0x000033e0  1500 0001 0701 0000 0600 0000 0100 0500  ................
+0x000033f0  1500 0001 5200 0000 0600 0000 0100 0500  ....R...........
+> build · deepseek-flash
+[0m$ [0mcd /home/bocil/ctf/layer7/work/6 && xxd -s 0x31a0 -l 0x120 janus
+000031a0: 2000 0000 0400 0000 1500 0100 3e00 00c0   ...........>...
+000031b0: 0600 0000 0000 0080 2000 0000 0000 0000  ........ .......
+000031c0: 1500 0001 3b00 0000 0600 0000 0100 0500  ....;...........
+000031d0: 1500 0001 4201 0000 0600 0000 0100 0500  ....B...........
+000031e0: 1500 0001 3900 0000 0600 0000 0100 0500  ....9...........
+000031f0: 1500 0001 3a00 0000 0600 0000 0100 0500  ....:...........
+00003200: 1500 0001 3800 0000 0600 0000 0100 0500  ....8...........
+00003210: 1500 0001 b301 0000 0600 0000 0100 0500  ................
+00003220: 1500 0001 3e00 0000 0600 0000 0100 0500  ....>...........
+00003230: 1500 0001 c800 0000 0600 0000 0100 0500  ................
+00003240: 1500 0001 ea00 0000 0600 0000 0100 0500  ................
+00003250: 1500 0001 6500 0000 0600 0000 0100 0500  ....e...........
+00003260: 1500 0001 3601 0000 0600 0000 0100 0500  ....6...........
+00003270: 1500 0001 3701 0000 0600 0000 0100 0500  ....7...........
+00003280: 1500 0001 b201 0000 0600 0000 0100 0500  ................
+00003290: 1500 0001 b601 0000 0600 0000 0100 0500  ................
+000032a0: 1500 0001 a801 0000 0600 0000 0100 0500  ................
+000032b0: 1500 0001 2900 0000 0600 0000 0100 0500  ....)...........
+> build · deepseek-flash
+[0m$ [0mcd /home/bocil/ctf/layer7/work/6 && python3 - <<'EOF'
+import struct
+d=open('janus','rb').read()
+off=0x31a0
+for i in range(0x63):
+    code,jt,jf,k=struct.unpack_from('<HBBI',d,off+i*8)
+    print(i,hex(code),jt,jf,hex(k))
+EOF
+0 0x20 0 0 0x4
+1 0x15 1 0 0xc000003e
+2 0x6 0 0 0x80000000
+3 0x20 0 0 0x0
+4 0x15 0 1 0x3b
+5 0x6 0 0 0x50001
+6 0x15 0 1 0x142
+7 0x6 0 0 0x50001
+8 0x15 0 1 0x39
+9 0x6 0 0 0x50001
+10 0x15 0 1 0x3a
+11 0x6 0 0 0x50001
+12 0x15 0 1 0x38
+13 0x6 0 0 0x50001
+14 0x15 0 1 0x1b3
+15 0x6 0 0 0x50001
+16 0x15 0 1 0x3e
+17 0x6 0 0 0x50001
+18 0x15 0 1 0xc8
+19 0x6 0 0 0x50001
+20 0x15 0 1 0xea
+21 0x6 0 0 0x50001
+22 0x15 0 1 0x65
+23 0x6 0 0 0x50001
+24 0x15 0 1 0x136
+25 0x6 0 0 0x50001
+26 0x15 0 1 0x137
+27 0x6 0 0 0x50001
+28 0x15 0 1 0x1b2
+29 0x6 0 0 0x50001
+30 0x15 0 1 0x1b6
+31 0x6 0 0 0x50001
+32 0x15 0 1 0x1a8
+33 0x6 0 0 0x50001
+34 0x15 0 1 0x29
+35 0x6 0 0 0x50001
+36 0x15 0 1 0x35
+37 0x6 0 0 0x50001
+38 0x15 0 1 0x2a
+39 0x6 0 0 0x50001
+40 0x15 0 1 0x31
+41 0x6 0 0 0x50001
+42 0x15 0 1 0x32
+43 0x6 0 0 0x50001
+44 0x15 0 1 0x2b
+45 0x6 0 0 0x50001
+46 0x15 0 1 0x120
+47 0x6 0 0 0x50001
+48 0x15 0 1 0xa5
+49 0x6 0 0 0x50001
+50 0x15 0 1 0xa6
+51 0x6 0 0 0x50001
+52 0x15 0 1 0x9b
+53 0x6 0 0 0x50001
+54 0x15 0 1 0xa1
+55 0x6 0 0 0x50001
+56 0x15 0 1 0x110
+57 0x6 0 0 0x50001
+58 0x15 0 1 0x134
+59 0x6 0 0 0x50001
+60 0x15 0 1 0x141
+61 0x6 0 0 0x50001
+62 0x15 0 1 0x12a
+63 0x6 0 0 0x50001
+64 0x15 0 1 0x143
+65 0x6 0 0 0x50001
+66 0x15 0 1 0x1a9
+67 0x6 0 0 0x50001
+68 0x15 0 1 0x130
+69 0x6 0 0 0x50001
+70 0x15 0 1 0x57
+71 0x6 0 0 0x50001
+72 0x15 0 1 0x107
+73 0x6 0 0 0x50001
+74 0x15 0 1 0x52
+75 0x6 0 0 0x50001
+76 0x15 0 1 0x108
+77 0x6 0 0 0x50001
+78 0x15 0 1 0x13c
+79 0x6 0 0 0x50001
+80 0x15 0 1 0x5a
+81 0x6 0 0 0x50001
+82 0x15 0 1 0x5b
+83 0x6 0 0 0x50001
+84 0x15 0 1 0x10c
+85 0x6 0 0 0x50001
+86 0x15 0 1 0x5c
+87 0x6 0 0 0x50001
+88 0x15 0 1 0x5d
+89 0x6 0 0 0x50001
+90 0x15 0 1 0x5e
+91 0x6 0 0 0x50001
+92 0x15 0 1 0x104
+93 0x6 0 0 0x50001
+94 0x15 0 1 0x4c
+95 0x6 0 0 0x50001
+96 0x15 0 1 0x4d
+97 0x6 0 0 0x50001
+98 0x6 0 0 0x7fff0000
+> build · deepseek-flash
+[0m$ [0mcd /home/bocil/ctf/layer7/work/6 && checksec --file=janus; echo ---; readelf -lW janus | grep -E "GNU_RELRO|GNU_STACK|LOAD"; echo ---; readelf -d janus | grep -Ei "bind_now|flags"
+[*] '/home/bocil/ctf/layer7/work/6/janus'
+    Arch:       amd64-64-little
+    RELRO:      Full RELRO
+    Stack:      Canary found
+    NX:         NX enabled
+    PIE:        PIE enabled
+    FORTIFY:    Enabled
+    SHSTK:      Enabled
+    IBT:        Enabled
+---
+  LOAD           0x000000 0x0000000000000000 0x0000000000000000 0x000fd0 0x000fd0 R   0x1000
+  LOAD           0x001000 0x0000000000001000 0x0000000000001000 0x001f2d 0x001f2d R E 0x1000
+  LOAD           0x003000 0x0000000000003000 0x0000000000003000 0x000770 0x000770 R   0x1000
+  LOAD           0x003c80 0x0000000000004c80 0x0000000000004c80 0x000398 0x0009c0 RW  0x1000
+  GNU_STACK      0x000000 0x0000000000000000 0x0000000000000000 0x000000 0x000000 RW  0x10
+  GNU_RELRO      0x003c80 0x0000000000004c80 0x0000000000004c80 0x000380 0x000380 R   0x1
+---
+ 0x000000000000001e (FLAGS)              BIND_NOW
+ 0x000000006ffffffb (FLAGS_1)            Flags: NOW PIE
+> build · deepseek-flash
+[0m$ [0mldd --version | head -1; ls -l /lib/x86_64-linux-gnu/libc.so.6; dpkg -l libc6 2>/dev/null | tail -2; cat /etc/os-release | head -3
+ldd (Ubuntu GLIBC 2.39-0ubuntu8.12) 2.39
+-rwxr-xr-x 1 root root 2129424 Nov  6 00:18 /lib/x86_64-linux-gnu/libc.so.6
++++-==============-================-============-=================================
+ii  libc6:amd64    2.39-0ubuntu8.12 amd64        GNU C Library: Shared libraries
+PRETTY_NAME="Ubuntu 24.04.5 LTS"
+NAME="Ubuntu"
+VERSION_ID="24.04"
+> build · deepseek-flash
+[0m$ [0mcd /home/bocil/ctf/layer7/work/6 && cat > /tmp/t1.py <<'EOF'
+from pwn import *
+context.log_level='error'
+p=remote('127.0.0.1',1337)
+def c(s):
+    p.sendline(s.encode())
+    d=p.recvuntil(b'> ')
+    return d[:-2].decode(errors='replace')
+print(c('new 0 64'))
+print(c('reflect 0'))
+print(c('drop 0'))
+print(c('drop 1'))
+print(c('new 0 64'))
+print(c('new 1 64'))
+print('peek0',c('peek 2 0 16'))
+print('peek1',c('peek 3 0 16'))
+print(c('drop 2'))
+print('peek alias',c('peek 3 0 32'))
+print(c('mark 3 0 4142434445464748'))
+print('peek alias2',c('peek 3 0 32'))
+print(c('new 0 64'))
+print('peek new',c('peek 4 0 32'))
+print(c('new 0 64'))
+print('peek new2',c('peek 5 0 32'))
+print(c('audit'))
+try: print(c('quit'))
+except: pass
+p.close()
+EOF
+python3 /tmp/t1.py
+JANUS ledger v4
+new SIDE SIZE | reflect ID | turn ID | drop ID | forget ID
+peek ID OFFSET LENGTH | mark ID OFFSET HEX | audit | quit
+
+ID 0
+
+ID 1
+
+OK
+
+OK
+
+ID 0
+
+peek0 ID 1
+
+peek1 ERR peek
+
+ERR peek
+
+peek alias ERR drop
+
+ERR peek
+
+peek alias2 ERR mark
+
+ERR peek
+
+peek new ID 2
+
+ERR peek
+
+peek new2 ID 3
+
+ERR peek
+> build · deepseek-flash
+[0m$ [0mcd /home/bocil/ctf/layer7/work/6 && cat > /tmp/t2.py <<'EOF'
+from pwn import *
+context.log_level='error'
+p=remote('127.0.0.1',1337)
+p.recvuntil(b'> ')
+def c(s):
+    p.sendline(s.encode())
+    d=p.recvuntil(b'> ')
+    return d[:-2].decode(errors='replace').replace('\n','|')
+for cmd in ['new 0 64','reflect 0','drop 0','drop 1','new 0 64','new 1 64','peek 0 0 16','peek 1 0 16','drop 0','peek 1 0 32']:
+    print(cmd,'=>',c(cmd))
+print('mark', c('mark 1 0 4142434445464748'))
+print('peek', c('peek 1 0 32'))
+print('new0', c('new 0 64'))
+print('peek0', c('peek 0 0 32'))
+print('new0b', c('new 0 64'))
+print('peek0b', c('peek 0 0 32'))
+try: print('audit',c('audit'))
+except Exception as e: print(e)
+p.close()
+EOF
+python3 /tmp/t2.py
+new 0 64 => ID 0|
+reflect 0 => ID 1|
+drop 0 => OK|
+drop 1 => OK|
+new 0 64 => ID 0|
+new 1 64 => ID 1|
+peek 0 0 16 => 626d04c9050000000000000000000000|
+peek 1 0 16 => 626d04c9050000000000000000000000|
+drop 0 => OK|
+peek 1 0 32 => 626d04c90500000039eaff102c781bac00000000000000000000000000000000|
+mark OK|
+peek 414243444546474839eaff102c781bac00000000000000000000000000000000|
+new0 ID 0|
+peek0 4142434445464748000000000000000000000000000000000000000000000000|
+new0b ID 2|
+peek0b 4142434445464748000000000000000000000000000000000000000000000000|
+audit
+> build · deepseek-flash
+[0m$ [0mcd /home/bocil/ctf/layer7/work/6 && cat > /tmp/trace.c <<'EOF'
+#define _GNU_SOURCE
+#include <stdio.h>
+#include <dlfcn.h>
+#include <pthread.h>
+static void*(*real_malloc)(size_t)=0;
+static void(*real_free)(void*)=0;
+void* malloc(size_t n){
+  if(!real_malloc) real_malloc=dlsym(RTLD_NEXT,"malloc");
+  void*p=real_malloc(n);
+  if(n>0x30 && n<0x700) fprintf(stderr,"MALLOC t=%lu n=%#zx p=%p\n",(unsigned long)pthread_self(),n,p);
+  return p;
+}
+void free(void*p){
+  if(!real_free) real_free=dlsym(RTLD_NEXT,"free");
+  if(p) fprintf(stderr,"FREE   t=%lu p=%p\n",(unsigned long)pthread_self(),p);
+  real_free(p);
+}
+EOF
+gcc -shared -fPIC -o /tmp/trace.so /tmp/trace.c -ldl && echo built
+built
+> build · deepseek-flash
+[0m$ [0mcd /home/bocil/ctf/layer7/work/6 && pkill -f 'janus --serve' ; sleep 0.5; (LD_PRELOAD=/tmp/trace.so ./janus --serve >/tmp/srv.out 2>/tmp/srv.err &) ; sleep 1; python3 /tmp/t2.py >/dev/null 2>&1; sleep 0.5; pkill -f 'janus --serve'; sleep 0.3; grep -E "MALLOC|FREE" /tmp/srv.err | head -60
+(no output)
+> build · deepseek-flash
+[0m$ [0mcat /tmp/srv.err 2>/dev/null | head; echo "---"; ls -l /tmp/srv.err; cat /tmp/srv.out | head
+---
+ls: cannot access '/tmp/srv.err': No such file or directory
+cat: /tmp/srv.out: No such file or directory
+> build · deepseek-flash

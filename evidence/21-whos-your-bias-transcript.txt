@@ -1,0 +1,428 @@
+captured_at=2026-11-21T02:34:04.631286+00:00 rc=143 tag=21-whos-your-bias
+i,rax
+    13a2:	48 89 d7             	mov    rdi,rdx
+    13a5:	b8 00 00 00 00       	mov    eax,0x0
+    13aa:	e8 61 fd ff ff       	call   1110 <__isoc23_scanf@plt>
+    13af:	e8 6c fd ff ff       	call   1120 <getchar@plt>
+    13b4:	8b 45 e8             	mov    eax,DWORD PTR [rbp-0x18]
+    13b7:	83 f8 05             	cmp    eax,0x5
+    13ba:	0f 84 18 04 00 00    	je     17d8 <main+0x558>
+    13c0:	83 f8 05             	cmp    eax,0x5
+    13c3:	0f 8f 6c ff ff ff    	jg     1335 <main+0xb5>
+    13c9:	83 f8 04             	cmp    eax,0x4
+    13cc:	0f 84 64 03 00 00    	je     1736 <main+0x4b6>
+    13d2:	83 f8 04             	cmp    eax,0x4
+    13d5:	0f 8f 5a ff ff ff    	jg     1335 <main+0xb5>
+    13db:	83 f8 03             	cmp    eax,0x3
+    13de:	0f 84 3d 02 00 00    	je     1621 <main+0x3a1>
+    13e4:	83 f8 03             	cmp    eax,0x3
+    13e7:	0f 8f 48 ff ff ff    	jg     1335 <main+0xb5>
+    13ed:	83 f8 01             	cmp    eax,0x1
+    13f0:	74 0e                	je     1400 <main+0x180>
+    13f2:	83 f8 02             	cmp    eax,0x2
+    13f5:	0f 84 7b 01 00 00    	je     1576 <main+0x2f6>
+    13fb:	e9 fb 03 00 00       	jmp    17fb <main+0x57b>
+    1400:	c7 45 f4 00 00 00 00 	mov    DWORD PTR [rbp-0xc],0x0
+    1407:	eb 04                	jmp    140d <main+0x18d>
+    1409:	83 45 f4 01          	add    DWORD PTR [rbp-0xc],0x1
+    140d:	83 7d f4 07          	cmp    DWORD PTR [rbp-0xc],0x7
+    1411:	7f 1d                	jg     1430 <main+0x1b0>
+    1413:	8b 45 f4             	mov    eax,DWORD PTR [rbp-0xc]
+    1416:	48 98                	cdqe
+    1418:	48 8d 14 c5 00 00 00 	lea    rdx,[rax*8+0x0]
+    141f:	00 
+    1420:	48 8d 05 19 2c 00 00 	lea    rax,[rip+0x2c19]        # 4040 <records>
+    1427:	48 8b 04 02          	mov    rax,QWORD PTR [rdx+rax*1]
+    142b:	48 85 c0             	test   rax,rax
+    142e:	75 d9                	jne    1409 <main+0x189>
+    1430:	83 7d f4 08          	cmp    DWORD PTR [rbp-0xc],0x8
+    1434:	0f 84 b4 03 00 00    	je     17ee <main+0x56e>
+    143a:	48 8d 05 f4 0b 00 00 	lea    rax,[rip+0xbf4]        # 2035 <_IO_stdin_used+0x35>
+    1441:	48 89 c7             	mov    rdi,rax
+    1444:	b8 00 00 00 00       	mov    eax,0x0
+    1449:	e8 a2 fc ff ff       	call   10f0 <printf@plt>
+    144e:	48 8d 45 f0          	lea    rax,[rbp-0x10]
+    1452:	48 8d 15 d9 0b 00 00 	lea    rdx,[rip+0xbd9]        # 2032 <_IO_stdin_used+0x32>
+    1459:	48 89 c6             	mov    rsi,rax
+    145c:	48 89 d7             	mov    rdi,rdx
+    145f:	b8 00 00 00 00       	mov    eax,0x0
+    1464:	e8 a7 fc ff ff       	call   1110 <__isoc23_scanf@plt>
+    1469:	e8 b2 fc ff ff       	call   1120 <getchar@plt>
+    146e:	8b 45 f0             	mov    eax,DWORD PTR [rbp-0x10]
+    1471:	85 c0                	test   eax,eax
+    1473:	0f 8e bc fe ff ff    	jle    1335 <main+0xb5>
+    1479:	8b 45 f0             	mov    eax,DWORD PTR [rbp-0x10]
+    147c:	83 f8 77             	cmp    eax,0x77
+    147f:	0f 8f b0 fe ff ff    	jg     1335 <main+0xb5>
+    1485:	bf 80 00 00 00       	mov    edi,0x80
+    148a:	e8 a1 fc ff ff       	call   1130 <malloc@plt>
+    148f:	48 89 c1             	mov    rcx,rax
+    1492:	8b 45 f4             	mov    eax,DWORD PTR [rbp-0xc]
+    1495:	48 98                	cdqe
+    1497:	48 8d 14 c5 00 00 00 	lea    rdx,[rax*8+0x0]
+    149e:	00 
+    149f:	48 8d 05 9a 2b 00 00 	lea    rax,[rip+0x2b9a]        # 4040 <records>
+    14a6:	48 89 0c 02          	mov    QWORD PTR [rdx+rax*1],rcx
+    14aa:	8b 45 f4             	mov    eax,DWORD PTR [rbp-0xc]
+    14ad:	48 98                	cdqe
+    14af:	48 8d 14 c5 00 00 00 	lea    rdx,[rax*8+0x0]
+    14b6:	00 
+    14b7:	48 8d 05 82 2b 00 00 	lea    rax,[rip+0x2b82]        # 4040 <records>
+    14be:	48 8b 04 02          	mov    rax,QWORD PTR [rdx+rax*1]
+    14c2:	c6 00 00             	mov    BYTE PTR [rax],0x0
+    14c5:	8b 45 f4             	mov    eax,DWORD PTR [rbp-0xc]
+    14c8:	48 98                	cdqe
+    14ca:	48 8d 14 c5 00 00 00 	lea    rdx,[rax*8+0x0]
+    14d1:	00 
+    14d2:	48 8d 05 67 2b 00 00 	lea    rax,[rip+0x2b67]        # 4040 <records>
+    14d9:	48 8b 04 02          	mov    rax,QWORD PTR [rdx+rax*1]
+    14dd:	48 8b 15 fc 2a 00 00 	mov    rdx,QWORD PTR [rip+0x2afc]        # 3fe0 <puts@GLIBC_2.2.5>
+    14e4:	48 89 50 78          	mov    QWORD PTR [rax+0x78],rdx
+    14e8:	48 8d 05 4d 0b 00 00 	lea    rax,[rip+0xb4d]        # 203c <_IO_stdin_used+0x3c>
+    14ef:	48 89 c7             	mov    rdi,rax
+    14f2:	b8 00 00 00 00       	mov    eax,0x0
+    14f7:	e8 f4 fb ff ff       	call   10f0 <printf@plt>
+    14fc:	8b 45 f0             	mov    eax,DWORD PTR [rbp-0x10]
+    14ff:	48 98                	cdqe
+    1501:	8b 55 f4             	mov    edx,DWORD PTR [rbp-0xc]
+    1504:	48 63 d2             	movsxd rdx,edx
+    1507:	48 8d 0c d5 00 00 00 	lea    rcx,[rdx*8+0x0]
+    150e:	00 
+    150f:	48 8d 15 2a 2b 00 00 	lea    rdx,[rip+0x2b2a]        # 4040 <records>
+    1516:	48 8b 14 11          	mov    rdx,QWORD PTR [rcx+rdx*1]
+    151a:	48 89 d1             	mov    rcx,rdx
+    151d:	48 89 c2             	mov    rdx,rax
+    1520:	48 89 ce             	mov    rsi,rcx
+    1523:	bf 00 00 00 00       	mov    edi,0x0
+    1528:	e8 d3 fb ff ff       	call   1100 <read@plt>
+    152d:	89 45 f0             	mov    DWORD PTR [rbp-0x10],eax
+    1530:	8b 45 f0             	mov    eax,DWORD PTR [rbp-0x10]
+    1533:	85 c0                	test   eax,eax
+    1535:	7e 21                	jle    1558 <main+0x2d8>
+    1537:	8b 45 f4             	mov    eax,DWORD PTR [rbp-0xc]
+    153a:	48 98                	cdqe
+    153c:	48 8d 14 c5 00 00 00 	lea    rdx,[rax*8+0x0]
+    1543:	00 
+    1544:	48 8d 05 f5 2a 00 00 	lea    rax,[rip+0x2af5]        # 4040 <records>
+    154b:	48 8b 14 02          	mov    rdx,QWORD PTR [rdx+rax*1]
+    154f:	8b 45 f0             	mov    eax,DWORD PTR [rbp-0x10]
+    1552:	48 98                	cdqe
+    1554:	c6 04 02 00          	mov    BYTE PTR [rdx+rax*1],0x0
+    1558:	8b 45 f4             	mov    eax,DWORD PTR [rbp-0xc]
+    155b:	48 8d 15 e1 0a 00 00 	lea    rdx,[rip+0xae1]        # 2043 <_IO_stdin_used+0x43>
+    1562:	89 c6                	mov    esi,eax
+    1564:	48 89 d7             	mov    rdi,rdx
+    1567:	b8 00 00 00 00       	mov    eax,0x0
+    156c:	e8 7f fb ff ff       	call   10f0 <printf@plt>
+    1571:	e9 85 02 00 00       	jmp    17fb <main+0x57b>
+    1576:	48 8d 05 d1 0a 00 00 	lea    rax,[rip+0xad1]        # 204e <_IO_stdin_used+0x4e>
+    157d:	48 89 c7             	mov    rdi,rax
+    1580:	b8 00 00 00 00       	mov    eax,0x0
+    1585:	e8 66 fb ff ff       	call   10f0 <printf@plt>
+    158a:	48 8d 45 ec          	lea    rax,[rbp-0x14]
+    158e:	48 8d 15 9d 0a 00 00 	lea    rdx,[rip+0xa9d]        # 2032 <_IO_stdin_used+0x32>
+    1595:	48 89 c6             	mov    rsi,rax
+    1598:	48 89 d7             	mov    rdi,rdx
+    159b:	b8 00 00 00 00       	mov    eax,0x0
+    15a0:	e8 6b fb ff ff       	call   1110 <__isoc23_scanf@plt>
+    15a5:	e8 76 fb ff ff       	call   1120 <getchar@plt>
+    15aa:	8b 45 ec             	mov    eax,DWORD PTR [rbp-0x14]
+    15ad:	85 c0                	test   eax,eax
+    15af:	0f 88 80 fd ff ff    	js     1335 <main+0xb5>
+    15b5:	8b 45 ec             	mov    eax,DWORD PTR [rbp-0x14]
+    15b8:	83 f8 07             	cmp    eax,0x7
+    15bb:	0f 8f 74 fd ff ff    	jg     1335 <main+0xb5>
+    15c1:	8b 45 ec             	mov    eax,DWORD PTR [rbp-0x14]
+    15c4:	48 98                	cdqe
+    15c6:	48 8d 14 c5 00 00 00 	lea    rdx,[rax*8+0x0]
+    15cd:	00 
+    15ce:	48 8d 05 6b 2a 00 00 	lea    rax,[rip+0x2a6b]        # 4040 <records>
+    15d5:	48 8b 04 02          	mov    rax,QWORD PTR [rdx+rax*1]
+    15d9:	48 85 c0             	test   rax,rax
+    15dc:	0f 84 53 fd ff ff    	je     1335 <main+0xb5>
+    15e2:	8b 45 ec             	mov    eax,DWORD PTR [rbp-0x14]
+    15e5:	48 98                	cdqe
+    15e7:	48 8d 14 c5 00 00 00 	lea    rdx,[rax*8+0x0]
+    15ee:	00 
+    15ef:	48 8d 05 4a 2a 00 00 	lea    rax,[rip+0x2a4a]        # 4040 <records>
+    15f6:	48 8b 04 02          	mov    rax,QWORD PTR [rdx+rax*1]
+    15fa:	48 8b 40 78          	mov    rax,QWORD PTR [rax+0x78]
+    15fe:	8b 55 ec             	mov    edx,DWORD PTR [rbp-0x14]
+    1601:	48 63 d2             	movsxd rdx,edx
+    1604:	48 8d 0c d5 00 00 00 	lea    rcx,[rdx*8+0x0]
+    160b:	00 
+    160c:	48 8d 15 2d 2a 00 00 	lea    rdx,[rip+0x2a2d]        # 4040 <records>
+    1613:	48 8b 14 11          	mov    rdx,QWORD PTR [rcx+rdx*1]
+    1617:	48 89 d7             	mov    rdi,rdx
+    161a:	ff d0                	call   rax
+    161c:	e9 da 01 00 00       	jmp    17fb <main+0x57b>
+    1621:	48 8d 05 26 0a 00 00 	lea    rax,[rip+0xa26]        # 204e <_IO_stdin_used+0x4e>
+    1628:	48 89 c7             	mov    rdi,rax
+    162b:	b8 00 00 00 00       	mov    eax,0x0
+    1630:	e8 bb fa ff ff       	call   10f0 <printf@plt>
+    1635:	48 8d 45 ec          	lea    rax,[rbp-0x14]
+    1639:	48 8d 15 f2 09 00 00 	lea    rdx,[rip+0x9f2]        # 2032 <_IO_stdin_used+0x32>
+    1640:	48 89 c6             	mov    rsi,rax
+    1643:	48 89 d7             	mov    rdi,rdx
+    1646:	b8 00 00 00 00       	mov    eax,0x0
+    164b:	e8 c0 fa ff ff       	call   1110 <__isoc23_scanf@plt>
+    1650:	e8 cb fa ff ff       	call   1120 <getchar@plt>
+    1655:	8b 45 ec             	mov    eax,DWORD PTR [rbp-0x14]
+    1658:	85 c0                	test   eax,eax
+    165a:	0f 88 d5 fc ff ff    	js     1335 <main+0xb5>
+    1660:	8b 45 ec             	mov    eax,DWORD PTR [rbp-0x14]
+    1663:	83 f8 07             	cmp    eax,0x7
+    1666:	0f 8f c9 fc ff ff    	jg     1335 <main+0xb5>
+    166c:	8b 45 ec             	mov    eax,DWORD PTR [rbp-0x14]
+    166f:	48 98                	cdqe
+    1671:	48 8d 14 c5 00 00 00 	lea    rdx,[rax*8+0x0]
+    1678:	00 
+    1679:	48 8d 05 c0 29 00 00 	lea    rax,[rip+0x29c0]        # 4040 <records>
+    1680:	48 8b 04 02          	mov    rax,QWORD PTR [rdx+rax*1]
+    1684:	48 85 c0             	test   rax,rax
+    1687:	0f 84 a8 fc ff ff    	je     1335 <main+0xb5>
+    168d:	48 8d 05 a8 09 00 00 	lea    rax,[rip+0x9a8]        # 203c <_IO_stdin_used+0x3c>
+    1694:	48 89 c7             	mov    rdi,rax
+    1697:	b8 00 00 00 00       	mov    eax,0x0
+    169c:	e8 4f fa ff ff       	call   10f0 <printf@plt>
+    16a1:	8b 45 ec             	mov    eax,DWORD PTR [rbp-0x14]
+    16a4:	83 f8 01             	cmp    eax,0x1
+    16a7:	75 2f                	jne    16d8 <main+0x458>
+    16a9:	8b 45 ec             	mov    eax,DWORD PTR [rbp-0x14]
+    16ac:	48 98                	cdqe
+    16ae:	48 8d 14 c5 00 00 00 	lea    rdx,[rax*8+0x0]
+    16b5:	00 
+    16b6:	48 8d 05 83 29 00 00 	lea    rax,[rip+0x2983]        # 4040 <records>
+    16bd:	48 8b 04 02          	mov    rax,QWORD PTR [rdx+rax*1]
+    16c1:	ba f0 00 00 00       	mov    edx,0xf0
+    16c6:	48 89 c6             	mov    rsi,rax
+    16c9:	bf 00 00 00 00       	mov    edi,0x0
+    16ce:	e8 2d fa ff ff       	call   1100 <read@plt>
+    16d3:	e9 1c 01 00 00       	jmp    17f4 <main+0x574>
+    16d8:	8b 45 ec             	mov    eax,DWORD PTR [rbp-0x14]
+    16db:	48 98                	cdqe
+    16dd:	48 8d 14 c5 00 00 00 	lea    rdx,[rax*8+0x0]
+    16e4:	00 
+    16e5:	48 8d 05 54 29 00 00 	lea    rax,[rip+0x2954]        # 4040 <records>
+    16ec:	48 8b 04 02          	mov    rax,QWORD PTR [rdx+rax*1]
+    16f0:	ba 77 00 00 00       	mov    edx,0x77
+    16f5:	48 89 c6             	mov    rsi,rax
+    16f8:	bf 00 00 00 00       	mov    edi,0x0
+    16fd:	e8 fe f9 ff ff       	call   1100 <read@plt>
+    1702:	89 45 f0             	mov    DWORD PTR [rbp-0x10],eax
+    1705:	8b 45 f0             	mov    eax,DWORD PTR [rbp-0x10]
+    1708:	85 c0                	test   eax,eax
+    170a:	0f 8e e4 00 00 00    	jle    17f4 <main+0x574>
+    1710:	8b 45 ec             	mov    eax,DWORD PTR [rbp-0x14]
+    1713:	48 98                	cdqe
+    1715:	48 8d 14 c5 00 00 00 	lea    rdx,[rax*8+0x0]
+    171c:	00 
+    171d:	48 8d 05 1c 29 00 00 	lea    rax,[rip+0x291c]        # 4040 <records>
+    1724:	48 8b 14 02          	mov    rdx,QWORD PTR [rdx+rax*1]
+    1728:	8b 45 f0             	mov    eax,DWORD PTR [rbp-0x10]
+    172b:	48 98                	cdqe
+    172d:	c6 04 02 00          	mov    BYTE PTR [rdx+rax*1],0x0
+    1731:	e9 be 00 00 00       	jmp    17f4 <main+0x574>
+    1736:	48 8d 05 11 09 00 00 	lea    rax,[rip+0x911]        # 204e <_IO_stdin_used+0x4e>
+    173d:	48 89 c7             	mov    rdi,rax
+    1740:	b8 00 00 00 00       	mov    eax,0x0
+    1745:	e8 a6 f9 ff ff       	call   10f0 <printf@plt>
+    174a:	48 8d 45 ec          	lea    rax,[rbp-0x14]
+    174e:	48 8d 15 dd 08 00 00 	lea    rdx,[rip+0x8dd]        # 2032 <_IO_stdin_used+0x32>
+    1755:	48 89 c6             	mov    rsi,rax
+    1758:	48 89 d7             	mov    rdi,rdx
+    175b:	b8 00 00 00 00       	mov    eax,0x0
+    1760:	e8 ab f9 ff ff       	call   1110 <__isoc23_scanf@plt>
+    1765:	e8 b6 f9 ff ff       	call   1120 <getchar@plt>
+    176a:	8b 45 ec             	mov    eax,DWORD PTR [rbp-0x14]
+    176d:	85 c0                	test   eax,eax
+    176f:	0f 88 85 00 00 00    	js     17fa <main+0x57a>
+    1775:	8b 45 ec             	mov    eax,DWORD PTR [rbp-0x14]
+    1778:	83 f8 07             	cmp    eax,0x7
+    177b:	7f 7d                	jg     17fa <main+0x57a>
+    177d:	8b 45 ec             	mov    eax,DWORD PTR [rbp-0x14]
+    1780:	48 98                	cdqe
+    1782:	48 8d 14 c5 00 00 00 	lea    rdx,[rax*8+0x0]
+    1789:	00 
+    178a:	48 8d 05 af 28 00 00 	lea    rax,[rip+0x28af]        # 4040 <records>
+    1791:	48 8b 04 02          	mov    rax,QWORD PTR [rdx+rax*1]
+    1795:	48 85 c0             	test   rax,rax
+    1798:	74 60                	je     17fa <main+0x57a>
+    179a:	8b 45 ec             	mov    eax,DWORD PTR [rbp-0x14]
+    179d:	48 98                	cdqe
+    179f:	48 8d 14 c5 00 00 00 	lea    rdx,[rax*8+0x0]
+    17a6:	00 
+    17a7:	48 8d 05 92 28 00 00 	lea    rax,[rip+0x2892]        # 4040 <records>
+    17ae:	48 8b 04 02          	mov    rax,QWORD PTR [rdx+rax*1]
+    17b2:	48 89 c7             	mov    rdi,rax
+    17b5:	e8 16 f9 ff ff       	call   10d0 <free@plt>
+    17ba:	8b 45 ec             	mov    eax,DWORD PTR [rbp-0x14]
+    17bd:	48 98                	cdqe
+    17bf:	48 8d 14 c5 00 00 00 	lea    rdx,[rax*8+0x0]
+    17c6:	00 
+    17c7:	48 8d 05 72 28 00 00 	lea    rax,[rip+0x2872]        # 4040 <records>
+    17ce:	48 c7 04 02 00 00 00 	mov    QWORD PTR [rdx+rax*1],0x0
+    17d5:	00 
+    17d6:	eb 22                	jmp    17fa <main+0x57a>
+    17d8:	b8 00 00 00 00       	mov    eax,0x0
+    17dd:	48 8b 55 f8          	mov    rdx,QWORD PTR [rbp-0x8]
+    17e1:	64 48 2b 14 25 28 00 	sub    rdx,QWORD PTR fs:0x28
+    17e8:	00 00 
+    17ea:	74 19                	je     1805 <main+0x585>
+    17ec:	eb 12                	jmp    1800 <main+0x580>
+    17ee:	90                   	nop
+    17ef:	e9 41 fb ff ff       	jmp    1335 <main+0xb5>
+    17f4:	90                   	nop
+    17f5:	e9 3b fb ff ff       	jmp    1335 <main+0xb5>
+    17fa:	90                   	nop
+    17fb:	e9 35 fb ff ff       	jmp    1335 <main+0xb5>
+    1800:	e8 db f8 ff ff       	call   10e0 <__stack_chk_fail@plt>
+    1805:	c9                   	leave
+    1806:	c3                   	ret
+[0m$ [0mcd /home/bocil/ctf/layer7/work/21/for_user && chmod +x whos_your_bias && (checksec --file=whos_your_bias 2>/dev/null || pwn checksec whos_your_bias 2>/dev/null || true) && echo "===STRINGS===" && strings -a whos_your_bias | head -80
+===STRINGS===
+/lib64/ld-linux-x86-64.so.2
+mgUa
+setvbuf
+stdin
+puts
+__stack_chk_fail
+free
+__isoc23_scanf
+read
+getchar
+stdout
+malloc
+__libc_start_main
+__cxa_finalize
+printf
+libc.so.6
+GLIBC_2.38
+GLIBC_2.4
+GLIBC_2.34
+GLIBC_2.2.5
+_ITM_deregisterTMCloneTable
+__gmon_start__
+_ITM_registerTMCloneTable
+PTE1
+u+UH
+Who's yoH
+ur bias?H
+my bias H
+ is ...
+1. Write
+2. Read
+3. Edit
+4. Delete
+5. Exit
+Size: 
+Data: 
+Index: %d
+Index: 
+9*3$"
+GCC: (Ubuntu 15.2.0-16ubuntu1) 15.2.0
+Scrt1.o
+__abi_tag
+crtstuff.c
+deregister_tm_clones
+__do_global_dtors_aux
+completed.0
+__do_global_dtors_aux_fini_array_entry
+frame_dummy
+__frame_dummy_init_array_entry
+whos_your_bias.c
+__FRAME_END__
+_DYNAMIC
+__GNU_EH_FRAME_HDR
+_GLOBAL_OFFSET_TABLE_
+free@GLIBC_2.2.5
+__libc_start_main@GLIBC_2.34
+_ITM_deregisterTMCloneTable
+stdout@GLIBC_2.2.5
+puts@GLIBC_2.2.5
+stdin@GLIBC_2.2.5
+_edata
+_fini
+__stack_chk_fail@GLIBC_2.4
+printf@GLIBC_2.2.5
+initialize
+read@GLIBC_2.2.5
+__isoc23_scanf@GLIBC_2.38
+__data_start
+getchar@GLIBC_2.2.5
+__gmon_start__
+__dso_handle
+_IO_stdin_used
+records
+malloc@GLIBC_2.2.5
+_end
+__bss_start
+main
+setvbuf@GLIBC_2.2.5
+__TMC_END__
+_ITM_registerTMCloneTable
+> build · deepseek-flash
+[0m$ [0mcd /home/bocil/ctf/layer7/work/21/for_user && objdump -s -j .rodata whos_your_bias && echo === && readelf -h whos_your_bias | grep -E 'Type|Entry' && readelf -l whos_your_bias | grep -E 'GNU_STACK|GNU_RELRO' && readelf -d whos_your_bias | grep -E 'BIND_NOW|NEEDED'
+whos_your_bias:     file format elf64-x86-64
+
+Contents of section .rodata:
+ 2000 01000200 312e2057 72697465 00322e20  ....1. Write.2. 
+ 2010 52656164 00332e20 45646974 00342e20  Read.3. Edit.4. 
+ 2020 44656c65 74650035 2e204578 6974003e  Delete.5. Exit.>
+ 2030 20002564 0053697a 653a2000 44617461   .%d.Size: .Data
+ 2040 3a200049 6e646578 3a202564 0a00496e  : .Index: %d..In
+ 2050 6465783a 2000                        dex: .          
+===
+  Type:                              DYN (Position-Independent Executable file)
+  Entry point address:               0x1150
+  GNU_STACK      0x0000000000000000 0x0000000000000000 0x0000000000000000
+  GNU_RELRO      0x0000000000002d78 0x0000000000003d78 0x0000000000003d78
+ 0x0000000000000001 (NEEDED)             Shared library: [libc.so.6]
+ 0x000000000000001e (FLAGS)              BIND_NOW
+[0m$ [0mcd /home/bocil/ctf/layer7/work/21/for_user && (which checksec pwn gdb python3) ; python3 -c "import pwn; print('pwntools', pwn.__version__)" 2>/dev/null; gdb --version | head -1; ldd --version | head -1; cat /etc/os-release | head -3
+/home/bocil/.local/bin/checksec
+/home/bocil/.local/bin/pwn
+/usr/bin/gdb
+/usr/bin/python3
+GNU gdb (Ubuntu 15.1-1ubuntu1~24.04.1) 15.1
+ldd (Ubuntu GLIBC 2.39-0ubuntu8.12) 2.39
+PRETTY_NAME="Ubuntu 24.04.5 LTS"
+NAME="Ubuntu"
+VERSION_ID="24.04"
+> build · deepseek-flash
+[0m$ [0mcd /home/bocil/ctf/layer7/work/21/for_user && checksec --file=whos_your_bias
+[*] '/home/bocil/ctf/layer7/work/21/for_user/whos_your_bias'
+    Arch:       amd64-64-little
+    RELRO:      Full RELRO
+    Stack:      Canary found
+    NX:         NX enabled
+    PIE:        PIE enabled
+    SHSTK:      Enabled
+    IBT:        Enabled
+    Stripped:   No
+> build · deepseek-flash
+[0m◈ [0mWeb Search via Exa "Layer7 CTF 2026 "whos your bias" heap tcache writeup" 
+[0m◈ [0mWeb Search via Exa ""whos your bias" pwn Layer7 CTF 2026 writeup" 
+> build · deepseek-flash
+[0m$ [0mnm -D /lib/x86_64-linux-gnu/libc.so.6 | grep -E ' (puts|printf|__printf|__isoc23_printf|fprintf|__fprintf|system|__libc_system|gets|read|puts_unlocked|_IO_puts)@@' | sort
+0000000000058750 T __libc_system@@GLIBC_PRIVATE
+0000000000058750 W system@@GLIBC_2.2.5
+000000000005f560 T fprintf@@GLIBC_2.2.5
+0000000000060100 T printf@@GLIBC_2.2.5
+0000000000087160 W gets@@GLIBC_2.2.5
+0000000000087cc0 T _IO_puts@@GLIBC_2.2.5
+0000000000087cc0 W puts@@GLIBC_2.2.5
+000000000011bce0 T read@@GLIBC_2.2.5
+[0m$ [0mnm -D /lib/x86_64-linux-gnu/libc.so.6 | egrep ' (printf|puts|sprintf|snprintf|vprintf|fwrite|fputs|puts_unlocked)@@' | sort; echo ---; objdump -T /lib/x86_64-linux-gnu/libc.so.6 | grep -E ' (puts|printf|system)$'
+0000000000060100 T printf@@GLIBC_2.2.5
+0000000000066370 W snprintf@@GLIBC_2.2.5
+0000000000066420 T sprintf@@GLIBC_2.2.5
+0000000000082930 T vprintf@@GLIBC_2.2.5
+0000000000086330 W fputs@@GLIBC_2.2.5
+0000000000086a20 W fwrite@@GLIBC_2.2.5
+0000000000087cc0 W puts@@GLIBC_2.2.5
+---
+0000000000087cc0  w   DF .text	0000000000000226  GLIBC_2.2.5 puts
+0000000000058750  w   DF .text	000000000000002d  GLIBC_2.2.5 system
+0000000000060100 g    DF .text	00000000000000cc  GLIBC_2.2.5 printf
+> build · deepseek-flash

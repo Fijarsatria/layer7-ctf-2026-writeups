@@ -1,0 +1,1537 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="English write-ups for Layer7 CTF 2026 (Jeopardy + KoTH) with captured evidence and verified flags.">
+      
+      
+        <meta name="author" content="B0TCIL">
+      
+      
+        <link rel="canonical" href="https://fijarsatria.github.io/layer7-ctf-2026-writeups/koth/koth-stage-6/">
+      
+      
+        <link rel="prev" href="../koth-stage-5/">
+      
+      
+        <link rel="next" href="../../challenges/10-pipecake/">
+      
+      
+      <link rel="icon" href="../../assets/layer7.svg">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.14">
+    
+    
+      
+        <title>KoTH Stage 6 — Glasshouse VM (Split Decoder) - Layer7 CTF 2026 — Write-ups</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.342714a4.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,300i,400,400i,700,700i%7CJetBrains+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Inter";--md-code-font:"JetBrains Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+      <link rel="stylesheet" href="../../stylesheets/layer7.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="green" data-md-color-accent="green">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#tldr" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Layer7 CTF 2026 — Write-ups" class="md-header__button md-logo" aria-label="Layer7 CTF 2026 — Write-ups" data-md-component="logo">
+      
+  <img src="../../assets/layer7.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Layer7 CTF 2026 — Write-ups
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              KoTH Stage 6 — Glasshouse VM (Split Decoder)
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="green" data-md-color-accent="green"  aria-label="Light mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="green" data-md-color-accent="green"  aria-label="Dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Dark mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/Fijarsatria/layer7-ctf-2026-writeups" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Layer7 CTF 2026 — Write-ups" class="md-nav__button md-logo" aria-label="Layer7 CTF 2026 — Write-ups" data-md-component="logo">
+      
+  <img src="../../assets/layer7.svg" alt="logo">
+
+    </a>
+    Layer7 CTF 2026 — Write-ups
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/Fijarsatria/layer7-ctf-2026-writeups" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Home
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../methodology/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Methodology
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reproducibility/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Reproducibility
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../evidence/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Evidence index
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    KoTH
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_5" id="__nav_5_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            KoTH
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Glasshouse
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../koth-stage-1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    KoTH Stage 1 — Glasshouse VM
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../koth-stage-2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    KoTH Stage 2 — Glasshouse VM
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../koth-stage-3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    KoTH Stage 3 — Glasshouse VM (Capability Confusion)
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../koth-stage-4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    KoTH Stage 4 — Glasshouse VM
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../koth-stage-5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    KoTH Stage 5 — Glasshouse VM
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    KoTH Stage 6 — Glasshouse VM (Split Decoder)
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    KoTH Stage 6 — Glasshouse VM (Split Decoder)
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#tldr" class="md-nav__link">
+    <span class="md-ellipsis">
+      TL;DR
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#kit-recon" class="md-nav__link">
+    <span class="md-ellipsis">
+      Kit recon
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#vm-analysis" class="md-nav__link">
+    <span class="md-ellipsis">
+      VM analysis
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#payload" class="md-nav__link">
+    <span class="md-ellipsis">
+      Payload
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#evidence" class="md-nav__link">
+    <span class="md-ellipsis">
+      Evidence
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#result" class="md-nav__link">
+    <span class="md-ellipsis">
+      Result
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    WEB
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            WEB
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../challenges/10-pipecake/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Pipecake
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../challenges/11-forgotten/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Forgotten
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../challenges/22-roupang/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Roupang
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    PWN
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            PWN
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../challenges/21-whos-your-bias/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    whos your bias
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../challenges/5-cartridge/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Cartridge
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../challenges/6-janus/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Janus
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../challenges/7-dead-letter/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Dead Letter
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    REV
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            REV
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../challenges/14-mad-rabbit/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Mad rabbit
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../challenges/17-false-friends/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    False Friends
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../challenges/20-prism-box/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Prism Box
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../challenges/8-autoby/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Autoby
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9" >
+        
+          
+          <label class="md-nav__link" for="__nav_9" id="__nav_9_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    MISC
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_9">
+            <span class="md-nav__icon md-icon"></span>
+            MISC
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../challenges/1-mic-check/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    mic_check
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../challenges/3-human-top-1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    human top 1
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#tldr" class="md-nav__link">
+    <span class="md-ellipsis">
+      TL;DR
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#kit-recon" class="md-nav__link">
+    <span class="md-ellipsis">
+      Kit recon
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#vm-analysis" class="md-nav__link">
+    <span class="md-ellipsis">
+      VM analysis
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#payload" class="md-nav__link">
+    <span class="md-ellipsis">
+      Payload
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#evidence" class="md-nav__link">
+    <span class="md-ellipsis">
+      Evidence
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#result" class="md-nav__link">
+    <span class="md-ellipsis">
+      Result
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="koth-stage-6-glasshouse-vm-split-decoder">KoTH Stage 6 — Glasshouse VM (Split Decoder)<a class="headerlink" href="#koth-stage-6-glasshouse-vm-split-decoder" title="Permanent link">&para;</a></h1>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Event</td>
+<td>Layer7 CTF 2026 — KoTH</td>
+</tr>
+<tr>
+<td>Stage</td>
+<td><code>6</code></td>
+</tr>
+<tr>
+<td>Payload</td>
+<td><code>353 bytes</code></td>
+</tr>
+<tr>
+<td>Cost</td>
+<td><code>2366</code></td>
+</tr>
+<tr>
+<td>Status</td>
+<td><code>VERIFIED</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="tldr">TL;DR<a class="headerlink" href="#tldr" title="Permanent link">&para;</a></h2>
+<p>Stage 6 ("Split Decoder") adds a privileged <code>TRACE dst, page, index</code> that reads
+host memory, but the verifier rejects any bytecode whose decoded opcode is
+<code>0x27</code> at an instruction boundary.  The verifier and the interpreter disagree
+about <code>META</code>: the verifier advances 6 bytes for <code>META</code>, while the interpreter
+advances only 2.  Placing a 4-byte <code>TRACE</code> immediately after <code>META</code> hides it
+from the verifier while the interpreter executes it.  A payload then computes
+the flag slot from the beacon, reads the key from the <code>"RV"+key</code> header, and
+decrypts the reversed ciphertext.</p>
+<h2 id="kit-recon">Kit recon<a class="headerlink" href="#kit-recon" title="Permanent link">&para;</a></h2>
+<p><code>koth/stage-6/glasshouse-kit/</code> contains <code>glasshouse.py</code>, <code>assembler.py</code>,
+<code>runner.py</code>, <code>example.asm</code>, <code>README.md</code>, and <code>VM_SPEC.md</code>.  Stage 6 specifics:</p>
+<ul>
+<li><code>OPCODE_MASK = 0x96</code> (assemble with <code>--mask 0x96</code>).</li>
+<li>Arena is <code>host + guest</code> (<code>HOST_BASE = 0</code>, <code>GUEST_BASE = 2048</code>); beacon is at
+  guest <code>0..7</code>.</li>
+<li>New <code>TRACE dst, page, index</code> (logical <code>0x27</code>, gas 3) is marked privileged.</li>
+<li>New <code>META imm</code> (logical <code>0x50</code>, runtime gas 1, runtime size 2).</li>
+<li>The verifier has a size table: <code>META</code> is listed as <strong>6 bytes</strong> and any
+  <code>TRACE</code> found at a verifier boundary is rejected.</li>
+<li>Flag layout:</li>
+<li><code>slot = ((b0*7 + b3*11 + b5) &amp; 31) * 64</code> (0, 64, ..., 1984)</li>
+<li><code>key0 = (b1 + b6 + 0x47) &amp; 0xFF</code></li>
+<li><code>host[slot:slot+3] = b"RV" + bytes([key0])</code></li>
+<li><code>host[slot+3+(47-i)] = flag[i] ^ beacon[(7-i) &amp; 7] ^ key_i</code></li>
+<li><code>key_{i+1} = (key_i*3 + 0x29) &amp; 0xFF</code></li>
+</ul>
+<h2 id="vm-analysis">VM analysis<a class="headerlink" href="#vm-analysis" title="Permanent link">&para;</a></h2>
+<p>The verifier walks the bytecode independently of execution:</p>
+<div class="highlight"><pre><span></span><code><span class="n">verify_sizes</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="o">...</span><span class="p">,</span> <span class="mh">0x20</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span> <span class="mh">0x27</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span> <span class="mh">0x30</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="mh">0x40</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="mh">0x41</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
+    <span class="mh">0x50</span><span class="p">:</span> <span class="mi">6</span><span class="p">,</span>
+<span class="p">}</span>
+<span class="k">while</span> <span class="n">verify_pc</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">code</span><span class="p">):</span>
+    <span class="n">verify_op</span> <span class="o">=</span> <span class="n">code</span><span class="p">[</span><span class="n">verify_pc</span><span class="p">]</span> <span class="o">^</span> <span class="n">OPCODE_MASK</span>
+    <span class="k">if</span> <span class="n">verify_op</span> <span class="o">==</span> <span class="mh">0x27</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">VMError</span><span class="p">(</span><span class="s2">&quot;privileged trace rejected by verifier&quot;</span><span class="p">)</span>
+    <span class="n">verify_size</span> <span class="o">=</span> <span class="n">verify_sizes</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">verify_op</span><span class="p">)</span>
+    <span class="o">...</span>
+    <span class="n">verify_pc</span> <span class="o">+=</span> <span class="n">verify_size</span>
+</code></pre></div>
+<p>The interpreter, however, treats <code>META</code> as a two-byte no-op:</p>
+<div class="highlight"><pre><span></span><code><span class="k">elif</span> <span class="n">op</span> <span class="o">==</span> <span class="mh">0x50</span><span class="p">:</span>  <span class="c1"># META imm</span>
+    <span class="n">need</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">pc</span> <span class="o">+=</span> <span class="mi">2</span>
+    <span class="n">gas</span> <span class="o">+=</span> <span class="mi">1</span>
+</code></pre></div>
+<p>Encoded layout <code>META 0; TRACE dst,page,index</code> is therefore six bytes on disk.
+The verifier sees one 6-byte <code>META</code> and resumes after the <code>TRACE</code>, while the
+interpreter sees <code>META</code> (2 bytes) followed by the real <code>TRACE</code> (4 bytes).  A
+<code>TRACE</code> can also be a loop target: after the first iteration, <code>JNZ</code> can jump
+directly to the <code>TRACE</code> byte (inside the hidden region), skipping the <code>META</code>
+and saving one gas per iteration.</p>
+<h2 id="payload">Payload<a class="headerlink" href="#payload" title="Permanent link">&para;</a></h2>
+<p>The final active payload is <code>koth/stage-6/u8.ghb</code> (353 B, max gas 671), a
+byte-identical copy of the submitted file preserved as
+<code>koth/stage-6/u8_submitted_353.ghb</code>.  It
+emits the constant prefix <code>Layer7{</code> and suffix <code>}</code>, so only the 40 middle bytes
+need decryption.  It reads <code>key0</code> from the host header, advances the key seven
+steps (<code>key7 = key0*139 + 13 mod 256</code>), starts at <code>host[slot+43]</code>, and uses an
+eight-byte unrolled loop with fixed beacon indices:</p>
+<div class="highlight"><pre><span></span><code><span class="c1">; q = (7*b0 + 11*b3 + b5) &amp; 31</span>
+<span class="c1">; page = q &gt;&gt; 2 ; idx = (q &lt;&lt; 6) + 50</span>
+<span class="nf">LOAD</span><span class="w"> </span><span class="no">r4</span><span class="p">,</span><span class="w"> </span><span class="no">r0</span><span class="p">,</span><span class="w"> </span><span class="no">r0</span>
+<span class="nf">MULI</span><span class="w"> </span><span class="no">r4</span><span class="p">,</span><span class="w"> </span><span class="mi">7</span>
+<span class="na">...</span>
+<span class="nf">MOV</span><span class="w"> </span><span class="no">r5</span><span class="p">,</span><span class="w"> </span><span class="no">r4</span>
+<span class="nf">SHR</span><span class="w"> </span><span class="no">r5</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span>
+<span class="nf">SHL</span><span class="w"> </span><span class="no">r4</span><span class="p">,</span><span class="w"> </span><span class="mi">6</span>
+<span class="nf">ADDI</span><span class="w"> </span><span class="no">r4</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span>
+<span class="nf">META</span><span class="w"> </span><span class="mi">0</span>
+<span class="nf">TRACE</span><span class="w"> </span><span class="no">r2</span><span class="p">,</span><span class="w"> </span><span class="no">r5</span><span class="p">,</span><span class="w"> </span><span class="no">r4</span><span class="w">      </span><span class="c1">; key0 = host[slot+2]</span>
+<span class="nf">ADDI</span><span class="w"> </span><span class="no">r4</span><span class="p">,</span><span class="w"> </span><span class="mi">41</span>
+<span class="nf">MULI</span><span class="w"> </span><span class="no">r2</span><span class="p">,</span><span class="w"> </span><span class="mi">139</span>
+<span class="nf">ADDI</span><span class="w"> </span><span class="no">r2</span><span class="p">,</span><span class="w"> </span><span class="mi">13</span><span class="w">           </span><span class="c1">; key7</span>
+<span class="nf">LDI</span><span class="w"> </span><span class="no">r1</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="w">             </span><span class="c1">; five 8-byte cycles = 40 bytes</span>
+<span class="nl">loop:</span>
+<span class="nf">META</span><span class="w"> </span><span class="mi">0</span>
+<span class="nf">TRACE</span><span class="w"> </span><span class="no">r6</span><span class="p">,</span><span class="w"> </span><span class="no">r5</span><span class="p">,</span><span class="w"> </span><span class="no">r4</span>
+<span class="nf">LDI</span><span class="w"> </span><span class="no">r3</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span>
+<span class="nf">LOAD</span><span class="w"> </span><span class="no">r7</span><span class="p">,</span><span class="w"> </span><span class="no">r0</span><span class="p">,</span><span class="w"> </span><span class="no">r3</span>
+<span class="nf">XOR</span><span class="w"> </span><span class="no">r6</span><span class="p">,</span><span class="w"> </span><span class="no">r7</span>
+<span class="nf">XOR</span><span class="w"> </span><span class="no">r6</span><span class="p">,</span><span class="w"> </span><span class="no">r2</span>
+<span class="nf">OUT</span><span class="w"> </span><span class="no">r6</span>
+<span class="nf">MULI</span><span class="w"> </span><span class="no">r2</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span>
+<span class="nf">ADDI</span><span class="w"> </span><span class="no">r2</span><span class="p">,</span><span class="w"> </span><span class="mi">0x29</span>
+<span class="nf">SUBI</span><span class="w"> </span><span class="no">r4</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span>
+<span class="na">...</span><span class="w">                   </span><span class="c1">; eight fixed beacon indices per block</span>
+<span class="nf">JNZ</span><span class="w"> </span><span class="no">r1</span><span class="p">,</span><span class="w"> </span><span class="no">loop</span>
+<span class="nf">LDI</span><span class="w"> </span><span class="no">r6</span><span class="p">,</span><span class="w"> </span><span class="mi">0x7D</span>
+<span class="nf">OUT</span><span class="w"> </span><span class="no">r6</span>
+</code></pre></div>
+<p>Cost-hull history for the stage:</p>
+<ul>
+<li><code>koth/stage-6/best.ghb</code> / <code>work/stage6/direct6.ghb</code> (99 B, gas 891):
+  deterministic direct loop, stops on the final <code>}</code>; best for the high-weight
+  rounds.</li>
+<li><code>work/stage6/u2.ghb</code> (175 B, gas 732): constant prefix/suffix plus a
+  two-byte unrolled middle loop; best at W=4..2.</li>
+<li><code>koth/stage-6/u8.ghb</code> / <code>koth/stage-6/u8_submitted_353.ghb</code> (353 B, gas
+  671): constant prefix/suffix plus an eight-byte fixed-index unrolled middle
+  loop; best at W=1.  After submissions closed the workspace copy was reduced
+  to 349 B (local gas 652, projected cost 2305) and kept as
+  <code>koth/stage-6/u8_postfinal_349.ghb</code>; it was not submitted.</li>
+</ul>
+<h2 id="evidence">Evidence<a class="headerlink" href="#evidence" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Local tests over 2000 random beacons and hex flags: <code>direct6</code> 99 B / gas 891,
+  <code>u2</code> 175 B / gas 732, <code>u8</code> 353 B / gas 671; all output the exact 48-byte flag
+  with no verifier or VM errors.</li>
+<li>Valid submissions are recorded in <code>koth/evidence/submit-e6-*.json</code>;
+  dashboard: <code>#3545 best.ghb</code> 99 B valid (max gas 891), <code>#3696 u2.ghb</code> 175 B
+  valid (max gas 732), <code>#3751</code>/<code>#3769 u8.ghb</code> 353 B valid (max gas 671, final
+  active).  A deliberately malformed 54-byte experiment <code>#3734 fixed6.ghb</code>
+  was correctly rejected ("case 1: wrong output").</li>
+<li>Round results (dashboard): r61 W=512 cost 60547 (113 B); r62 W=256 cost
+  31619; r63 W=128 cost 17014; r64 W=64 cost 9009 (99 B); r65 W=32 cost 5841
+  (99 B, gas 891); r66 W=16 cost 4256 (107 B); r67 W=8 cost 3452 (142 B);
+  r68 W=6 cost 3228 (113 B); r69 W=4 cost 2896 (175 B); r70 W=3 cost 2721
+  (175 B); r71 W=2 cost 2719 (353 B); r72 W=1 cost 2366 (353 B, gas 671,
+  rank 34, +27.47).  Stage 6 ran rounds 61-72.</li>
+<li>Final account total from the scoreboard: 1613.35 points (General division,
+  overall rank 44), with no missed stage-6 scoring rounds after the stage-5
+  transition.</li>
+</ul>
+<h2 id="result">Result<a class="headerlink" href="#result" title="Permanent link">&para;</a></h2>
+<p>A valid Stage 6 payload passed all 32 fixed hidden instances and was active for
+every scored round.  The best round was the final W=1 round 72: 353-byte
+<code>u8</code>, max gas 671, cost <code>353 + 3*671 = 2366</code>, rank 34.  The smallest verified
+payload is 99 bytes (<code>direct6</code>/<code>best</code>), used for the byte-heavy rounds, and the
+353-byte unrolled decoder won the gas-heavy final round.  The <code>META</code>/<code>TRACE</code>
+size split was the intended verifier bypass; a 54-byte "fixed" experiment was
+rejected, confirming the verifier is active on ordinary instruction paths.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Layer7 CTF 2026 · write-ups by B0TCIL
+    </div>
+  
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.sections", "navigation.top", "navigation.tracking", "navigation.path", "navigation.indexes", "toc.follow", "search.suggest", "search.highlight", "content.code.copy", "content.tabs.link"], "search": "../../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.13a4f30d.min.js"></script>
+      
+        <script src="../../javascripts/nx.js"></script>
+      
+    
+  </body>
+</html>

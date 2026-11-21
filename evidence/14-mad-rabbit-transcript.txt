@@ -1,0 +1,378 @@
+captured_at=2026-11-21T02:32:01.528243+00:00 rc=0 tag=14-mad-rabbit
+of 1,2,4,8 exactly
+    if ecx not in dirs: return
+    ch=dirs[ecx]
+    delta={'N':-5,'E':1,'S':5,'W':-1}[ch]
+    npos=pos+delta
+    if not (0<=npos<=24): return
+    # unsigned >24 check same
+    # W/E extra check: al = (pos*-51+0xcc)&0xff
+    al=(pos*(-51)+0xcc)&0xff
+    if ch=='W':
+        if al<=0x33: return
+    elif ch=='E':
+        if not (al>=0x33): return
+    p11=path11 or (npos==11)
+    dfs(npos,route+[ch],p11)
+for start in range(0,25):
+    pass
+dfs(0,[],False)
+print("solutions from 0:",sols)
+EOF
+tbl a4b7145d7c3d9207cd011eb0b0d609ea3c108ccfc0a2bb0365
+solutions from 0: []
+> build · deepseek-flash
+[0m$ [0mcd /home/bocil/ctf/layer7/work/14 && python3 - <<'EOF'
+from pathlib import Path
+d=Path('mad_rabbit').read_bytes()
+def getb(va,n): return d[va-0x1000000:va-0x1000000+n]
+tbl=getb(0x100195d,25)
+def ror8(x,n):
+    n&=7
+    return ((x>>n)|(x<<(8-n)))&0xff if n else x
+def ecx_at(pos):
+    idx=((pos*7+3)&0xff)%25
+    val=tbl[idx]
+    c=(pos*3+1)&0xff
+    tmp=(~(pos*3))&0xff
+    rot=val if (tmp&7)==0 else ror8(val,c&7)
+    return ((pos*0x3d+0xa7)&0xff)^rot
+masks={'N':1,'E':2,'S':4,'W':8}
+delta={'N':-5,'E':1,'S':5,'W':-1}
+sols=[]
+def dfs(pos,route,path11):
+    if len(route)==12:
+        if pos==24 and path11: sols.append((tuple(route),path11))
+        return
+    e=ecx_at(pos)
+    al=(pos*(-51)+0xcc)&0xff
+    for ch,m in masks.items():
+        if e & m: continue
+        np=pos+delta[ch]
+        if not (0<=np<=24): continue
+        if ch=='W' and al<=0x33: continue
+        if ch=='E' and al<0x33: continue
+        dfs(np,route+[ch],path11 or np==11)
+dfs(0,[],False)
+print("num",len(sols))
+for s in sols[:50]: print(''.join(s[0]))
+EOF
+num 1
+EESSWSSEENES
+> build · deepseek-flash
+[0m$ [0mcd /home/bocil/ctf/layer7/work/14 && printf 'EESSWSSEENES\nDGSMDGS\n' | timeout 5 ./mad_rabbit; echo "EXIT=$?"
+=== THE CARROT DUNGEON ===
+The Mad Rabbit waits below. Find the 13th room.
+Enter the twelve-step route (N/E/S/W): The Mad Rabbit appears, ears twitching in no visible rhythm.
+Answer six turns with D/G/S/M, then append C to offer the carrot: The rabbit laughs. The dungeon resets.
+EXIT=0
+> build · deepseek-flash
+[0m$ [0mcd /home/bocil/ctf/layer7/work/14 && which gdb || echo NOGDB
+/usr/bin/gdb
+> build · deepseek-flash
+[0m$ [0mcd /home/bocil/ctf/layer7/work/14 && printf 'EESSWSSEENES\nDGSMDGS\n' > /tmp/opencode/in14.txt && gdb -q -batch -ex 'break *0x10170fb' -ex 'run < /tmp/opencode/in14.txt' -ex 'x/8cb $rsi' -ex 'x/8cb $rdi' -ex 'p/x $rdx' ./mad_rabbit 2>&1 | tail -30
+Breakpoint 1 at 0x10170fb
+
+This GDB supports auto-downloading debuginfo from the following URLs:
+  <https://debuginfod.ubuntu.com>
+Enable debuginfod for this session? (y or [n]) [answered N; input not from terminal]
+Debuginfod has been disabled.
+To make this setting permanent, add 'set debuginfod enabled off' to .gdbinit.
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+=== THE CARROT DUNGEON ===
+The Mad Rabbit waits below. Find the 13th room.
+Enter the twelve-step route (N/E/S/W): The Mad Rabbit appears, ears twitching in no visible rhythm.
+Answer six turns with D/G/S/M, then append C to offer the carrot: 
+Breakpoint 1, 0x00000000010170fb in ?? ()
+0x43:	Cannot access memory at address 0x43
+0x7fffffffe011:	68 'D'	71 'G'	83 'S'	77 'M'	68 'D'	71 'G'	83 'S'	0 '\000'
+$1 = 0x7
+> build · deepseek-flash
+[0m$ [0mcd /home/bocil/ctf/layer7/work/14 && gdb -q -batch -ex 'set debuginfod enabled off' -ex 'break *0x101710a' -ex 'run < /tmp/opencode/in14.txt' -ex 'x/8cb $rsi' -ex 'x/8cb $rdi' -ex 'p/x $rdx' ./mad_rabbit 2>&1 | tail -12
+Breakpoint 1 at 0x101710a
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+=== THE CARROT DUNGEON ===
+The Mad Rabbit waits below. Find the 13th room.
+Enter the twelve-step route (N/E/S/W): The Mad Rabbit appears, ears twitching in no visible rhythm.
+Answer six turns with D/G/S/M, then append C to offer the carrot: 
+Breakpoint 1, 0x000000000101710a in ?? ()
+0x7fffffffe071:	68 'D'	83 'S'	77 'M'	83 'S'	77 'M'	83 'S'	67 'C'	0 '\000'
+0x7fffffffe011:	68 'D'	71 'G'	83 'S'	77 'M'	68 'D'	71 'G'	83 'S'	0 '\000'
+$1 = 0x7
+> build · deepseek-flash
+[0m$ [0mcd /home/bocil/ctf/layer7/work/14 && printf 'EESSWSSEENES\nDSMSMSC\n' | timeout 5 ./mad_rabbit; echo "EXIT=$?"
+=== THE CARROT DUNGEON ===
+The Mad Rabbit waits below. Find the 13th room.
+Enter the twelve-step route (N/E/S/W): The Mad Rabbit appears, ears twitching in no visible rhythm.
+Answer six turns with D/G/S/M, then append C to offer the carrot: The rabbit laughs. The dungeon resets.
+EXIT=0
+> build · deepseek-flash
+[0m$ [0mcd /home/bocil/ctf/layer7/work/14 && printf 'EESSWSSEENES\nDSMSMSC\n' > /tmp/opencode/in14b.txt && gdb -q -batch -ex 'set debuginfod enabled off' -ex 'break *0x101710a' -ex 'run < /tmp/opencode/in14b.txt' -ex 'x/8cb $rsi' -ex 'x/8cb $rdi' ./mad_rabbit 2>&1 | tail -10
+Breakpoint 1 at 0x101710a
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+=== THE CARROT DUNGEON ===
+The Mad Rabbit waits below. Find the 13th room.
+Enter the twelve-step route (N/E/S/W): The Mad Rabbit appears, ears twitching in no visible rhythm.
+Answer six turns with D/G/S/M, then append C to offer the carrot: 
+Breakpoint 1, 0x000000000101710a in ?? ()
+0x7fffffffe071:	68 'D'	83 'S'	77 'M'	83 'S'	77 'M'	83 'S'	67 'C'	0 '\000'
+0x7fffffffe011:	68 'D'	83 'S'	77 'M'	83 'S'	77 'M'	83 'S'	67 'C'	0 '\000'
+> build · deepseek-flash
+[0m$ [0mcd /home/bocil/ctf/layer7/work/14 && objdump -d -M intel --start-address=0x1017830 --stop-address=0x1017b80 mad_rabbit | head -160
+mad_rabbit:     file format elf64-x86-64
+
+
+Disassembly of section .text:
+
+0000000001017830 <.text+0xc10>:
+ 1017830:	55                   	push   rbp
+ 1017831:	48 89 e5             	mov    rbp,rsp
+ 1017834:	41 57                	push   r15
+ 1017836:	41 56                	push   r14
+ 1017838:	41 55                	push   r13
+ 101783a:	41 54                	push   r12
+ 101783c:	53                   	push   rbx
+ 101783d:	48 81 ec 88 01 00 00 	sub    rsp,0x188
+ 1017844:	89 75 ac             	mov    DWORD PTR [rbp-0x54],esi
+ 1017847:	89 7d d4             	mov    DWORD PTR [rbp-0x2c],edi
+ 101784a:	48 8d 35 a9 a3 fe ff 	lea    rsi,[rip+0xfffffffffffea3a9]        # 1001bfa <bcmp@plt-0x5d916>
+ 1017851:	4c 8d bd 50 fe ff ff 	lea    r15,[rbp-0x1b0]
+ 1017858:	4c 89 ff             	mov    rdi,r15
+ 101785b:	ba 08 00 00 00       	mov    edx,0x8
+ 1017860:	e8 0b 0a 00 00       	call   1018270 <bcmp@plt-0x472a0>
+ 1017865:	0f 57 c0             	xorps  xmm0,xmm0
+ 1017868:	0f 29 45 b0          	movaps XMMWORD PTR [rbp-0x50],xmm0
+ 101786c:	48 c7 45 c0 00 00 00 	mov    QWORD PTR [rbp-0x40],0x0
+ 1017873:	00 
+ 1017874:	4c 8d 65 a0          	lea    r12,[rbp-0x60]
+ 1017878:	4c 8d 2d d1 00 05 00 	lea    r13,[rip+0x500d1]        # 1067950 <pthread_rwlock_rdlock@plt+0x8000>
+ 101787f:	4c 8d 75 b0          	lea    r14,[rbp-0x50]
+ 1017883:	66 2e 0f 1f 84 00 00 	cs nop WORD PTR [rax+rax*1+0x0]
+ 101788a:	00 00 00 
+ 101788d:	0f 1f 00             	nop    DWORD PTR [rax]
+ 1017890:	48 8b 85 50 fe ff ff 	mov    rax,QWORD PTR [rbp-0x1b0]
+ 1017897:	48 8b 70 e8          	mov    rsi,QWORD PTR [rax-0x18]
+ 101789b:	4c 01 fe             	add    rsi,r15
+ 101789e:	4c 89 e7             	mov    rdi,r12
+ 10178a1:	e8 aa b9 01 00       	call   1033250 <bcmp@plt-0x2c2c0>
+ 10178a6:	4c 89 e7             	mov    rdi,r12
+ 10178a9:	4c 89 ee             	mov    rsi,r13
+ 10178ac:	e8 8f cf 03 00       	call   1054840 <bcmp@plt-0xacd0>
+ 10178b1:	48 8b 08             	mov    rcx,QWORD PTR [rax]
+ 10178b4:	48 89 c7             	mov    rdi,rax
+ 10178b7:	be 0a 00 00 00       	mov    esi,0xa
+ 10178bc:	ff 51 38             	call   QWORD PTR [rcx+0x38]
+ 10178bf:	89 c3                	mov    ebx,eax
+ 10178c1:	4c 89 e7             	mov    rdi,r12
+ 10178c4:	e8 c7 ce 03 00       	call   1054790 <bcmp@plt-0xad80>
+ 10178c9:	0f be d3             	movsx  edx,bl
+ 10178cc:	4c 89 ff             	mov    rdi,r15
+ 10178cf:	4c 89 f6             	mov    rsi,r14
+ 10178d2:	e8 39 04 00 00       	call   1017d10 <bcmp@plt-0x47800>
+ 10178d7:	48 8b 08             	mov    rcx,QWORD PTR [rax]
+ 10178da:	48 8b 49 e8          	mov    rcx,QWORD PTR [rcx-0x18]
+ 10178de:	f6 44 08 20 05       	test   BYTE PTR [rax+rcx*1+0x20],0x5
+ 10178e3:	0f 85 e5 00 00 00    	jne    10179ce <bcmp@plt-0x47b42>
+ 10178e9:	44 0f b6 45 b0       	movzx  r8d,BYTE PTR [rbp-0x50]
+ 10178ee:	44 89 c0             	mov    eax,r8d
+ 10178f1:	41 d1 e8             	shr    r8d,1
+ 10178f4:	a8 01                	test   al,0x1
+ 10178f6:	48 8b 4d c0          	mov    rcx,QWORD PTR [rbp-0x40]
+ 10178fa:	48 89 ca             	mov    rdx,rcx
+ 10178fd:	48 8d 75 b1          	lea    rsi,[rbp-0x4f]
+ 1017901:	48 0f 44 d6          	cmove  rdx,rsi
+ 1017905:	4c 0f 45 45 b8       	cmovne r8,QWORD PTR [rbp-0x48]
+ 101790a:	49 83 f8 0a          	cmp    r8,0xa
+ 101790e:	be 0a 00 00 00       	mov    esi,0xa
+ 1017913:	49 0f 42 f0          	cmovb  rsi,r8
+ 1017917:	48 01 d6             	add    rsi,rdx
+ 101791a:	48 89 f7             	mov    rdi,rsi
+ 101791d:	49 83 f8 0a          	cmp    r8,0xa
+ 1017921:	72 70                	jb     1017993 <bcmp@plt-0x47b7d>
+ 1017923:	4c 8d 41 09          	lea    r8,[rcx+0x9]
+ 1017927:	a8 01                	test   al,0x1
+ 1017929:	48 8d 7d ba          	lea    rdi,[rbp-0x46]
+ 101792d:	4c 0f 44 c7          	cmove  r8,rdi
+ 1017931:	48 89 f7             	mov    rdi,rsi
+ 1017934:	49 89 f9             	mov    r9,rdi
+ 1017937:	66 0f 1f 84 00 00 00 	nop    WORD PTR [rax+rax*1+0x0]
+ 101793e:	00 00 
+ 1017940:	4d 39 c1             	cmp    r9,r8
+ 1017943:	74 4b                	je     1017990 <bcmp@plt-0x47b80>
+ 1017945:	49 8d 79 ff          	lea    rdi,[r9-0x1]
+ 1017949:	41 80 79 ff 3a       	cmp    BYTE PTR [r9-0x1],0x3a
+ 101794e:	49 89 f9             	mov    r9,rdi
+ 1017951:	75 ed                	jne    1017940 <bcmp@plt-0x47bd0>
+ 1017953:	80 7f ff 64          	cmp    BYTE PTR [rdi-0x1],0x64
+ 1017957:	75 db                	jne    1017934 <bcmp@plt-0x47bdc>
+ 1017959:	80 7f fe 69          	cmp    BYTE PTR [rdi-0x2],0x69
+ 101795d:	75 d5                	jne    1017934 <bcmp@plt-0x47bdc>
+ 101795f:	80 7f fd 50          	cmp    BYTE PTR [rdi-0x3],0x50
+ 1017963:	75 cf                	jne    1017934 <bcmp@plt-0x47bdc>
+ 1017965:	80 7f fc 72          	cmp    BYTE PTR [rdi-0x4],0x72
+ 1017969:	75 c9                	jne    1017934 <bcmp@plt-0x47bdc>
+ 101796b:	80 7f fb 65          	cmp    BYTE PTR [rdi-0x5],0x65
+ 101796f:	75 c3                	jne    1017934 <bcmp@plt-0x47bdc>
+ 1017971:	80 7f fa 63          	cmp    BYTE PTR [rdi-0x6],0x63
+ 1017975:	75 bd                	jne    1017934 <bcmp@plt-0x47bdc>
+ 1017977:	80 7f f9 61          	cmp    BYTE PTR [rdi-0x7],0x61
+ 101797b:	75 b7                	jne    1017934 <bcmp@plt-0x47bdc>
+ 101797d:	80 7f f8 72          	cmp    BYTE PTR [rdi-0x8],0x72
+ 1017981:	75 b1                	jne    1017934 <bcmp@plt-0x47bdc>
+ 1017983:	80 7f f7 54          	cmp    BYTE PTR [rdi-0x9],0x54
+ 1017987:	75 ab                	jne    1017934 <bcmp@plt-0x47bdc>
+ 1017989:	48 83 c7 f7          	add    rdi,0xfffffffffffffff7
+ 101798d:	eb 04                	jmp    1017993 <bcmp@plt-0x47b7d>
+ 101798f:	90                   	nop
+ 1017990:	48 89 f7             	mov    rdi,rsi
+ 1017993:	48 39 f7             	cmp    rdi,rsi
+ 1017996:	0f 84 f4 fe ff ff    	je     1017890 <bcmp@plt-0x47c80>
+ 101799c:	48 39 d7             	cmp    rdi,rdx
+ 101799f:	0f 85 eb fe ff ff    	jne    1017890 <bcmp@plt-0x47c80>
+ 10179a5:	48 83 c1 0a          	add    rcx,0xa
+ 10179a9:	a8 01                	test   al,0x1
+ 10179ab:	48 8d 7d bb          	lea    rdi,[rbp-0x45]
+ 10179af:	48 0f 45 f9          	cmovne rdi,rcx
+ 10179b3:	31 f6                	xor    esi,esi
+ 10179b5:	ba 0a 00 00 00       	mov    edx,0xa
+ 10179ba:	e8 71 7b 04 00       	call   105f530 <strtoul@plt>
+ 10179bf:	48 85 c0             	test   rax,rax
+ 10179c2:	41 0f 95 c6          	setne  r14b
+ 10179c6:	f6 45 b0 01          	test   BYTE PTR [rbp-0x50],0x1
+ 10179ca:	75 0b                	jne    10179d7 <bcmp@plt-0x47b39>
+ 10179cc:	eb 1a                	jmp    10179e8 <bcmp@plt-0x47b28>
+ 10179ce:	45 31 f6             	xor    r14d,r14d
+ 10179d1:	f6 45 b0 01          	test   BYTE PTR [rbp-0x50],0x1
+ 10179d5:	74 11                	je     10179e8 <bcmp@plt-0x47b28>
+ 10179d7:	48 8b 75 b0          	mov    rsi,QWORD PTR [rbp-0x50]
+ 10179db:	48 8b 7d c0          	mov    rdi,QWORD PTR [rbp-0x40]
+ 10179df:	48 83 e6 fe          	and    rsi,0xfffffffffffffffe
+ 10179e3:	e8 68 97 01 00       	call   1031150 <bcmp@plt-0x2e3c0>
+ 10179e8:	48 8d 1d d9 c4 04 00 	lea    rbx,[rip+0x4c4d9]        # 1063ec8 <pthread_rwlock_rdlock@plt+0x4578>
+ 10179ef:	48 8b 03             	mov    rax,QWORD PTR [rbx]
+ 10179f2:	48 8b 4b 18          	mov    rcx,QWORD PTR [rbx+0x18]
+ 10179f6:	48 89 85 50 fe ff ff 	mov    QWORD PTR [rbp-0x1b0],rax
+ 10179fd:	48 8b 40 e8          	mov    rax,QWORD PTR [rax-0x18]
+ 1017a01:	48 89 8c 05 50 fe ff 	mov    QWORD PTR [rbp+rax*1-0x1b0],rcx
+ 1017a08:	ff 
+ 1017a09:	48 8d bd 60 fe ff ff 	lea    rdi,[rbp-0x1a0]
+ 1017a10:	e8 2b cc 01 00       	call   1034640 <bcmp@plt-0x2aed0>
+ 1017a15:	48 83 c3 08          	add    rbx,0x8
+ 1017a19:	48 8d bd 50 fe ff ff 	lea    rdi,[rbp-0x1b0]
+ 1017a20:	48 89 de             	mov    rsi,rbx
+ 1017a23:	e8 18 c0 01 00       	call   1033a40 <bcmp@plt-0x2bad0>
+ 1017a28:	48 8d bd 08 ff ff ff 	lea    rdi,[rbp-0xf8]
+ 1017a2f:	e8 6c bd 01 00       	call   10337a0 <bcmp@plt-0x2bd70>
+ 1017a34:	45 84 f6             	test   r14b,r14b
+ 1017a37:	74 27                	je     1017a60 <bcmp@plt-0x47ab0>
+ 1017a39:	8b 45 d4             	mov    eax,DWORD PTR [rbp-0x2c]
+ 1017a3c:	8b 4d ac             	mov    ecx,DWORD PTR [rbp-0x54]
+ 1017a3f:	31 c8                	xor    eax,ecx
+ 1017a41:	89 ca                	mov    edx,ecx
+ 1017a43:	c1 ea 03             	shr    edx,0x3
+ 1017a46:	81 f2 f5 79 2b 6d    	xor    edx,0x6d2b79f5
+ 1017a4c:	01 c2                	add    edx,eax
+ 1017a4e:	c1 e9 1b             	shr    ecx,0x1b
+ 1017a51:	83 c1 09             	add    ecx,0x9
+ 1017a54:	89 d0                	mov    eax,edx
+ 1017a56:	d3 c0                	rol    eax,cl
+ 1017a58:	f6 c1 1f             	test   cl,0x1f
+ 1017a5b:	0f 44 c2             	cmove  eax,edx
+> build · deepseek-flash
+[0m$ [0mcd /home/bocil/ctf/layer7/work/14 && cat > brute_answer.py <<'EOF'
+import subprocess, itertools, sys
+route="EESSWSSEENES"
+alphabet="DGSM"
+for combo in itertools.product(alphabet, repeat=6):
+    ans=''.join(combo)+'C'
+    inp=f"{route}\n{ans}\n"
+    p=subprocess.run(['./mad_rabbit'],input=inp,capture_output=True,text=True,timeout=5)
+    if 'takes the carrot' in p.stdout:
+        print("FOUND",ans)
+        print(p.stdout)
+        sys.exit(0)
+print("none")
+EOF
+time python3 brute_answer.py
+FOUND DMDDMSC
+=== THE CARROT DUNGEON ===
+The Mad Rabbit waits below. Find the 13th room.
+Enter the twelve-step route (N/E/S/W): The Mad Rabbit appears, ears twitching in no visible rhythm.
+Answer six turns with D/G/S/M, then append C to offer the carrot: The rabbit takes the carrot. Its eyes clear.
+Layer7{mad_rabbit_mercy}
+
+
+real	0m0.917s
+user	0m0.396s
+sys	0m0.488s
+> build · deepseek-flash
+[0m$ [0mcd /home/bocil/ctf/layer7 && python3 l7.py submit 14 'Layer7{mad_rabbit_mercy}'
+200 {
+  "correct": true,
+  "ctf_state": "active"
+}
+> build · deepseek-flash
+[0m$ [0mcd /home/bocil/ctf/layer7 && ls solves/ 2>/dev/null | head && echo "---PROGRESS---" && tail -30 state/PROGRESS.md 2>/dev/null && echo "---SUBMIT---" && cat work/14/submit.json 2>/dev/null
+---PROGRESS---
+# PROGRESS — Jeopardy
+
+(format: id | status | temuan | next)
+
+1 | NEED_HUMAN | mic_check (re-verified 2026-11-21 09:30 WIB): flag hanya ada di Discord `#announcement` (guild 1546511280536555572, channel 1556619038342516799). Fresh recon: `has_file=false`, `/api/announcements=[]`, `/api/pages=[]`, description tanpa flag tersembunyi, widget Discord 403 disabled, tidak ada token Discord di `.env`/state. Solve count 151; tidak ada flag 2026 di sumber publik (ctf.layer7.kr/article, websearch). Tidak boleh menebak. Catatan: `l7.py` sudah diperbaiki agar reuse session (login langsung kini 403; `ensure_auth()` probe `/api/me` dulu) sehingga submit tetap bisa dilakukan. | NEED_HUMAN: Discord mic check — manusia buka Discord `#announcement`, salin `Layer7{...}`, jalankan `python3 l7.py submit 1 'Layer7{...}'`, lalu tulis `solves/1.md` dari `work/1/submit.json`.
+
+---SUBMIT---
+{
+  "submitted_at": "2026-11-21T02:31:37.826054+00:00",
+  "challenge_id": "14",
+  "flag": "Layer7{mad_rabbit_mercy}",
+  "http_status": 200,
+  "response": {
+    "correct": true,
+    "ctf_state": "active"
+  }
+}
+> build · deepseek-flash
+[0m← [0mWrite work/14/solve.py
+Created file successfully: work/14/solve.py
+> build · deepseek-flash
+[0m$ [0mcd /home/bocil/ctf/layer7/work/14 && python3 solve.py
+[+] route = EESSWSSEENES
+[+] turns = DMDDMSC
+=== THE CARROT DUNGEON ===
+The Mad Rabbit waits below. Find the 13th room.
+Enter the twelve-step route (N/E/S/W): The Mad Rabbit appears, ears twitching in no visible rhythm.
+Answer six turns with D/G/S/M, then append C to offer the carrot: The rabbit takes the carrot. Its eyes clear.
+Layer7{mad_rabbit_mercy}
+> build · deepseek-flash
+[0m← [0mWrite solves/14.md
+Created file successfully: solves/14.md
+> build · deepseek-flash
+[0m$ [0mcd /home/bocil/ctf/layer7 && cat >> state/PROGRESS.md <<'EOF'
+
+14 | SOLVED | rev "Mad rabbit": route unik `EESSWSSEENES` dari bit-mask check; stage-2 memakai PRNG dengan anti-debug TracerPid (`/proc/self/status`) sehingga jawaban beda saat di-gdb. Brute force 4^6 tanpa debugger -> `DMDDMSC`, program mencetak `Layer7{mad_rabbit_mercy}`. Submit 200 correct. | selesai; write-up di `solves/14.md`, solver `work/14/solve.py`.
+EOF
+tail -5 state/PROGRESS.md && echo "---" && ls -la work/14/ && echo "---" && ls -la solves/14.md
+1 | NEED_HUMAN | mic_check (re-verified 2026-11-21 09:30 WIB): flag hanya ada di Discord `#announcement` (guild 1546511280536555572, channel 1556619038342516799). Fresh recon: `has_file=false`, `/api/announcements=[]`, `/api/pages=[]`, description tanpa flag tersembunyi, widget Discord 403 disabled, tidak ada token Discord di `.env`/state. Solve count 151; tidak ada flag 2026 di sumber publik (ctf.layer7.kr/article, websearch). Tidak boleh menebak. Catatan: `l7.py` sudah diperbaiki agar reuse session (login langsung kini 403; `ensure_auth()` probe `/api/me` dulu) sehingga submit tetap bisa dilakukan. | NEED_HUMAN: Discord mic check — manusia buka Discord `#announcement`, salin `Layer7{...}`, jalankan `python3 l7.py submit 1 'Layer7{...}'`, lalu tulis `solves/1.md` dari `work/1/submit.json`.
+
+
+14 | SOLVED | rev "Mad rabbit": route unik `EESSWSSEENES` dari bit-mask check; stage-2 memakai PRNG dengan anti-debug TracerPid (`/proc/self/status`) sehingga jawaban beda saat di-gdb. Brute force 4^6 tanpa debugger -> `DMDDMSC`, program mencetak `Layer7{mad_rabbit_mercy}`. Submit 200 correct. | selesai; write-up di `solves/14.md`, solver `work/14/solve.py`.
+---
+total 440
+drwxr-xr-x  2 bocil bocil   4096 Nov 21 09:31 .
+drwxrwxr-x 13 bocil bocil   4096 Nov 21 09:27 ..
+-rw-rw-r--  1 bocil bocil    391 Nov 21 09:31 brute_answer.py
+-rw-r--r--  1 bocil bocil  15295 Nov 21 09:30 challenge.json
+-rwxr-xr-x  1 bocil bocil 410616 Nov 21 09:30 mad_rabbit
+-rw-rw-r--  1 bocil bocil   2231 Nov 21 09:31 solve.py
+-rw-rw-r--  1 bocil bocil    208 Nov 21 09:31 submit.json
+---
+-rw-rw-r-- 1 bocil bocil 7039 Nov 21 09:31 solves/14.md
+> build · deepseek-flash
+Status: SOLVED
+Flag: Layer7{mad_rabbit_mercy}
+Tried: Reverse-engineered binary (`chall 14`), found unique 12-step route `EESSWSSEENES` via bit-mask DFS, discovered TracerPid anti-debug altering the stage-2 PRNG, brute-forced 4^6 turns normally → `DMDDMSC`, program printed the flag.
+Next: Nothing for 14; continue with other active challenges.
+Files written: `solves/14.md`, `work/14/solve.py`, `work/14/brute_answer.py`, `work/14/submit.json`, updated `state/PROGRESS.md`.

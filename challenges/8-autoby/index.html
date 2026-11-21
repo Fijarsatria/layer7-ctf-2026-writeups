@@ -1,0 +1,3152 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="English write-ups for Layer7 CTF 2026 (Jeopardy + KoTH) with captured evidence and verified flags.">
+      
+      
+        <meta name="author" content="B0TCIL">
+      
+      
+        <link rel="canonical" href="https://fijarsatria.github.io/layer7-ctf-2026-writeups/challenges/8-autoby/">
+      
+      
+        <link rel="prev" href="../20-prism-box/">
+      
+      
+        <link rel="next" href="../1-mic-check/">
+      
+      
+      <link rel="icon" href="../../assets/layer7.svg">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.14">
+    
+    
+      
+        <title>Autoby - Layer7 CTF 2026 — Write-ups</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.342714a4.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,300i,400,400i,700,700i%7CJetBrains+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Inter";--md-code-font:"JetBrains Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+      <link rel="stylesheet" href="../../stylesheets/layer7.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="green" data-md-color-accent="green">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#tldr" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Layer7 CTF 2026 — Write-ups" class="md-header__button md-logo" aria-label="Layer7 CTF 2026 — Write-ups" data-md-component="logo">
+      
+  <img src="../../assets/layer7.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Layer7 CTF 2026 — Write-ups
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Autoby
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="green" data-md-color-accent="green"  aria-label="Light mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="green" data-md-color-accent="green"  aria-label="Dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Dark mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/Fijarsatria/layer7-ctf-2026-writeups" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Layer7 CTF 2026 — Write-ups" class="md-nav__button md-logo" aria-label="Layer7 CTF 2026 — Write-ups" data-md-component="logo">
+      
+  <img src="../../assets/layer7.svg" alt="logo">
+
+    </a>
+    Layer7 CTF 2026 — Write-ups
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/Fijarsatria/layer7-ctf-2026-writeups" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Home
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../methodology/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Methodology
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reproducibility/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Reproducibility
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../evidence/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Evidence index
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../koth/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    KoTH
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_5" id="__nav_5_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            KoTH
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../koth/2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Glasshouse
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../koth/koth-stage-1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    KoTH Stage 1 — Glasshouse VM
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../koth/koth-stage-2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    KoTH Stage 2 — Glasshouse VM
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../koth/koth-stage-3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    KoTH Stage 3 — Glasshouse VM (Capability Confusion)
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../koth/koth-stage-4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    KoTH Stage 4 — Glasshouse VM
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../koth/koth-stage-5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    KoTH Stage 5 — Glasshouse VM
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../koth/koth-stage-6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    KoTH Stage 6 — Glasshouse VM (Split Decoder)
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    WEB
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            WEB
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../10-pipecake/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Pipecake
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../11-forgotten/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Forgotten
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../22-roupang/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Roupang
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    PWN
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            PWN
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../21-whos-your-bias/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    whos your bias
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../5-cartridge/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Cartridge
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../6-janus/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Janus
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../7-dead-letter/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Dead Letter
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    REV
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            REV
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../14-mad-rabbit/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Mad rabbit
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../17-false-friends/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    False Friends
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../20-prism-box/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Prism Box
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Autoby
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    Autoby
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#tldr" class="md-nav__link">
+    <span class="md-ellipsis">
+      TL;DR
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#recon" class="md-nav__link">
+    <span class="md-ellipsis">
+      Recon
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#analysis" class="md-nav__link">
+    <span class="md-ellipsis">
+      Analysis
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exploit" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exploit
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#evidence" class="md-nav__link">
+    <span class="md-ellipsis">
+      Evidence
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#flag" class="md-nav__link">
+    <span class="md-ellipsis">
+      Flag
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#evidence_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Evidence
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Evidence">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#platform-submission" class="md-nav__link">
+    <span class="md-ellipsis">
+      Platform submission
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#captured-solver-transcript" class="md-nav__link">
+    <span class="md-ellipsis">
+      Captured solver transcript
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#artifacts" class="md-nav__link">
+    <span class="md-ellipsis">
+      Artifacts
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#flag_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Flag
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9" >
+        
+          
+          <label class="md-nav__link" for="__nav_9" id="__nav_9_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    MISC
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_9">
+            <span class="md-nav__icon md-icon"></span>
+            MISC
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1-mic-check/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    mic_check
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../3-human-top-1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    human top 1
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#tldr" class="md-nav__link">
+    <span class="md-ellipsis">
+      TL;DR
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#recon" class="md-nav__link">
+    <span class="md-ellipsis">
+      Recon
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#analysis" class="md-nav__link">
+    <span class="md-ellipsis">
+      Analysis
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exploit" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exploit
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#evidence" class="md-nav__link">
+    <span class="md-ellipsis">
+      Evidence
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#flag" class="md-nav__link">
+    <span class="md-ellipsis">
+      Flag
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#evidence_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Evidence
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Evidence">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#platform-submission" class="md-nav__link">
+    <span class="md-ellipsis">
+      Platform submission
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#captured-solver-transcript" class="md-nav__link">
+    <span class="md-ellipsis">
+      Captured solver transcript
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#artifacts" class="md-nav__link">
+    <span class="md-ellipsis">
+      Artifacts
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#flag_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Flag
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="autoby">Autoby<a class="headerlink" href="#autoby" title="Permanent link">&para;</a></h1>
+<p><span class="nx-badge nx-badge-verified">VERIFIED</span> <span class="nx-chip">REV</span> <span class="nx-chip">920 pts</span> <span class="nx-chip">id 8</span></p>
+
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Event</td>
+<td>Layer7 CTF 2026</td>
+</tr>
+<tr>
+<td>Category</td>
+<td><code>rev</code></td>
+</tr>
+<tr>
+<td>Points</td>
+<td><code>920</code></td>
+</tr>
+<tr>
+<td>Solved at</td>
+<td><code>2026-11-21 10:31:00+07:00</code></td>
+</tr>
+<tr>
+<td>Flag</td>
+<td><code>Layer7{c852b5f4e46a951c72664b14cd091a2fd1dfcb867b064d5d}</code></td>
+</tr>
+<tr>
+<td>Status</td>
+<td><code>VERIFIED</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="tldr">TL;DR<a class="headerlink" href="#tldr" title="Permanent link">&para;</a></h2>
+<p><code>Autoby</code> is a 50-stage reversing service. Each stage sends <code>INPUT_BYTES</code>, an
+<code>ELF_BASE64</code> checker, and an <code>ANSWER&gt;</code> prompt with a 10-second deadline. The
+checker applies a reversible 16-byte-block transform and compares the result to
+an embedded target. Inverting the transform recovers a PNG per stage; the 50
+PNGs spell the key. Tesseract misread five glyphs, so the final solver matched
+glyph shapes against labelled samples.</p>
+<h2 id="recon">Recon<a class="headerlink" href="#recon" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>OK 50
+Key time limit: 5.000 seconds.
+KEY&gt;
+</code></pre></div>
+<p>Each stage:</p>
+<div class="highlight"><pre><span></span><code>INPUT_BYTES: 4228
+ELF_BASE64: &lt;base64 ELF&gt;
+ANSWER&gt;
+</code></pre></div>
+<p>The answer for a 4,228-byte input is sent as 8,456 hex characters.</p>
+<h2 id="analysis">Analysis<a class="headerlink" href="#analysis" title="Permanent link">&para;</a></h2>
+<p>Decoding the first ELF and disassembling it:</p>
+<ul>
+<li>validator at <code>0x1880</code>: checks the input length, calls the transform at
+  <code>0x12c0</code>, compares to target bytes;</li>
+<li>stage-1 config at file offset <code>0x2020</code>, target at <code>0x2048</code>.</li>
+</ul>
+<p>The transform keeps one 32-bit carry and a set of 16-byte blocks. Each round
+updates blocks in a config-defined order, then mixes each block with its
+neighbours.</p>
+<p>To invert it:</p>
+<ol>
+<li>Recompute the block-update order and key state for every round.</li>
+<li>Walk rounds backwards.</li>
+<li>Undo the neighbour mixing first.</li>
+<li>Undo each block update and restore the previous carry.</li>
+</ol>
+<p>One step has the form:</p>
+<div class="highlight"><pre><span></span><code>y = x + 2x(ax + b)  (mod 2^32)
+</code></pre></div>
+<p>The second term is always even, so the lowest bit of <code>x</code> equals the lowest bit
+of <code>y</code>. Changing a candidate <code>x</code> by <code>2^k</code> changes the output by <code>2^k</code> modulo
+<code>2^(k+1)</code>, so bits can be recovered from LSB to MSB.</p>
+<p>The recovered bytes start with the PNG signature:</p>
+<div class="highlight"><pre><span></span><code>89 50 4e 47 0d 0a 1a 0a
+</code></pre></div>
+<p>The first stage image shows the letter <code>f</code>.</p>
+<h2 id="exploit">Exploit<a class="headerlink" href="#exploit" title="Permanent link">&para;</a></h2>
+<p>After <code>OK 50</code> the server asks for <code>KEY&gt;</code> with a 5-second limit. The key is one
+character from each of the 50 PNGs, in stage order.</p>
+<p>Tesseract passed all 50 stages but produced <code>WRONG_KEY</code>; comparing OCR with the
+images showed five wrong glyphs (<code>b</code> → <code>c</code>, <code>d</code> → <code>c</code>, <code>9</code> → <code>0</code>, <code>4</code> → <code>a</code>).
+One wrong character rejects the whole key.</p>
+<p>The final solver uses shape matching:</p>
+<ul>
+<li>crop each glyph to its ink bounding box,</li>
+<li>normalise to <code>24 × 32</code> pixels,</li>
+<li>compare with labelled samples for <code>0–9</code> and <code>a–f</code> from earlier sessions,</li>
+<li>score by pixel difference and aspect ratio,</li>
+<li>rotate samples by a few degrees to tolerate skew.</li>
+</ul>
+<p>Characters are recognised as each PNG is recovered, so the key is ready the
+moment <code>KEY&gt;</code> appears.</p>
+<p>Solver: <code>work/8/solve_autoby_glyph.py</code> and the stage artifacts in <code>work/8/</code>.</p>
+<h2 id="evidence">Evidence<a class="headerlink" href="#evidence" title="Permanent link">&para;</a></h2>
+<ul>
+<li><code>work/8/client.log</code> — live 50-stage session.</li>
+<li><code>work/8/stage_*.hex</code>, <code>s16.elf</code> … <code>s39_answer.png</code> — per-stage inputs/answers.</li>
+<li><code>work/8/final_response.txt</code> — final <code>OK</code>/key exchange.</li>
+</ul>
+<h2 id="flag">Flag<a class="headerlink" href="#flag" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>Layer7{c852b5f4e46a951c72664b14cd091a2fd1dfcb867b064d5d}
+</code></pre></div>
+<h2 id="evidence_1">Evidence<a class="headerlink" href="#evidence_1" title="Permanent link">&para;</a></h2>
+<h3 id="platform-submission">Platform submission<a class="headerlink" href="#platform-submission" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;submitted_at&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2026-11-21T04:16:23.897880+00:00&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;challenge_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;8&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;flag&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Layer7{c852b5f4e46a951c72664b14cd091a2fd1dfcb867b064d5d}&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;http_status&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">409</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;response&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;error&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;challenge already solved&quot;</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p><img alt="Platform submission" src="../../assets/8-autoby/00-platform-submission.png" /></p>
+<h3 id="captured-solver-transcript">Captured solver transcript<a class="headerlink" href="#captured-solver-transcript" title="Permanent link">&para;</a></h3>
+<p>Full raw log: <a href="../../evidence/8-autoby-transcript.txt"><code>evidence/8-autoby-transcript.txt</code></a></p>
+<p><img alt="Solver transcript" src="../../assets/8-autoby/01-solver-transcript.png" /></p>
+<h3 id="artifacts">Artifacts<a class="headerlink" href="#artifacts" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>File</th>
+<th style="text-align: right;">Size</th>
+<th>SHA-256</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="assets/8-autoby/answer1.png"><code>answer1.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>1eedbdc9bbe453dbced20a18…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/answer1_big.png"><code>answer1_big.png</code></a></td>
+<td style="text-align: right;">232 B</td>
+<td><code>1f63c24ebd3f7b6c02a531c5…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/01.png"><code>01.png</code></a></td>
+<td style="text-align: right;">11875 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/02.png"><code>02.png</code></a></td>
+<td style="text-align: right;">13283 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/03.png"><code>03.png</code></a></td>
+<td style="text-align: right;">10532 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/04.png"><code>04.png</code></a></td>
+<td style="text-align: right;">6695 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/05.png"><code>05.png</code></a></td>
+<td style="text-align: right;">14765 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/06.png"><code>06.png</code></a></td>
+<td style="text-align: right;">18803 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/07.png"><code>07.png</code></a></td>
+<td style="text-align: right;">22890 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/08.png"><code>08.png</code></a></td>
+<td style="text-align: right;">13423 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/09.png"><code>09.png</code></a></td>
+<td style="text-align: right;">10777 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/10.png"><code>10.png</code></a></td>
+<td style="text-align: right;">21691 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/11.png"><code>11.png</code></a></td>
+<td style="text-align: right;">7720 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/12.png"><code>12.png</code></a></td>
+<td style="text-align: right;">18091 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/13.png"><code>13.png</code></a></td>
+<td style="text-align: right;">19212 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/14.png"><code>14.png</code></a></td>
+<td style="text-align: right;">14887 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/15.png"><code>15.png</code></a></td>
+<td style="text-align: right;">14824 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/16.png"><code>16.png</code></a></td>
+<td style="text-align: right;">15996 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/17.png"><code>17.png</code></a></td>
+<td style="text-align: right;">6968 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/18.png"><code>18.png</code></a></td>
+<td style="text-align: right;">18431 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/19.png"><code>19.png</code></a></td>
+<td style="text-align: right;">16134 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/20.png"><code>20.png</code></a></td>
+<td style="text-align: right;">17368 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/21.png"><code>21.png</code></a></td>
+<td style="text-align: right;">10153 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/22.png"><code>22.png</code></a></td>
+<td style="text-align: right;">16045 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/23.png"><code>23.png</code></a></td>
+<td style="text-align: right;">18425 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/24.png"><code>24.png</code></a></td>
+<td style="text-align: right;">11815 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/25.png"><code>25.png</code></a></td>
+<td style="text-align: right;">16899 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/26.png"><code>26.png</code></a></td>
+<td style="text-align: right;">12479 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/27.png"><code>27.png</code></a></td>
+<td style="text-align: right;">11900 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/28.png"><code>28.png</code></a></td>
+<td style="text-align: right;">20976 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/29.png"><code>29.png</code></a></td>
+<td style="text-align: right;">16639 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/30.png"><code>30.png</code></a></td>
+<td style="text-align: right;">13905 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/31.png"><code>31.png</code></a></td>
+<td style="text-align: right;">12961 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/32.png"><code>32.png</code></a></td>
+<td style="text-align: right;">16972 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/33.png"><code>33.png</code></a></td>
+<td style="text-align: right;">21361 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/34.png"><code>34.png</code></a></td>
+<td style="text-align: right;">12726 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/35.png"><code>35.png</code></a></td>
+<td style="text-align: right;">17163 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/36.png"><code>36.png</code></a></td>
+<td style="text-align: right;">16914 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/37.png"><code>37.png</code></a></td>
+<td style="text-align: right;">20066 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/38.png"><code>38.png</code></a></td>
+<td style="text-align: right;">16988 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/39.png"><code>39.png</code></a></td>
+<td style="text-align: right;">20135 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/40.png"><code>40.png</code></a></td>
+<td style="text-align: right;">17346 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/41.png"><code>41.png</code></a></td>
+<td style="text-align: right;">18803 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/42.png"><code>42.png</code></a></td>
+<td style="text-align: right;">18532 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/43.png"><code>43.png</code></a></td>
+<td style="text-align: right;">18631 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/44.png"><code>44.png</code></a></td>
+<td style="text-align: right;">17840 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/45.png"><code>45.png</code></a></td>
+<td style="text-align: right;">12013 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/46.png"><code>46.png</code></a></td>
+<td style="text-align: right;">10743 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/47.png"><code>47.png</code></a></td>
+<td style="text-align: right;">9682 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/48.png"><code>48.png</code></a></td>
+<td style="text-align: right;">12171 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/49.png"><code>49.png</code></a></td>
+<td style="text-align: right;">19472 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/50.png"><code>50.png</code></a></td>
+<td style="text-align: right;">15979 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/s01.png"><code>s01.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/s02.png"><code>s02.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/s03.png"><code>s03.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/s04.png"><code>s04.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/s05.png"><code>s05.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/s06.png"><code>s06.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/s07.png"><code>s07.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/s08.png"><code>s08.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/s09.png"><code>s09.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/s10.png"><code>s10.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/s11.png"><code>s11.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/s12.png"><code>s12.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/s13.png"><code>s13.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/s14.png"><code>s14.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/s15.png"><code>s15.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/s16.png"><code>s16.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/s17.png"><code>s17.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/s18.png"><code>s18.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/s19.png"><code>s19.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/s20.png"><code>s20.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/s21.png"><code>s21.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/s22.png"><code>s22.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/s23.png"><code>s23.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/s24.png"><code>s24.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/s25.png"><code>s25.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/s26.png"><code>s26.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/s27.png"><code>s27.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/s28.png"><code>s28.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/s29.png"><code>s29.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/s30.png"><code>s30.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/s31.png"><code>s31.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/s32.png"><code>s32.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/s33.png"><code>s33.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/s34.png"><code>s34.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/s35.png"><code>s35.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/s36.png"><code>s36.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/s37.png"><code>s37.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/s38.png"><code>s38.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/s39.png"><code>s39.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/s40.png"><code>s40.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/s41.png"><code>s41.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/s42.png"><code>s42.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/s43.png"><code>s43.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/s44.png"><code>s44.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/s45.png"><code>s45.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/s46.png"><code>s46.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/s47.png"><code>s47.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/s48.png"><code>s48.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/s49.png"><code>s49.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/s50.png"><code>s50.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/s01.png"><code>s01.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/s02.png"><code>s02.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/s03.png"><code>s03.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/s04.png"><code>s04.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/s05.png"><code>s05.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/s06.png"><code>s06.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/s07.png"><code>s07.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/s08.png"><code>s08.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/s09.png"><code>s09.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/s10.png"><code>s10.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/s11.png"><code>s11.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/s12.png"><code>s12.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/s13.png"><code>s13.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/s14.png"><code>s14.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/s15.png"><code>s15.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/s16.png"><code>s16.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/s17.png"><code>s17.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/s18.png"><code>s18.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/s19.png"><code>s19.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/s20.png"><code>s20.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/s21.png"><code>s21.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/s22.png"><code>s22.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/s23.png"><code>s23.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/s24.png"><code>s24.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/s25.png"><code>s25.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/s26.png"><code>s26.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/s27.png"><code>s27.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/s28.png"><code>s28.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/s29.png"><code>s29.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/s30.png"><code>s30.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/s31.png"><code>s31.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/s32.png"><code>s32.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/s33.png"><code>s33.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/s34.png"><code>s34.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/s35.png"><code>s35.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/s36.png"><code>s36.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/s37.png"><code>s37.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/s38.png"><code>s38.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/s39.png"><code>s39.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/s40.png"><code>s40.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/s41.png"><code>s41.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/s42.png"><code>s42.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/s43.png"><code>s43.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/s44.png"><code>s44.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/s45.png"><code>s45.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/s46.png"><code>s46.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/s47.png"><code>s47.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/s48.png"><code>s48.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/s49.png"><code>s49.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/s50.png"><code>s50.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/news01.png"><code>news01.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>fb7d558717eed97a3316efdc…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/01.png"><code>01.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/02.png"><code>02.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/03.png"><code>03.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/04.png"><code>04.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/05.png"><code>05.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/06.png"><code>06.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/07.png"><code>07.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/08.png"><code>08.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/09.png"><code>09.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/10.png"><code>10.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/11.png"><code>11.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/12.png"><code>12.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/13.png"><code>13.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/14.png"><code>14.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/15.png"><code>15.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/16.png"><code>16.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/17.png"><code>17.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/18.png"><code>18.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/19.png"><code>19.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/20.png"><code>20.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/21.png"><code>21.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/22.png"><code>22.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/23.png"><code>23.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/24.png"><code>24.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/25.png"><code>25.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/26.png"><code>26.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/27.png"><code>27.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/28.png"><code>28.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/29.png"><code>29.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/30.png"><code>30.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/31.png"><code>31.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/32.png"><code>32.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/33.png"><code>33.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/34.png"><code>34.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/35.png"><code>35.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/36.png"><code>36.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/37.png"><code>37.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/38.png"><code>38.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/39.png"><code>39.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/40.png"><code>40.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/41.png"><code>41.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/42.png"><code>42.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/43.png"><code>43.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/44.png"><code>44.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/45.png"><code>45.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/46.png"><code>46.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/47.png"><code>47.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/48.png"><code>48.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/49.png"><code>49.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/50.png"><code>50.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/01.png"><code>01.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/02.png"><code>02.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/03.png"><code>03.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/04.png"><code>04.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/05.png"><code>05.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/06.png"><code>06.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/07.png"><code>07.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/08.png"><code>08.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/09.png"><code>09.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/10.png"><code>10.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/11.png"><code>11.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/12.png"><code>12.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/13.png"><code>13.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/14.png"><code>14.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/15.png"><code>15.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/16.png"><code>16.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/17.png"><code>17.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/18.png"><code>18.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/19.png"><code>19.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/20.png"><code>20.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/21.png"><code>21.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/22.png"><code>22.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/23.png"><code>23.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/24.png"><code>24.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/25.png"><code>25.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/26.png"><code>26.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/27.png"><code>27.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/28.png"><code>28.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/29.png"><code>29.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/30.png"><code>30.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/31.png"><code>31.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/32.png"><code>32.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/33.png"><code>33.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/34.png"><code>34.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/35.png"><code>35.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/36.png"><code>36.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/37.png"><code>37.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/38.png"><code>38.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/39.png"><code>39.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/40.png"><code>40.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/41.png"><code>41.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/42.png"><code>42.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/43.png"><code>43.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/44.png"><code>44.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/45.png"><code>45.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/46.png"><code>46.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/47.png"><code>47.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/48.png"><code>48.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/49.png"><code>49.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/50.png"><code>50.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/s01_answer.png"><code>s01_answer.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>d6e8d9ec9a6f503e4ef8e544…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/s02_answer.png"><code>s02_answer.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>addbd07a1943ba7da6f937f7…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/s03_answer.png"><code>s03_answer.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>4325ce4c52edbe1178a85037…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/s04_answer.png"><code>s04_answer.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>f2c5714c038094af6a5a3873…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/s05_answer.png"><code>s05_answer.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>65335be72de4f116e971d905…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/s06_answer.png"><code>s06_answer.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>27b26d45898f2f9213daae1d…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/s07_answer.png"><code>s07_answer.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>7505c123214fff0e8e656203…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/s08_answer.png"><code>s08_answer.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>ae8493c99c339b9261dba99c…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/s09_answer.png"><code>s09_answer.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>f7ffe2308452514eb1b6ebb7…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/s10_answer.png"><code>s10_answer.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>ef7f6374c181c56d0c6187d6…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/s11_answer.png"><code>s11_answer.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>999f9426349b397a9aa349eb…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/s12_answer.png"><code>s12_answer.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>59702a965c243505f80eb3af…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/s13_answer.png"><code>s13_answer.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>9b0bc625a3402507a463dfbf…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/s14_answer.png"><code>s14_answer.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>bf1125503136b4cfd0d4f443…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/s15_answer.png"><code>s15_answer.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>8473d21e11138df72a97f55f…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/s16_answer.png"><code>s16_answer.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>5abfd7552d6563b85a6ba22e…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/s17_answer.png"><code>s17_answer.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>dda721bd4bd8fbd4bc78a824…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/s18_answer.png"><code>s18_answer.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>a93159b6896049bdbbac59cf…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/s19_answer.png"><code>s19_answer.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>27bb73808794ea7511d06c51…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/s20_answer.png"><code>s20_answer.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>438d8e555316046577f2f080…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/s21_answer.png"><code>s21_answer.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>b896fce066f0e12b67dc2336…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/s22_answer.png"><code>s22_answer.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>7e418a80533754603796613e…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/s23_answer.png"><code>s23_answer.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>21ccd3347fa19fa44c886f73…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/s24_answer.png"><code>s24_answer.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>87203ae3799f8c9360e35de5…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/s25_answer.png"><code>s25_answer.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>3d8a96721fd92ca65f57a62f…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/s26_answer.png"><code>s26_answer.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>bee0397cb79a138afe614fcf…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/s27_answer.png"><code>s27_answer.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>d028afa7e530baf370c45a90…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/s28_answer.png"><code>s28_answer.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>d2d68b9c1dcf8477c40ec847…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/s29_answer.png"><code>s29_answer.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>d30d7de6a1072ef55275416d…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/s30_answer.png"><code>s30_answer.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>5ab163130f25a19a9f5dca3f…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/s31_answer.png"><code>s31_answer.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>e90bde393f683c8811655e1a…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/s32_answer.png"><code>s32_answer.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>8e8dddb7e69498daf8eaeee2…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/s33_answer.png"><code>s33_answer.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>d031df6afda2b139a4980c00…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/s34_answer.png"><code>s34_answer.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>c39657743cfe98044b4c5156…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/s35_answer.png"><code>s35_answer.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>b0ffc6b3edf01f32e0ceaa5c…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/s36_answer.png"><code>s36_answer.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>3b7da90e29fcdb074affdfbf…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/s37_answer.png"><code>s37_answer.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>7dd821fc2a721cfdca61d0cd…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/s38_answer.png"><code>s38_answer.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>7ea091b8595f627abee40e50…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/s39_answer.png"><code>s39_answer.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>ca44b0f03ab26efff0ae616b…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/s40_answer.png"><code>s40_answer.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>0c9060002f37fb25156f4850…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/s41_answer.png"><code>s41_answer.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>c0c2d58968b07b0e5602c2a9…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/s42_answer.png"><code>s42_answer.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>0a36826516fca16165592b1a…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/s43_answer.png"><code>s43_answer.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>7c112694bb7513e3419c02d9…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/s44_answer.png"><code>s44_answer.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>0c51f63d00522029396dafa8…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/s45_answer.png"><code>s45_answer.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>ecf7747cddb95f3b85c586b4…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/s46_answer.png"><code>s46_answer.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>a854d2be90a773bfaa02c8cb…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/s47_answer.png"><code>s47_answer.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>bb2a06db7b4d05d980b61352…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/s48_answer.png"><code>s48_answer.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>a2ba9ea7495a6a4cc5ba18ae…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/s49_answer.png"><code>s49_answer.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>6d4e0a4df09b15537499960e…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/s50_answer.png"><code>s50_answer.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>840f1a97e0da1c0f31533485…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/s01.png"><code>s01.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/s02.png"><code>s02.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/s03.png"><code>s03.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+<tr>
+<td><a href="assets/8-autoby/s04.png"><code>s04.png</code></a></td>
+<td style="text-align: right;">4228 B</td>
+<td><code>-…</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="flag_1">Flag<a class="headerlink" href="#flag_1" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>Layer7{c852b5f4e46a951c72664b14cd091a2fd1dfcb867b064d5d}
+</code></pre></div>
+<blockquote>
+<p>Submitted and accepted on the platform at <code>2026-11-21 10:31:00+07:00</code> (Asia/Jakarta).</p>
+</blockquote>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Layer7 CTF 2026 · write-ups by B0TCIL
+    </div>
+  
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.sections", "navigation.top", "navigation.tracking", "navigation.path", "navigation.indexes", "toc.follow", "search.suggest", "search.highlight", "content.code.copy", "content.tabs.link"], "search": "../../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.13a4f30d.min.js"></script>
+      
+        <script src="../../javascripts/nx.js"></script>
+      
+    
+  </body>
+</html>

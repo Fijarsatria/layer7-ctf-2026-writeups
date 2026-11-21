@@ -1,0 +1,30 @@
+:root {
+  --nx-accent: #17f58a;
+  --nx-accent-2: #7ee787;
+  --nx-card: rgba(8, 22, 15, .72);
+  --nx-border: rgba(126, 231, 135, .18);
+}
+.md-header {
+  background: linear-gradient(110deg, #03110a 0%, #052e1c 55%, #03110a 100%);
+}
+.nx-progress {
+  background: linear-gradient(90deg, #17f58a, #7ee787);
+}
+.nx-hero {
+  background:
+    radial-gradient(900px 220px at 10% -20%, rgba(23, 245, 138, .30), transparent 60%),
+    radial-gradient(700px 220px at 100% 0%, rgba(126, 231, 135, .16), transparent 55%),
+    linear-gradient(145deg, rgba(4, 20, 12, .95), rgba(2, 10, 6, .96));
+}
+.nx-kicker { color: #7ee787; }
+.nx-badge-verified {
+  background: rgba(23, 245, 138, .14);
+  color: #7ee787;
+  border: 1px solid rgba(23, 245, 138, .35);
+}
+.nx-cat:hover, .nx-page-card:hover { border-color: var(--nx-accent); }
+.nx-stat strong { color: #eafff3; }
+.nx-verified-note strong { color: #7ee787; }
+.md-typeset code { background: rgba(23, 245, 138, .08); }
+.md-typeset pre > code { background: transparent; }
+.md-typeset table:not([class]) th { background: rgba(23, 245, 138, .10); }

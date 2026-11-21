@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#7c3aed"/>
+      <stop offset="1" stop-color="#fb7185"/>
+    </linearGradient>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f7f4ff"/>
+      <stop offset="1" stop-color="#efe8ff"/>
+    </linearGradient>
+    <filter id="s" x="-30%" y="-30%" width="160%" height="160%">
+      <feDropShadow dx="0" dy="18" stdDeviation="16" flood-color="#4c1d95" flood-opacity="0.18"/>
+    </filter>
+  </defs>
+  <rect width="800" height="800" fill="url(#bg)"/>
+  <ellipse cx="400" cy="640" rx="190" ry="22" fill="#4c1d95" opacity="0.08"/>
+  <g filter="url(#s)" transform="translate(400 390)">
+    <path d="M0 -190 C90 -190 150 -150 150 -70 C150 80 80 170 0 210 C-80 170 -150 80 -150 -70 C-150 -150 -90 -190 0 -190Z" fill="url(#g)"/>
+    <path d="M0 -150 C60 -150 108 -120 108 -60 C108 50 54 120 0 154 C-54 120 -108 50 -108 -60 C-108 -120 -60 -150 0 -150Z" fill="#f8f5ff"/>
+    <text x="0" y="16" text-anchor="middle" font-family="Arial Black, sans-serif" font-size="64" fill="#6d28d9">L7</text></g>
+</svg>
